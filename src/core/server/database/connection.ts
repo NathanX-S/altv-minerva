@@ -1,6 +1,5 @@
 import * as alt from 'alt-server';
 import { Collections } from './collections';
-import { IConfig } from '../interface/iConfig';
 
 // All of these are default values and should not be changed.
 const DEFAULT_DATABASE_NAME = 'athena';
@@ -12,7 +11,7 @@ const DEFAULT_COLLECTIONS: string[] = [
     Collections.Vehicles,
 ];
 
-export function getURL(config: IConfig): string {
+export function getURL(): string {
     if (!process.env.MONGO_URL) {
         return DEFAULT_MONGO_URL.replace(`USERNAME:PASSWORD@`, '');
     }
@@ -24,7 +23,7 @@ export function getCollections(): string[] {
     return DEFAULT_COLLECTIONS;
 }
 
-export function getName(config: IConfig): string {
+export function getName(): string {
     if (!process.env.MONGO_DATABASE_NAME) {
         return DEFAULT_DATABASE_NAME;
     }
