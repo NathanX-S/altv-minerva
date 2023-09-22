@@ -1,7 +1,7 @@
 {
     "[?] A URI with authentication to connect to a MongoDB Database": "TYPE IS STRING",
     "[?] ex: mongodb://username:password@127.0.0.1:27017": "TYPE IS STRING",
-    "MONGO_URL": null,
+    "MONGO_URL": "mongodb://game:Rixp3i88rCY9m8gDbFraxm9J7Aoz@127.0.0.1:27017?authSource=athena",
     "[?] Used for Framework custom Database": "TYPE IS STRING",
     "MONGO_DATABASE_NAME": null,
     "[?] Use altv built-in reconnect?": "TYPE IS BOOLEAN",

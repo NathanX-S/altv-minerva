@@ -5,6 +5,7 @@ import serverConfig from './utility/config';
 import Database from '@stuyk/ezmongodb';
 import { SYSTEM_EVENTS } from '../shared/enums/system';
 import { IConfig } from './interface/iConfig';
+import 'dotenv/config';
 
 const startTime = Date.now();
 let config: IConfig | undefined;
@@ -29,10 +30,10 @@ class Startup {
             process.exit(1);
         }
 
-        const url = connection.getURL(config);
+        const url = connection.getURL();
         const collections = connection.getCollections();
 
-        Database.init(url, connection.getName(config), collections)
+        Database.init(url, connection.getName(), collections)
             .catch(() => {
                 connection.throwConnectionError();
             })

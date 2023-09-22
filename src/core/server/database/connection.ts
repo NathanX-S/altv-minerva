@@ -13,11 +13,11 @@ const DEFAULT_COLLECTIONS: string[] = [
 ];
 
 export function getURL(config: IConfig): string {
-    if (!config.MONGO_URL) {
+    if (!process.env.MONGO_URL) {
         return DEFAULT_MONGO_URL.replace(`USERNAME:PASSWORD@`, '');
     }
 
-    return config.MONGO_URL;
+    return process.env.MONGO_URL;
 }
 
 export function getCollections(): string[] {
@@ -25,10 +25,10 @@ export function getCollections(): string[] {
 }
 
 export function getName(config: IConfig): string {
-    if (!config.MONGO_DATABASE_NAME) {
+    if (!process.env.MONGO_DATABASE_NAME) {
         return DEFAULT_DATABASE_NAME;
     }
-    return config.MONGO_DATABASE_NAME;
+    return process.env.MONGO_DATABASE_NAME;
 }
 
 export function throwConnectionError() {

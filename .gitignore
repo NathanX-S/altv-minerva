@@ -56,3 +56,5 @@ resources/core/**
 resources/webviews/**
 
 typedefs.d.ts
+
+AthenaConfig.json
