@@ -53,9 +53,6 @@ export function add<CustomCurrency>(
     }
 }
 
-
-
-
 /**
  * Remove currency type from the player.
  *

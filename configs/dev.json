@@ -14,17 +14,8 @@
     "debug": true,
     "streamingDistance": 400,
     "migrationDistance": 150,
-    "modules": [
-        "js-module"
-    ],
-    "resources": [
-        "core"
-    ],
-    "tags": [
-        "athena",
-        "framework",
-        "version",
-        "3"
-    ],
+    "modules": ["js-module-v2"],
+    "resources": ["core"],
+    "tags": ["athena", "framework", "version", "3"],
     "vue-athena": true
 }

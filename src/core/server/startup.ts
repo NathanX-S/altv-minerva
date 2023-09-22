@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import connection from './database/connection';
 import reconnect from './utility/reconnect';
 import serverConfig from './utility/config';
@@ -65,11 +65,11 @@ class Startup {
     }
 
     static async toggleEntry() {
-        alt.off('playerConnect', Startup.handleEarlyConnect);
+        earlyConnHandler.destroy();
         reconnect.invoke();
     }
 
-    static handleEarlyConnect(player: alt.Player) {
+    static handleEarlyConnect({ player }) {
         if (!(player instanceof alt.Player) || !player || !player.valid) {
             return;
         }
@@ -82,7 +82,7 @@ class Startup {
     }
 }
 
-alt.on('playerConnect', Startup.handleEarlyConnect);
-alt.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, Startup.toggleEntry);
+const earlyConnHandler = alt.Events.onPlayerConnect(Startup.handleEarlyConnect);
+alt.Events.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, Startup.toggleEntry);
 
 Startup.begin();

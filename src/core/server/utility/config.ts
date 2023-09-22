@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { IConfig } from '../interface/iConfig';
 import fs from 'fs';
 

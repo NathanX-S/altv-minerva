@@ -18,6 +18,7 @@ src/core/plugins/sandbox
 cdn_upload
 tsconfig.tsbuildinfo
 athena-cache/
+.server-crashes-cache/
 node_modules
 .DS_Store
 dist
@@ -46,6 +47,11 @@ docs/
 yarn.lock
 
 # Resources
+resources/shared/**
+resources/server/**
+resources/client/**
+resources/webview/**
+resources/natives/**
 resources/core/**
 resources/webviews/**
 

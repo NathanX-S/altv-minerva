@@ -26,4 +26,3 @@ export function closePages(player: alt.Player, pages: Array<string> = []) {
 
     player.emit(WebViewEventNames.CLOSE_PAGES, pages);
 }
-

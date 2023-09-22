@@ -4,7 +4,7 @@ import path from 'path';
 
 const scriptPath = path.join(process.cwd(), '/scripts/buildresource/resource.json');
 const defaults = {
-    type: 'js',
+    type: 'jsv2',
     main: 'server/startup.js',
     'client-main': 'client/startup.js',
     'client-files': ['client/*', 'shared/*'],
