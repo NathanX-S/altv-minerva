@@ -1,5 +1,5 @@
 import { GLOBAL_SYNCED } from '@AthenaShared/enums/globalSynced';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 /**
  * Do not modify this directly.

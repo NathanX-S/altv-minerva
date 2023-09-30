@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 /**
  * By default Interactions are supported for vehicle and player.

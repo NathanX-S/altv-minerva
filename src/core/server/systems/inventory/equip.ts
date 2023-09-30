@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { StoredItem, StoredItemEx } from '@AthenaShared/interfaces/item';
 
 type StoredItemCallbacks = ((player: alt.Player, item: StoredItem) => void)[];

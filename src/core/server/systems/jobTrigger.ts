@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { VIEW_EVENTS_JOB_TRIGGER } from '@AthenaShared/enums/views';
 import { JobTrigger } from '@AthenaShared/interfaces/jobTrigger';
 import { deepCloneObject } from '@AthenaShared/utility/deepCopy';

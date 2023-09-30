@@ -1,5 +1,5 @@
 import { VehicleState } from '@AthenaShared/interfaces/vehicleState';
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 
 export const SEAT = {
     DRIVER: 1,

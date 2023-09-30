@@ -1,6 +1,6 @@
 import * as Athena from '@AthenaServer/api';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 /**
  * THIS IS A DEFAULT SYSTEM.

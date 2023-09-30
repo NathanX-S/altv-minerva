@@ -1,5 +1,5 @@
 import * as Athena from '@AthenaServer/api';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { PLAYER_SYNCED_META } from '@AthenaShared/enums/playerSynced';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { View_Events_Input_Menu } from '@AthenaShared/enums/views';

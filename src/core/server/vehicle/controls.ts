@@ -1,6 +1,6 @@
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { VEHICLE_LOCK_STATE } from '@AthenaShared/enums/vehicle';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '@AthenaServer/api';
 
 /**

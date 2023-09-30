@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '@AthenaServer/api';
 import { WORLD_NOTIFICATION_TYPE } from '@AthenaShared/enums/worldNotificationTypes';
 import { ANIMATION_FLAGS } from '@AthenaShared/flags/animationFlags';

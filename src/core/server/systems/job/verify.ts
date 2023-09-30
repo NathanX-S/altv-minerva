@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '@AthenaServer/api';
 import { Objective, ObjectiveCriteria, ObjectiveEvents, ObjectiveType } from '@AthenaShared/interfaces/job';
 import { isFlagEnabled } from '@AthenaShared/utility/flags';

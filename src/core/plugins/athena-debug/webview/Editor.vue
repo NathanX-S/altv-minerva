@@ -37,7 +37,7 @@ const serverKey = 'editorServer';
 const clientKey = 'editorClient';
 
 const defaultServerCode =
-    `import * as alt from 'alt-server'; // Do Not Remove` +
+    `import * as alt from '@altv/server'; // Do Not Remove` +
     `\r\nimport * as Athena from 'src/core/server/api/index';  // Do Not Remove` +
     `\r\n// Reminder that this is JavaScript, do not write TypeScript`;
 

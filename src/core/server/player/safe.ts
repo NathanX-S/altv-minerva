@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { PLAYER_SYNCED_META } from '@AthenaShared/enums/playerSynced';
 import * as Athena from '@AthenaServer/api';
 

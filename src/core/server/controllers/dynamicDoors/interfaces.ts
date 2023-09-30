@@ -1,5 +1,5 @@
 import { Marker } from '@AthenaShared/interfaces/marker';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 export interface DoorInfo {
     /**

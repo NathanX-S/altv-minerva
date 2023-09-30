@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { ATHENA_EVENTS_PLAYER_CLIENT } from '../../shared/enums/athenaEvents';
 
 const clientEvents: Array<{ eventName: string; callback: (player: alt.Player, ...args: any[]) => void }> = [];

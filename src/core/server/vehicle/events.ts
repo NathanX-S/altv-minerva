@@ -1,5 +1,5 @@
 import { OwnedVehicle } from '@AthenaShared/interfaces/vehicleOwned';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 export type AthenaVehicleEvents =
     | 'engine-started'

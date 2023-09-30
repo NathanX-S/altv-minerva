@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 /**
  * Check if a world position is free of vehicles.

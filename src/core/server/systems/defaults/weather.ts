@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { getWeatherFromString, WEATHER_KEY } from '@AthenaShared/utility/weather';
 import * as Athena from '@AthenaServer/api';
 

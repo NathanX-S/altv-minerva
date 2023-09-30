@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { SYSTEM_EVENTS } from '../../shared/enums/system';
 import { ExtractStringKeys } from '@AthenaShared/utility/extractStringKeys';
 

@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 import * as Athena from '@AthenaServer/api';
 import { StoredItem, WeaponInfo } from '@AthenaShared/interfaces/item';

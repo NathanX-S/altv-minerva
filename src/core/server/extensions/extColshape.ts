@@ -1,42 +1,45 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { SYSTEM_EVENTS } from '../../shared/enums/system';
 import { Interaction } from '../../shared/interfaces/interaction';
 import { sha256Random } from '../utility/hash';
 
 const DEFAULT_INTERACTION_HEIGHT = 3;
 
-export class InteractionShape extends alt.ColshapeCylinder {
+export class InteractionShape {
     interaction: Interaction = {
         position: { x: 0, y: 0, z: 0 },
     };
+    colShape: alt.ColShapeCylinder;
 
     constructor(interaction: Required<Interaction>) {
-        super(
-            interaction.position.x,
-            interaction.position.y,
-            interaction.position.z,
-            interaction.range,
-            interaction.height ? interaction.height : DEFAULT_INTERACTION_HEIGHT,
-        );
+        this.colShape = alt.ColShapeCylinder.create({
+            pos: interaction.position,
+            radius: interaction.range,
+            height: interaction.height ? interaction.height : DEFAULT_INTERACTION_HEIGHT,
+        });
 
         // Set the dimension based on specifications from the interaction interface
-        if (this.dimension === undefined || this.dimension === null) {
-            this.dimension = 0;
+        if (this.colShape.dimension === undefined || this.colShape.dimension === null) {
+            this.colShape.dimension = 0;
         } else {
-            this.dimension = interaction.dimension;
+            this.colShape.dimension = interaction.dimension;
         }
 
         this.interaction = interaction;
     }
 }
 
-export class GarageSpaceShape extends alt.ColshapeSphere {
+export class GarageSpaceShape {
     private rotation: alt.IVector3;
     private isOpen: boolean = true;
     isGarage: boolean = true;
 
+    colShape: alt.ColShapeSphere;
     constructor(position: alt.IVector3, rotation: alt.IVector3, radius: number) {
-        super(position.x, position.y, position.z, radius);
+        this.colShape = alt.ColShapeSphere.create({
+            pos: position,
+            radius: radius,
+        });
         this.rotation = rotation;
     }
 
@@ -45,7 +48,7 @@ export class GarageSpaceShape extends alt.ColshapeSphere {
     }
 
     getPositionAndRotation() {
-        return { position: this.pos, rotation: this.rotation };
+        return { position: this.colShape.pos, rotation: this.rotation };
     }
 
     getSpaceStatus() {
@@ -53,13 +56,15 @@ export class GarageSpaceShape extends alt.ColshapeSphere {
     }
 }
 
-export class PolygonShape extends alt.ColshapePolygon {
+export class PolygonShape {
     uid: string;
     vertices: Array<alt.IVector2>;
     isPlayerOnly: boolean;
     isVehicleOnly: boolean;
     isPolygonShape = true;
     isDebug = false;
+
+    colShape: alt.ColShapePolygon;
 
     private enterCallbacks: Array<(shape: PolygonShape, entity: alt.Vehicle | alt.Player | alt.Entity) => void> = [];
     private leaveCallbacks: Array<(shape: PolygonShape, entity: alt.Vehicle | alt.Player | alt.Entity) => void> = [];
@@ -86,7 +91,7 @@ export class PolygonShape extends alt.ColshapePolygon {
             return new alt.Vector2(pos.x, pos.y);
         });
 
-        super(minZ, maxZ, processedVertices);
+        this.colShape = alt.ColShapePolygon.create({ minZ: minZ, maxZ: maxZ, points: processedVertices });
         this.vertices = processedVertices;
         this.isPolygonShape = true;
         this.isPlayerOnly = isPlayerOnly;
@@ -116,7 +121,7 @@ export class PolygonShape extends alt.ColshapePolygon {
     }
 }
 
-alt.on('entityEnterColshape', (colshape: alt.Colshape, entity: alt.Entity) => {
+alt.Events.on('entityEnterColshape', (colshape: alt.ColShape, entity: alt.Entity) => {
     if (!(colshape instanceof PolygonShape)) {
         return;
     }
@@ -129,7 +134,7 @@ alt.on('entityEnterColshape', (colshape: alt.Colshape, entity: alt.Entity) => {
         colshape.invokeEnterCallbacks(entity);
 
         if (colshape.isDebug) {
-            alt.emitClient(entity, SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, colshape.uid, colshape.vertices);
+            entity.emit(SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, colshape.uid, colshape.vertices);
         }
     }
 
@@ -137,12 +142,12 @@ alt.on('entityEnterColshape', (colshape: alt.Colshape, entity: alt.Entity) => {
         colshape.invokeEnterCallbacks(entity);
 
         if (colshape.isDebug && entity.driver) {
-            alt.emitClient(entity.driver, SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, colshape.uid, colshape.vertices);
+            entity.driver.emit(SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, colshape.uid, colshape.vertices);
         }
     }
 });
 
-alt.on('entityLeaveColshape', (colshape: alt.Colshape, entity: alt.Entity) => {
+alt.Events.on('entityLeaveColshape', (colshape: alt.ColShape, entity: alt.Entity) => {
     if (!(colshape instanceof PolygonShape)) {
         return;
     }

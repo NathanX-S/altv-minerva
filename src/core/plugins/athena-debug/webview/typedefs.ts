@@ -63,7 +63,7 @@ declare module "src/core/shared/flags/animationFlags" {
     }
 }
 declare module "src/core/shared/interfaces/animation" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     import { ANIMATION_FLAGS } from "src/core/shared/flags/animationFlags";
     export interface Animation {
         dict: string;
@@ -78,7 +78,7 @@ declare module "src/core/shared/interfaces/animation" {
     }
 }
 declare module "src/core/shared/interfaces/iPed" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     import { Animation } from "src/core/shared/interfaces/animation";
     export interface IPed {
         pos: alt.IVector3;
@@ -233,7 +233,7 @@ declare module "src/core/shared/enums/system" {
     }
 }
 declare module "src/core/shared/interfaces/iObject" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface IObject {
         uid?: string;
         subType?: string;
@@ -337,7 +337,7 @@ declare module "src/core/client/rmlui/input/index" {
     export function cancel(): Promise<void>;
 }
 declare module "src/core/shared/utility/color" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export function rgbaToHexAlpha(color: alt.RGBA): string;
 }
 declare module "src/core/client/rmlui/menu/menuInterfaces" {
@@ -396,7 +396,7 @@ declare module "src/core/client/rmlui/menu3d/index" {
     export function close(): Promise<void>;
 }
 declare module "src/core/shared/interfaces/progressBar" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface ProgressBar {
         uid?: string;
         position: {
@@ -536,7 +536,7 @@ declare module "src/core/client/screen/notification" {
     export function create(text: string): void;
 }
 declare module "src/core/shared/interfaces/particle" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface Particle {
         pos: alt.IVector3;
         dict: string;
@@ -833,7 +833,7 @@ declare module "src/core/shared/enums/blipColor" {
     }
 }
 declare module "src/core/shared/interfaces/blip" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     import { BLIP_COLOR } from "src/core/shared/enums/blipColor";
     export interface Blip {
         pos: alt.IVector3;
@@ -854,7 +854,7 @@ declare module "src/core/client/streamers/blip" {
     export function remove(uid: string): void;
 }
 declare module "src/core/shared/interfaces/door" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface Door {
         uid: string;
         description?: string;
@@ -865,7 +865,7 @@ declare module "src/core/shared/interfaces/door" {
 }
 declare module "src/core/client/streamers/doors" { }
 declare module "src/core/shared/interfaces/item" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export type WeaponInfo = {
         hash: number;
         ammo: number;
@@ -995,7 +995,7 @@ declare module "src/core/shared/enums/markerTypes" {
     }
 }
 declare module "src/core/shared/interfaces/marker" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     import { MARKER_TYPE } from "src/core/shared/enums/markerTypes";
     export interface Marker {
         pos: alt.IVector3;
@@ -1024,7 +1024,7 @@ declare module "src/core/client/streamers/ped" {
     export function remove(uid: string): void;
 }
 declare module "src/core/shared/interfaces/textLabel" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface TextLabel {
         pos: alt.IVector3;
         text: string;
@@ -1045,7 +1045,7 @@ declare module "src/core/shared/enums/worldNotificationTypes" {
 }
 declare module "src/core/shared/interfaces/iWorldNotification" {
     import { WORLD_NOTIFICATION_TYPE } from "src/core/shared/enums/worldNotificationTypes";
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface IWorldNotification {
         pos: alt.IVector3;
         text: string;
@@ -1092,7 +1092,7 @@ declare module "src/core/client/systems/adminControl" {
     export function onControlUpdate(callback: (controls: typeof AdminControls) => void): void;
 }
 declare module "src/core/shared/interfaces/interaction" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export interface Interaction {
         uid?: string;
         description?: string;
@@ -1245,7 +1245,7 @@ declare module "src/core/client/systems/playerConfig" {
     export function addCallback<CustomKeys>(key: PlayerConfigKeys | CustomKeys, callback: ConfigCallback): void;
 }
 declare module "src/core/shared/utility/vector" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export function distance(vector1: alt.IVector3, vector2: alt.IVector3): number;
     export function distance2d(vector1: alt.IVector2, vector2: alt.IVector2): number;
     export function getClosestVector(pos: alt.IVector3, arrayOfPositions: alt.IVector3[]): alt.IVector3;
@@ -1421,7 +1421,7 @@ declare module "src/core/client/utility/pauseMenu" {
     export function enable(): void;
 }
 declare module "src/core/shared/utility/random" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export function randomNumberBetween(min: number, max: number): number;
     export function randomNumberBetweenInclusive(min: number, max: number): number;
     export function getRandomRGB(alpha?: number): alt.RGBA;
@@ -2022,7 +2022,7 @@ declare module "src/core/shared/enums/boneIds" {
 }
 declare module "src/core/shared/interfaces/iAttachable" {
     import { PedBone } from "src/core/shared/enums/boneIds";
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export default interface IAttachable {
         uid?: string;
         model: string;
@@ -2146,7 +2146,7 @@ declare module "src/core/shared/interfaces/eventCall" {
     }
 }
 declare module "src/core/shared/interfaces/job" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     import { Blip } from "src/core/shared/interfaces/blip";
     import { EventCall } from "src/core/shared/interfaces/eventCall";
     import { Marker } from "src/core/shared/interfaces/marker";
@@ -2686,7 +2686,7 @@ declare module "src/core/plugins/athena-debug/shared/events" {
 }
 declare module "src/core/plugins/athena-debug/client/index" { }
 declare module "src/core/server/config/playerConfig" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { PlayerConfigKeys } from "src/core/shared/enums/playerConfigKeys";
     export function set<CustomKeys>(player: alt.Player, key: PlayerConfigKeys | CustomKeys, value: any): void;
     const _default_14: {
@@ -2698,7 +2698,7 @@ declare module "src/core/server/config/index" {
     export { default as player } from "src/core/server/config/playerConfig";
 }
 declare module "src/core/shared/interfaces/iStream" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface IStreamConfig {
         TimeBetweenUpdates: number;
     }
@@ -2758,7 +2758,7 @@ declare module "src/core/server/athena/main" {
     };
 }
 declare module "src/core/server/systems/streamer" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function registerCallback<T>(key: string, callback: (player: alt.Player, streamedData: Array<T>) => void, range?: number): Promise<void>;
     export function updateData<T>(key: string, array: Array<T>): Promise<void>;
 }
@@ -2812,7 +2812,7 @@ declare module "src/core/server/utility/hash" {
     export default _default_15;
 }
 declare module "src/core/server/controllers/marker" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import "src/core/server/systems/streamer";
     import { Marker } from "src/core/shared/interfaces/marker";
     export function append(marker: Marker): string;
@@ -2825,7 +2825,7 @@ declare module "src/core/server/controllers/marker" {
     export function override(functionName: 'removeFromPlayer', callback: typeof removeFromPlayer): any;
 }
 declare module "src/core/server/controllers/object" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import "src/core/server/systems/streamer";
     import { IObject } from "src/core/shared/interfaces/iObject";
     export function append(objectData: IObject): string;
@@ -2842,7 +2842,7 @@ declare module "src/core/server/controllers/object" {
     export function override(functionName: 'updateModel', callback: typeof updateModel): any;
 }
 declare module "src/core/server/controllers/staticPed" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import "src/core/server/systems/streamer";
     import { IPed } from "src/core/shared/interfaces/iPed";
     import { Animation } from "src/core/shared/interfaces/animation";
@@ -2857,7 +2857,7 @@ declare module "src/core/server/controllers/staticPed" {
     export function override(functionName: 'removeFromPlayer', callback: typeof removeFromPlayer): any;
 }
 declare module "src/core/server/controllers/textlabel" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import "src/core/server/systems/streamer";
     import { TextLabel } from "src/core/shared/interfaces/textLabel";
     export function append(label: TextLabel): string;
@@ -2872,7 +2872,7 @@ declare module "src/core/server/controllers/textlabel" {
     export function override(functionName: 'update', callback: typeof update): any;
 }
 declare module "src/core/server/controllers/worldNotifications" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import "src/core/server/systems/streamer";
     import { IWorldNotification } from "src/core/shared/interfaces/iWorldNotification";
     export function append(notification: IWorldNotification): string;
@@ -2903,14 +2903,14 @@ declare module "src/core/server/interface/iAccount" {
     }
 }
 declare module "src/core/server/controllers/admin" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function banPlayer(player: alt.Player, reason: string): Promise<boolean>;
     export function unbanPlayerByDiscord(discord: string): Promise<boolean>;
     export function override(functionName: 'banPlayer', callback: typeof banPlayer): any;
     export function override(functionName: 'unbanPlayerByDiscord', callback: typeof unbanPlayerByDiscord): any;
 }
 declare module "src/core/server/controllers/blip" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import "src/core/server/systems/streamer";
     import { Blip } from "src/core/shared/interfaces/blip";
     export function append(blip: Blip): string;
@@ -2925,7 +2925,7 @@ declare module "src/core/server/controllers/blip" {
     export function override(functionName: 'populateGlobalBlips', callback: typeof populateGlobalBlips): any;
 }
 declare module "src/core/server/extensions/extColshape" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Interaction } from "src/core/shared/interfaces/interaction";
     export class InteractionShape extends alt.ColshapeCylinder {
         interaction: Interaction;
@@ -2964,7 +2964,7 @@ declare module "src/core/shared/utility/deepCopy" {
     export function deepCloneArray<T>(data: Array<object | T>): Array<T>;
 }
 declare module "src/core/server/controllers/interaction" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { InteractionShape } from "src/core/server/extensions/extColshape";
     import { Interaction } from "src/core/shared/interfaces/interaction";
     const InternalFunctions: {
@@ -3067,7 +3067,7 @@ declare module "src/core/shared/utility/knownKeys" {
     };
 }
 declare module "src/core/server/document/accountData" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { KnownKeys } from "src/core/shared/utility/knownKeys";
     import { Account } from "src/core/server/interface/iAccount";
     export type KeyChangeCallback = (player: alt.Player, newValue: any, oldValue: any) => void;
@@ -3093,7 +3093,7 @@ declare module "src/core/shared/interfaces/characterInfo" {
     }
 }
 declare module "src/core/shared/interfaces/character" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     import { Appearance } from "src/core/shared/interfaces/appearance";
     import { CharacterInfo } from "src/core/shared/interfaces/characterInfo";
     import { ClothingComponent, StoredItem } from "src/core/shared/interfaces/item";
@@ -3129,7 +3129,7 @@ declare module "src/core/shared/interfaces/character" {
     export const CharacterDefaults: Partial<Character>;
 }
 declare module "src/core/server/document/character" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Character } from "src/core/shared/interfaces/character";
     import { KnownKeys } from "src/core/shared/utility/knownKeys";
     export type KeyChangeCallback = (player: alt.Player, newValue: any, oldValue: any) => void;
@@ -3149,7 +3149,7 @@ declare module "src/core/server/document/character" {
     export function override(functionName: 'onChange', callback: typeof onChange): any;
 }
 declare module "src/core/shared/interfaces/vehicleBase" {
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface BaseVehicle {
         _id?: unknown;
         id?: number;
@@ -3173,7 +3173,7 @@ declare module "src/core/shared/interfaces/vehicleBase" {
 declare module "src/core/shared/interfaces/vehicleState" {
     import { WindowTint } from 'alt-server';
     import { IVehicleNeon } from 'alt-server';
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export interface VehicleState {
         activeRadioStation: number;
         bodyAdditionalHealth: number;
@@ -3273,7 +3273,7 @@ declare module "src/core/shared/interfaces/vehicleOwned" {
     }
 }
 declare module "src/core/server/document/vehicle" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { KnownKeys } from "src/core/shared/utility/knownKeys";
     import { OwnedVehicle } from "src/core/shared/interfaces/vehicleOwned";
     export type KeyChangeCallback = (vehicle: alt.Vehicle, newValue: any, oldValue: any) => void;
@@ -3301,7 +3301,7 @@ declare module "src/core/server/document/index" {
 }
 declare module "src/core/server/vehicle/events" {
     import { OwnedVehicle } from "src/core/shared/interfaces/vehicleOwned";
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type AthenaVehicleEvents = 'engine-started' | 'engine-stopped' | 'door-opened' | 'door-closed' | 'doors-locked' | 'doors-lock-changed' | 'doors-unlocked' | 'vehicle-destroyed' | 'vehicle-repaired' | 'vehicle-spawned' | 'vehicle-repaired';
     export function trigger<CustomEvents = AthenaVehicleEvents>(eventName: CustomEvents, vehicle: alt.Vehicle, ...args: any[]): void;
     export function on(eventName: 'vehicle-spawned', callback: (vehicle: alt.Vehicle) => void): any;
@@ -3322,7 +3322,7 @@ declare module "src/core/server/api/consts/constExtensions" {
     export { InteractionShape, PolygonShape } from "src/core/server/extensions/extColshape";
 }
 declare module "src/core/server/getters/player" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Character } from "src/core/shared/interfaces/character";
     import { Account } from "src/core/server/interface/iAccount";
     import { OwnedVehicle } from "src/core/shared/interfaces/vehicleOwned";
@@ -3343,7 +3343,7 @@ declare module "src/core/server/getters/player" {
     export function isValid(player: alt.Player): boolean;
 }
 declare module "src/core/server/getters/vehicle" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function byID(id: number): alt.Vehicle | undefined;
     export function byIncrementalDatabaseID(id: number | string): alt.Vehicle | undefined;
     export function byDatabaseID(id: string): alt.Vehicle | undefined;
@@ -3356,7 +3356,7 @@ declare module "src/core/server/getters/vehicle" {
     export function closestToVehicle(player: alt.Player): alt.Vehicle | undefined;
 }
 declare module "src/core/server/getters/players" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function online(): alt.Player[];
     export function onlineWithWeapons(): alt.Player[];
     export function inRangeWithDistance(pos: alt.IVector3, range: number): Array<{
@@ -3371,11 +3371,11 @@ declare module "src/core/server/getters/players" {
     export function inVehicle(vehicle: alt.Vehicle): alt.Player[];
 }
 declare module "src/core/server/getters/vehicles" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function inRange(pos: alt.IVector3, range: number): alt.Vehicle[];
 }
 declare module "src/core/server/getters/world" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function positionIsClear(pos: alt.IVector3, lookFor: 'vehicle' | 'player' | 'all'): Promise<boolean>;
     export function isInOceanWater(entity: alt.Entity): boolean;
 }
@@ -3387,7 +3387,7 @@ declare module "src/core/server/getters/index" {
     export * as world from "src/core/server/getters/world";
 }
 declare module "src/core/server/player/appearance" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type Decorator = {
         overlay: string;
         collection: string;
@@ -3424,7 +3424,7 @@ declare module "src/core/shared/enums/currency" {
     }
 }
 declare module "src/core/server/player/currency" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type DefaultCurrency = 'bank' | 'cash';
     export function add<CustomCurrency>(player: alt.Player, type: DefaultCurrency | CustomCurrency, amount: number): boolean;
     export function sub<CustomCurrency>(player: alt.Player, type: DefaultCurrency | CustomCurrency, amount: number): boolean;
@@ -3457,7 +3457,7 @@ declare module "src/core/shared/utility/weather" {
     export function getWeatherFromString(weatherName: WEATHER_KEY): number;
 }
 declare module "src/core/server/player/emit" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { ANIMATION_FLAGS } from "src/core/shared/flags/animationFlags";
     import IAttachable from "src/core/shared/interfaces/iAttachable";
     import ICredit from "src/core/shared/interfaces/iCredit";
@@ -3553,7 +3553,7 @@ declare module "src/core/server/player/events" {
     import { InventoryType } from "src/core/plugins/core-inventory/shared/interfaces";
     import { Character } from "src/core/shared/interfaces/character";
     import { StoredItem } from "src/core/shared/interfaces/item";
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type AthenaPlayerEvents = 'drop-item' | 'increased-play-time' | 'item-equipped' | 'item-unequipped' | 'pickup-item' | 'player-account-created' | 'player-character-created' | 'player-armour-set' | 'player-died' | 'player-disconnected' | 'player-entered-vehicle-as-driver' | 'player-health-set' | 'player-left-vehicle-seat' | 'player-pos-set' | 'player-skin-cleared' | 'player-skin-set' | 'player-uniform-cleared' | 'player-uniform-set' | 'player-weapon-unequipped' | 'respawned' | 'selected-character' | 'set-account-data' | 'spawned';
     export function trigger<CustomEvents = AthenaPlayerEvents>(eventName: CustomEvents, player: alt.Player, ...args: any[]): void;
     export function on(eventName: 'item-equipped', callback: (player: alt.Player, slot: number, type: InventoryType) => void): any;
@@ -3579,7 +3579,7 @@ declare module "src/core/server/player/events" {
     export function on<T>(eventName: 'player-character-created', callback: (player: alt.Player) => void): any;
 }
 declare module "src/core/server/player/inventory" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { StoredItem } from "src/core/shared/interfaces/item";
     export function add(player: alt.Player, item: Omit<StoredItem, 'slot'>): Promise<boolean>;
     export function sub(player: alt.Player, item: Omit<StoredItem, 'slot' | 'data'>): Promise<boolean>;
@@ -3611,7 +3611,7 @@ declare module "src/core/server/systems/permissionGroup" {
     export function hasCommonPermission(documents: Array<PermissionGroup>, groupName: string, permission: string): boolean;
 }
 declare module "src/core/server/player/permissions" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { PermissionGroup } from "src/core/server/systems/permissionGroup";
     export function addPermission(player: alt.Player, permission: string): Promise<boolean>;
     export function removePermission(player: alt.Player, permission: string): Promise<boolean>;
@@ -3622,7 +3622,7 @@ declare module "src/core/server/player/permissions" {
     export function addGroupPerm(player: alt.Player, groupName: string, permission: string): Promise<boolean>;
 }
 declare module "src/core/server/player/safe" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function setPosition(player: alt.Player, x: number, y: number, z: number, doNotInvokeEventCall?: boolean): void;
     export function addHealth(player: alt.Player, value: number, exactValue?: boolean, doNotInvokeEventCall?: boolean): any;
     export function subHealth(player: alt.Player, value: number, exactValue?: boolean, doNotInvokeEventCall?: boolean): any;
@@ -3637,7 +3637,7 @@ declare module "src/core/server/player/safe" {
     export function override(functionName: 'setDimension', callback: typeof setDimension): any;
 }
 declare module "src/core/server/player/setter" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { ActionMenu } from "src/core/shared/interfaces/actions";
     import { Account } from "src/core/server/interface/iAccount";
     export function account(player: alt.Player, accountData: Account): Promise<void>;
@@ -3648,7 +3648,7 @@ declare module "src/core/server/player/setter" {
     export function override(functionName: 'respawned', callback: typeof respawned): any;
 }
 declare module "src/core/server/player/sync" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Character } from "src/core/shared/interfaces/character";
     export function currencyData(player: alt.Player): void;
     export function appearance(player: alt.Player, document?: Character): any;
@@ -3660,7 +3660,7 @@ declare module "src/core/server/player/sync" {
     export function override(functionName: 'playTime', callback: typeof playTime): any;
 }
 declare module "src/core/server/player/toolbar" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { StoredItem } from "src/core/shared/interfaces/item";
     export function add(player: alt.Player, item: Omit<StoredItem, 'slot'>): Promise<boolean>;
     export function sub(player: alt.Player, item: Omit<StoredItem, 'slot'>): Promise<boolean>;
@@ -3678,7 +3678,7 @@ declare module "src/core/server/player/toolbar" {
     export function override(functionName: 'getItemData', callback: typeof getItemData): any;
 }
 declare module "src/core/server/player/weapons" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { StoredItem } from "src/core/shared/interfaces/item";
     export function get(player: alt.Player): {
         inventory: Array<StoredItem>;
@@ -3700,7 +3700,7 @@ declare module "src/core/server/player/index" {
     export * as weapons from "src/core/server/player/weapons";
 }
 declare module "src/core/server/systems/account" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Account } from "src/core/server/interface/iAccount";
     export function getAccount(key: string, value: any): Promise<Account | undefined>;
     export function create(player: alt.Player, dataToAppend: {
@@ -3710,7 +3710,7 @@ declare module "src/core/server/systems/account" {
     export function override(functionName: 'getAccount', callback: typeof getAccount): any;
 }
 declare module "src/core/server/systems/adminControl" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { AdminControl } from "src/core/shared/interfaces/adminControl";
     type PlayerCallback = (player: alt.Player, ...args: any[]) => void;
     export function addControl(control: AdminControl, callback: PlayerCallback): boolean;
@@ -3718,7 +3718,7 @@ declare module "src/core/server/systems/adminControl" {
     export function updateControls(player: alt.Player): void;
 }
 declare module "src/core/server/systems/character" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Character } from "src/core/shared/interfaces/character";
     import { Appearance } from "src/core/shared/interfaces/appearance";
     import { CharacterInfo } from "src/core/shared/interfaces/characterInfo";
@@ -3779,7 +3779,7 @@ declare module "src/core/server/systems/defaults/inventorySync" {
     export function disable(): void;
 }
 declare module "src/core/server/systems/defaults/time" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function updatePlayer(player: alt.Player): void;
     export function disable(): void;
     export function getHour(): number;
@@ -3798,7 +3798,7 @@ declare module "src/core/server/systems/defaults/weaponItems" {
     export function disable(): void;
 }
 declare module "src/core/server/systems/defaults/weather" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { WEATHER_KEY } from "src/core/shared/utility/weather";
     export function updatePlayer(player: alt.Player): void;
     export function disable(): void;
@@ -3832,7 +3832,7 @@ declare module "src/core/server/systems/global" {
     export function decrease(key: string, decreaseByValue?: number, startValue?: number): Promise<boolean>;
 }
 declare module "src/core/server/systems/identifier" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type IdentifierStrategy = 'account_id' | 'character_id' | 'server_id';
     export function setIdentificationStrategy(_strategy: IdentifierStrategy): any;
     export function setPlayerIdentifier(player: alt.Player): any;
@@ -3847,7 +3847,7 @@ declare module "src/core/shared/utility/undefinedCheck" {
     export function isNullOrUndefined(value: any): boolean;
 }
 declare module "src/core/server/systems/inventory/clothing" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { ClothingComponent, ClothingInfo, StoredItem } from "src/core/shared/interfaces/item";
     import { Character } from "src/core/shared/interfaces/character";
     let femaleClothes: {
@@ -3946,7 +3946,7 @@ declare module "src/core/server/systems/inventory/crafting" {
     export function override(functionName: 'findRecipe', callback: typeof findRecipe): any;
 }
 declare module "src/core/server/systems/inventory/drops" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { ItemDrop, StoredItem } from "src/core/shared/interfaces/item";
     export function add(item: StoredItem, pos: alt.IVector3, player?: alt.Player): Promise<string>;
     export function get(id: string): ItemDrop | undefined;
@@ -3960,7 +3960,7 @@ declare module "src/core/server/systems/inventory/drops" {
     export function override(functionName: 'markForTaken', callback: typeof markForTaken): any;
 }
 declare module "src/core/server/systems/inventory/effects" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type InventoryType = 'inventory' | 'toolbar';
     export type EffectCallback = (player: alt.Player, slot: number, type: 'inventory' | 'toolbar') => void;
     export function add(effectNameFromItem: string, callback: EffectCallback): any;
@@ -3992,7 +3992,7 @@ declare module "src/core/server/systems/inventory/factory" {
     export function override(functionName: 'fromBaseToStored', callback: typeof fromBaseToStored): any;
 }
 declare module "src/core/server/systems/inventory/manager" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { BaseItem, StoredItem, Item, DefaultItemBehavior } from "src/core/shared/interfaces/item";
     export interface ItemQuantityChange {
         item: Item | StoredItem;
@@ -4070,7 +4070,7 @@ declare module "src/core/server/systems/inventory/weight" {
     export function override(functionName: 'isWeightExceeded', callback: typeof isWeightExceeded): any;
 }
 declare module "src/core/server/systems/inventory/weapons" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { StoredItem } from "src/core/shared/interfaces/item";
     export function get(dataSet: Array<StoredItem>): Array<StoredItem>;
     export function removeAll(dataSet: Array<StoredItem>): Array<StoredItem>;
@@ -4091,12 +4091,12 @@ declare module "src/core/server/systems/inventory/index" {
     export * as weapons from "src/core/server/systems/inventory/weapons";
 }
 declare module "src/core/server/systems/job/events" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     function invokeObjectiveCheck(player: alt.Player): any;
     export function override(functionName: 'invokeObjectiveCheck', callback: typeof invokeObjectiveCheck): any;
 }
 declare module "src/core/server/systems/job/system" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Objective } from "src/core/shared/interfaces/job";
     export class Job {
         private id;
@@ -4126,7 +4126,7 @@ declare module "src/core/server/systems/job/system" {
     }
 }
 declare module "src/core/server/systems/job/instance" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Job } from "src/core/server/systems/job/system";
     export function get(player: number | alt.Player): Job | undefined;
     export function set(player: alt.Player, newJob: Job): any;
@@ -4156,7 +4156,7 @@ declare module "src/core/server/systems/job/objective" {
     export function override(functionName: 'getType', callback: typeof getType): any;
 }
 declare module "src/core/server/systems/job/triggers" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Objective } from "src/core/shared/interfaces/job";
     export function tryEventCall(player: alt.Player, objective: Objective): any;
     export function tryAnimation(player: alt.Player, objective: Objective): any;
@@ -4166,7 +4166,7 @@ declare module "src/core/server/systems/job/triggers" {
     export function override(functionName: 'tryAttach', callback: typeof tryAttach): any;
 }
 declare module "src/core/server/systems/job/verify" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Objective } from "src/core/shared/interfaces/job";
     import { Job } from "src/core/server/systems/job/system";
     export function objective(job: Job): Promise<boolean>;
@@ -4193,13 +4193,13 @@ declare module "src/core/server/systems/job/index" {
     export { Job as builder } from "src/core/server/systems/job/system";
 }
 declare module "src/core/server/systems/jobTrigger" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { JobTrigger } from "src/core/shared/interfaces/jobTrigger";
     export function create(player: alt.Player, data: JobTrigger): any;
     export function override(functionName: 'create', callback: typeof create): any;
 }
 declare module "src/core/server/systems/jwt" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Account } from "src/core/server/interface/iAccount";
     export function create(account: Account): Promise<undefined | string>;
     export function verify(data: string): Promise<string | undefined>;
@@ -4209,7 +4209,7 @@ declare module "src/core/server/systems/jwt" {
     export function override(functionName: 'fetch', callback: typeof fetch): any;
 }
 declare module "src/core/server/systems/loginFlow" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export interface FlowInfo {
         name: string;
         weight: number;
@@ -4237,7 +4237,7 @@ declare module "src/core/shared/utility/getParamNames" {
     export function getParamNames(func: Function): Array<string>;
 }
 declare module "src/core/server/systems/messenger/commands" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { CommandCallback, DetailedCommand } from "src/core/shared/interfaces/messageCommand";
     export function execute(player: alt.Player, commandName: string, args: Array<any>): any;
     export function get(commandName: string): any;
@@ -4259,7 +4259,7 @@ declare module "src/core/server/systems/messenger/commands" {
     export function override(functionName: 'register', callback: typeof register): any;
 }
 declare module "src/core/server/systems/messenger/messaging" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export type MessageCallback = (player: alt.Player, msg: string) => void;
     function cleanMessage(msg: string): string;
     export function send(player: alt.Player, msg: string): any;
@@ -4285,12 +4285,12 @@ declare module "src/core/server/systems/messenger/index" {
     export * as messaging from "src/core/server/systems/messenger/messaging";
 }
 declare module "src/core/server/systems/notification/index" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function toAll(message: string, ...args: any[]): void;
     export function toPlayer(player: alt.Player, message: string, ...args: any[]): void;
 }
 declare module "src/core/server/systems/permission" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { Account } from "src/core/server/interface/iAccount";
     import { Character } from "src/core/shared/interfaces/character";
     export type DefaultPerms = 'admin' | 'moderator';
@@ -4324,7 +4324,7 @@ declare module "src/core/server/systems/plugins" {
     export function addCallback(callback: Function): void;
 }
 declare module "src/core/server/systems/sound" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export interface CustomSoundInfo {
         audioName: string;
         pos?: alt.IVector3;
@@ -4339,7 +4339,7 @@ declare module "src/core/server/systems/sound" {
     export function override(functionName: 'playSoundInArea', callback: typeof playSoundInArea): any;
 }
 declare module "src/core/server/systems/storage" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { StoredItem } from "src/core/shared/interfaces/item";
     export interface StorageInstance<CustomData = {}> {
         _id?: unknown;
@@ -4355,7 +4355,7 @@ declare module "src/core/server/systems/storage" {
     export function closeOnDisconnect(player: alt.Player, id: string): boolean;
 }
 declare module "src/core/server/systems/tick" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function onTick(player: alt.Player): Promise<void>;
     function handlePing(player: alt.Player): void;
     export function override(functionName: 'onTick', callback: typeof onTick): any;
@@ -4384,7 +4384,7 @@ declare module "src/core/server/systems/index" {
     export * as tick from "src/core/server/systems/tick";
 }
 declare module "src/core/server/utility/closest" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function getClosestVehicle(pos: alt.IVector3): alt.Vehicle | undefined;
     export function getClosestPlayer(pos: alt.IVector3, ignoredIds?: Array<number>): alt.Player | undefined;
     const _default_22: {
@@ -4417,7 +4417,7 @@ declare module "src/core/server/utility/math" {
     export default _default_24;
 }
 declare module "src/core/server/utility/restrict" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export interface Restrictions {
         permissions: {
             account: Array<string>;
@@ -4450,7 +4450,7 @@ declare module "src/core/server/utility/index" {
     export * as hashLookup from "src/core/shared/utility/hashLookup/index";
 }
 declare module "src/core/server/vehicle/add" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { VehicleState } from "src/core/shared/interfaces/vehicleState";
     import IVehicleTuning from "src/core/shared/interfaces/vehicleTuning";
     export interface AddOptions {
@@ -4466,7 +4466,7 @@ declare module "src/core/server/vehicle/add" {
     export function override(functionName: 'toPlayer', callback: typeof toPlayer): any;
 }
 declare module "src/core/server/vehicle/asPlayer" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function toggleLock(player: alt.Player, vehicle: alt.Vehicle): any;
     export function toggleEngine(player: alt.Player, vehicle: alt.Vehicle): any;
     export function toggleDoor(player: alt.Player, vehicle: alt.Vehicle, door: 0 | 1 | 2 | 3 | 4 | 5): any;
@@ -4475,7 +4475,7 @@ declare module "src/core/server/vehicle/asPlayer" {
     export function override(functionName: 'toggleEngine', callback: typeof toggleEngine): any;
 }
 declare module "src/core/server/vehicle/controls" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function toggleLock(vehicle: alt.Vehicle): Promise<boolean>;
     export function toggleEngine(vehicle: alt.Vehicle): Promise<boolean>;
     export function toggleDoor(vehicle: alt.Vehicle, door: 0 | 1 | 2 | 3 | 4 | 5): Promise<boolean>;
@@ -4489,7 +4489,7 @@ declare module "src/core/server/vehicle/controls" {
     export function override(functionName: 'isLocked', callback: typeof isLocked): any;
 }
 declare module "src/core/server/vehicle/damage" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { VehicleDamage } from "src/core/shared/interfaces/vehicleOwned";
     export function get(vehicle: alt.Vehicle): VehicleDamage | undefined;
     export function apply(vehicle: alt.Vehicle, damage: VehicleDamage): void;
@@ -4504,13 +4504,13 @@ declare module "src/core/server/vehicle/despawn" {
     export function override(functionName: 'list', callback: typeof list): any;
 }
 declare module "src/core/server/vehicle/get" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function temporaryVehicles(): Array<alt.Vehicle>;
     export function ownedVehicles(): Array<alt.Vehicle>;
     export function playerOwnedVehicles(player: alt.Player | string): alt.Vehicle[];
 }
 declare module "src/core/server/vehicle/ownership" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function isOwner(player: alt.Player, vehicle: alt.Vehicle, options?: {
         includePermissions?: boolean;
         includeKeys?: boolean;
@@ -4537,7 +4537,7 @@ declare module "src/core/server/vehicle/ownership" {
     export function override(functionName: 'transfer', callback: typeof transfer): any;
 }
 declare module "src/core/server/vehicle/permissions" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { PermissionGroup } from "src/core/server/systems/permissionGroup";
     export function hasGroupPermission(vehicle: alt.Vehicle, groupName: string, permission: string): boolean;
     export function hasCommonGroupPermission(vehicle: alt.Vehicle, document: PermissionGroup, groupName: string, permission: string): boolean;
@@ -4545,7 +4545,7 @@ declare module "src/core/server/vehicle/permissions" {
 }
 declare module "src/core/server/vehicle/shared" {
     import { VehicleState } from "src/core/shared/interfaces/vehicleState";
-    import * as alt from 'alt-shared';
+    import * as alt from '@altv/shared';
     export const SEAT: {
         DRIVER: number;
         PASSENGER: number;
@@ -4560,7 +4560,7 @@ declare module "src/core/server/vehicle/shared" {
     }
 }
 declare module "src/core/server/vehicle/spawn" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { OwnedVehicle } from "src/core/shared/interfaces/vehicleOwned";
     import { VehicleSpawnInfo } from "src/core/server/vehicle/shared";
     export function temporary(vehicleInfo: VehicleSpawnInfo, deleteOnLeave?: boolean): alt.Vehicle;
@@ -4573,7 +4573,7 @@ declare module "src/core/server/vehicle/spawn" {
     export function override(functionName: 'persistent', callback: typeof persistent): any;
 }
 declare module "src/core/server/vehicle/tempVehicles" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function add(vehicle: alt.Vehicle, options: {
         owner?: number;
         deleteOnLeave?: boolean;
@@ -4589,7 +4589,7 @@ declare module "src/core/server/vehicle/tempVehicles" {
     export function override(functionName: 'shouldBeDestroyed', callback: typeof shouldBeDestroyed): any;
 }
 declare module "src/core/server/vehicle/tuning" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import VehicleTuning from "src/core/shared/interfaces/vehicleTuning";
     import { VehicleState } from "src/core/shared/interfaces/vehicleState";
     export function applyState(vehicle: alt.Vehicle, state: Partial<VehicleState> | VehicleState): any;
@@ -4613,7 +4613,7 @@ declare module "src/core/server/vehicle/index" {
     export * as tuning from "src/core/server/vehicle/tuning";
 }
 declare module "src/core/server/webview/index" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export function emit(player: alt.Player, eventName: string, ...args: any[]): void;
     export function closePages(player: alt.Player, pages?: Array<string>): void;
 }
@@ -4662,7 +4662,7 @@ declare module "src/core/server/api/index" {
     export default _default_25;
 }
 declare module "src/core/plugins/athena-debug/server/system/keys" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     interface LastStoredData {
         pos: alt.IVector3;
         rot: alt.IVector3;
@@ -5810,7 +5810,7 @@ declare module "src/core/plugins/core-inventory/shared/config" {
 }
 declare module "src/core/plugins/core-inventory/client/index" { }
 declare module "src/core/plugins/core-inventory/server/src/view" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { StoredItem } from "src/core/shared/interfaces/item";
     type PlayerCallback = (player: alt.Player) => void;
     type PlayerCloseCallback = (uid: string, items: Array<StoredItem>, player: alt.Player | undefined) => void;
@@ -5957,7 +5957,7 @@ declare module "src/core/server/imports/configs" {
     import "src/core/server/athena/main";
 }
 declare module "src/core/server/events/clientEvents" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { ATHENA_EVENTS_PLAYER_CLIENT } from "src/core/shared/enums/athenaEvents";
     export function trigger(eventName: ATHENA_EVENTS_PLAYER_CLIENT, player: alt.Player, ...args: any[]): void;
     export function on(eventName: ATHENA_EVENTS_PLAYER_CLIENT, callback: (player: alt.Player, ...args: any[]) => void): void;
@@ -5965,7 +5965,7 @@ declare module "src/core/server/events/clientEvents" {
 declare module "src/core/server/events/onAppearance" { }
 declare module "src/core/server/events/pickupItemEvent" { }
 declare module "src/core/server/systems/dev" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export class DevModeOverride {
         static setDevAccountCallback(cb: (player: alt.Player) => Promise<void>): void;
         static login(player: alt.Player): Promise<void>;
@@ -5997,7 +5997,7 @@ declare module "src/core/server/interface/iDiscordUser" {
     }
 }
 declare module "src/core/server/extensions/extPlayer" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     import { DiscordUser } from "src/core/server/interface/iDiscordUser";
     import IAttachable from "src/core/shared/interfaces/iAttachable";
     module 'alt-server' {
@@ -6137,7 +6137,7 @@ declare module "src/core/server/interface/iOptions" {
     };
 }
 declare module "src/core/server/utility/screenshot" {
-    import * as alt from 'alt-server';
+    import * as alt from '@altv/server';
     export class AthenaScreenshot {
         static takeScreenshot(player: alt.Player): Promise<string | null>;
         static buildData(player: alt.Player, data: string, index: number, lengthOfData: number): Promise<void>;

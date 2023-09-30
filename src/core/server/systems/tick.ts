@@ -1,5 +1,5 @@
 import { Character } from '@AthenaShared/interfaces/character';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { PLAYER_SYNCED_META } from '../../shared/enums/playerSynced';
 import { SYSTEM_EVENTS } from '../../shared/enums/system';
 import * as Athena from '../api';

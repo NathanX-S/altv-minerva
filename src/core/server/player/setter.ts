@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '../api';
 import * as emit from './emit';
 import * as PlayerEvents from '@AthenaServer/player/events';

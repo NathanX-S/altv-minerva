@@ -1,4 +1,4 @@
-import alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '@AthenaServer/api';
 
 Athena.commands.register('gethere', '/gethere [id]', ['admin'], async (player: alt.Player, id: string | undefined) => {

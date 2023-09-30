@@ -1,7 +1,7 @@
 import { InventoryType } from '@AthenaPlugins/core-inventory/shared/interfaces';
 import { Character } from '@AthenaShared/interfaces/character';
 import { StoredItem } from '@AthenaShared/interfaces/item';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 export type AthenaPlayerEvents =
     | 'drop-item'

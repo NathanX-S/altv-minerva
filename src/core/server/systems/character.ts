@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '../api';
 import Database from '@stuyk/ezmongodb';
 import { DEFAULT_CONFIG } from '../athena/main';

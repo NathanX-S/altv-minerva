@@ -1,5 +1,5 @@
 import * as Athena from '@AthenaServer/api';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 /**
  * THIS IS A DEFAULT SYSTEM.

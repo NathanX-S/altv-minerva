@@ -1,4 +1,4 @@
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 import { Blip } from './blip';
 import { EventCall } from './eventCall';
 import { Marker } from './marker';

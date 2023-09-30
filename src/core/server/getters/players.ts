@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '@AthenaServer/api';
 import * as vehicle from './vehicle';
 import { Character } from '@AthenaShared/interfaces/character';

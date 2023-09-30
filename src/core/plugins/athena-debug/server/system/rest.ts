@@ -1,5 +1,5 @@
 import * as Athena from '@AthenaServer/api';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import http from 'http';
 import { DebugKeys } from './keys';
 

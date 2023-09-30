@@ -1,4 +1,4 @@
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 import { ANIMATION_FLAGS } from '../flags/animationFlags';
 
 /**

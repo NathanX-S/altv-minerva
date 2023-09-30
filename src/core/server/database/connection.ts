@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import { Collections } from './collections';
 
 // All of these are default values and should not be changed.

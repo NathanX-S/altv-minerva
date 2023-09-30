@@ -1,5 +1,5 @@
 import { PedBone } from '@AthenaShared/enums/boneIds';
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 
 /**
  * Used in the attachement system when attaching objects to a player.

@@ -1,6 +1,6 @@
 import { WindowTint } from 'alt-server';
 import { IVehicleNeon } from 'alt-server';
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 
 /**
  * Wraps the alt.Vehicle properties that can be set.

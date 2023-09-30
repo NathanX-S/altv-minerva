@@ -1,4 +1,4 @@
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 
 /**
  * Used to create and show a progress bar. Used in server to client.

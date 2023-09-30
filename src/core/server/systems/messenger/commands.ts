@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 
 import { MESSENGER_EVENTS } from '@AthenaShared/enums/messenger';
 import * as Athena from '@AthenaServer/api';
@@ -169,7 +169,7 @@ export function getCommands(player: alt.Player): Array<DetailedCommand> {
     return validCommands;
 }
 
-alt.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, () => {
+alt.Events.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, () => {
     Athena.player.events.on('selected-character', populateCommands);
 });
 

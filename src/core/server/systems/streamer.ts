@@ -1,5 +1,5 @@
 import * as Athena from '@AthenaServer/api';
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import SockJS from 'sockjs-client';
 import { IStream, IStreamMessage } from '../../shared/interfaces/iStream';
 import { DEFAULT_CONFIG } from '../athena/main';

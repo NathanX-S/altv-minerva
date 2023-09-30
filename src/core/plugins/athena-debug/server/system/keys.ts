@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '@AthenaServer/api';
 import { ATHENA_DEBUG_EVENTS } from '../../shared/events';
 import { deepCloneObject } from '@AthenaShared/utility/deepCopy';

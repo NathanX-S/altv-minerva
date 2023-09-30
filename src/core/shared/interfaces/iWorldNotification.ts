@@ -1,5 +1,5 @@
 import { WORLD_NOTIFICATION_TYPE } from '../enums/worldNotificationTypes';
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 
 /**
  * Used to pass an in-world marker from server to client.

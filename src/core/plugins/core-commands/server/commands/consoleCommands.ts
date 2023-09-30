@@ -1,5 +1,5 @@
 // import Database from '@stuyk/ezmongodb';
-// import * as alt from 'alt-server';
+// import * as alt from '@altv/server';
 // import fs from 'fs';
 // import * as Athena from '@AthenaServer/api/athena';
 // import { Account } from '@AthenaServer/interface/iAccount';

@@ -1,4 +1,4 @@
-import * as alt from 'alt-shared';
+import * as alt from '@altv/shared';
 
 /**
  * Used to describe a text label. Passed from server to client.

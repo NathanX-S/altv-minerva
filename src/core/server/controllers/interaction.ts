@@ -1,4 +1,4 @@
-import * as alt from 'alt-server';
+import * as alt from '@altv/server';
 import * as Athena from '../api';
 import { DEFAULT_CONFIG } from '../athena/main';
 import { InteractionShape } from '../extensions/extColshape';
@@ -44,7 +44,7 @@ const InternalFunctions = {
             }
 
             try {
-                interactions[i].destroy();
+                interactions[i].colShape.destroy();
             } catch (err) {
                 // Ignore error
             }
@@ -135,7 +135,7 @@ const InternalFunctions = {
 
         InteractionBindings[entity.id] = colshape;
         const cleanInteraction = deepCloneObject<Omit<Interaction, 'callback'>>(colshape.interaction);
-        alt.emitClient(entity, SYSTEM_EVENTS.PLAYER_SET_INTERACTION, cleanInteraction);
+        entity.emit(SYSTEM_EVENTS.PLAYER_SET_INTERACTION, cleanInteraction);
     },
 
     /**
@@ -199,7 +199,7 @@ const InternalFunctions = {
         }
 
         delete InteractionBindings[entity.id];
-        alt.emitClient(entity, SYSTEM_EVENTS.PLAYER_SET_INTERACTION, null);
+        entity.emit(SYSTEM_EVENTS.PLAYER_SET_INTERACTION, null);
     },
 
     /**
@@ -330,7 +330,7 @@ export function append(interaction: Interaction): string {
     }
 
     const shape = new InteractionShape(interaction as Required<Interaction>);
-    shape.playersOnly = true;
+    shape.colShape.playersOnly = true;
 
     InternalFunctions.add(shape);
 
@@ -400,16 +400,16 @@ export function getBindings(): { [player_id: string]: InteractionShape } {
     return InteractionBindings;
 }
 
-alt.on('playerDisconnect', (player: alt.Player) => {
+alt.Events.on('playerDisconnect', (player: alt.Player) => {
     if (!player || !player.valid) {
         return;
     }
 
     delete InteractionBindings[player.id];
 });
-alt.on('entityLeaveColshape', InternalFunctions.leave);
-alt.on('entityEnterColshape', InternalFunctions.enter);
-alt.onClient(SYSTEM_EVENTS.INTERACTION, InternalFunctions.trigger);
+alt.Events.on('entityLeaveColshape', InternalFunctions.leave);
+alt.Events.on('entityEnterColshape', InternalFunctions.enter);
+alt.Events.onPlayer(SYSTEM_EVENTS.INTERACTION, InternalFunctions.trigger);
 
 interface InteractionControllerFuncs {
     append: typeof append;
