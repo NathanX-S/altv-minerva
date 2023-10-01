@@ -1,6 +1,6 @@
 import { Meta } from './meta';
 
-declare module 'alt-client' {
+declare module '@altv/client' {
     export interface Player {
         // Used to store data sent down from the server-side.
         meta: Partial<Meta>;

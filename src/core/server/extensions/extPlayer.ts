@@ -2,7 +2,7 @@ import * as alt from '@altv/server';
 import { DiscordUser } from '../interface/iDiscordUser';
 import IAttachable from '../../shared/interfaces/iAttachable';
 
-declare module 'alt-server' {
+declare module '@altv/server' {
     export interface Player {
         /**
          * A boolean for when a player is currently pending login.
