@@ -24,7 +24,7 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     const vueDefaultPath = ConfigUtil.getVueDebugMode()
         ? ConfigUtil.getViteServer()
         : `http://assets/webviews/index.html`;
-    alt.emitClient(player, SYSTEM_EVENTS.WEBVIEW_INFO, vueDefaultPath);
+    player.emit(SYSTEM_EVENTS.WEBVIEW_INFO, vueDefaultPath);
 
     const pos = { ...DEFAULT_CONFIG.CHARACTER_SELECT_POS };
 
@@ -37,4 +37,4 @@ async function handlePlayerConnect(player: alt.Player): Promise<void> {
     Athena.systems.loginFlow.next(player);
 }
 
-alt.onClient(SYSTEM_EVENTS.BEGIN_CONNECTION, handlePlayerConnect);
+alt.Events.onPlayer(SYSTEM_EVENTS.BEGIN_CONNECTION, handlePlayerConnect);

@@ -114,9 +114,9 @@ export async function toggleDoor(player: alt.Player, vehicle: alt.Vehicle, door:
     Athena.vehicle.events.trigger(eventToEmit, vehicle, door, player);
 }
 
-alt.onClient(VEHICLE_EVENTS.SET_LOCK, toggleLock);
-alt.onClient(VEHICLE_EVENTS.SET_ENGINE, toggleEngine);
-alt.onClient(VEHICLE_EVENTS.SET_DOOR, toggleDoor);
+alt.Events.onPlayer(VEHICLE_EVENTS.SET_LOCK, toggleLock);
+alt.Events.onPlayer(VEHICLE_EVENTS.SET_ENGINE, toggleEngine);
+alt.Events.onPlayer(VEHICLE_EVENTS.SET_DOOR, toggleDoor);
 
 interface VehicleAsPlayerFuncs {
     toggleLock: typeof toggleLock;

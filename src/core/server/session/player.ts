@@ -149,4 +149,4 @@ export function getAll<K extends keyof AthenaSession.Player>(key: K): Array<Athe
     return Object.values(sessionStorage).filter((x) => x[key]) as Array<AthenaSession.Player[K]>;
 }
 
-alt.on('playerDisconnect', clearAll);
+alt.Events.on('playerDisconnect', clearAll);

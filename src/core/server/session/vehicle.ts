@@ -141,4 +141,4 @@ export function getAll<K extends keyof AthenaSession.Vehicle>(key: K): Array<Ath
     return Object.values(sessionStorage).filter((x) => x[key]) as Array<AthenaSession.Vehicle[K]>;
 }
 
-alt.on('vehicleDestroy', clearAll);
+alt.Events.on('vehicleDestroy', clearAll);

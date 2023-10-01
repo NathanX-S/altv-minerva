@@ -4,7 +4,7 @@ import { BaseItem, StoredItem, Item, DefaultItemBehavior } from '@AthenaShared/i
 import { deepCloneArray, deepCloneObject } from '@AthenaShared/utility/deepCopy';
 import { GLOBAL_SYNCED } from '@AthenaShared/enums/globalSynced';
 
-alt.setSyncedMeta(GLOBAL_SYNCED.INVENTORY_WEIGHT_ENABLED, true);
+alt.syncedMeta[GLOBAL_SYNCED.INVENTORY_WEIGHT_ENABLED] = true;
 
 export interface ItemQuantityChange {
     /**

@@ -89,5 +89,5 @@ function handleInvoke(player: alt.Player, uid: string, ...args: any[]) {
     AdminControls[index].callback(player, ...args);
 }
 
-alt.onClient(AdminControlEvents.toServer.invoke, handleInvoke);
+alt.Events.onPlayer(AdminControlEvents.toServer.invoke, handleInvoke);
 Athena.player.events.on('selected-character', updateControls);

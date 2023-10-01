@@ -127,8 +127,8 @@ export function emit(player: alt.Player, msg: string) {
     }
 }
 
-alt.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, () => {
-    alt.onClient(MESSENGER_EVENTS.TO_SERVER.MESSAGE, emit);
+alt.Events.on(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY, () => {
+    alt.Events.onPlayer(MESSENGER_EVENTS.TO_SERVER.MESSAGE, emit);
 });
 
 export default { addCallback, cleanMessage, emit, send, sendToPlayers };

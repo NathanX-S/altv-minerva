@@ -237,7 +237,7 @@ export function exists(_id: string): boolean {
     return sessions.find((x) => x && x._id && x._id.toString() === _id) ? true : false;
 }
 
-alt.on('removeEntity', (entity: alt.Entity) => {
+alt.Events.on('removeEntity', (entity: alt.Entity) => {
     if (!(entity instanceof alt.Vehicle)) {
         return;
     }

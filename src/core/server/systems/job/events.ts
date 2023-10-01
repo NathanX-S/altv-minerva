@@ -19,7 +19,7 @@ async function invokeObjectiveCheck(player: alt.Player) {
     if (!instance) {
         const data = Athena.document.character.get(this.player);
         alt.log(`${data.name} has a dead job instance.`);
-        alt.emitClient(player, ObjectiveEvents.JOB_SYNC, null);
+        player.emit(ObjectiveEvents.JOB_SYNC, null);
         return;
     }
 
@@ -33,8 +33,8 @@ async function invokeObjectiveCheck(player: alt.Player) {
     delete isVerifying[player.id];
 }
 
-alt.onClient(ObjectiveEvents.JOB_VERIFY, invokeObjectiveCheck);
-alt.on('playerDisconnect', (player: alt.Player) => {
+alt.Events.onPlayer(ObjectiveEvents.JOB_VERIFY, invokeObjectiveCheck);
+alt.Events.on('playerDisconnect', (player: alt.Player) => {
     const id = player.id;
     if (typeof id === 'undefined' || id === null) {
         return;

@@ -156,12 +156,12 @@ export async function registerCallback<T>(
     callbacks[key] = callback;
 
     await new Promise((resolve: Function) => {
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (!ready) {
                 return;
             }
 
-            alt.clearInterval(interval);
+            clearInterval(interval.id);
             resolve();
         }, 100);
     });
@@ -191,12 +191,12 @@ export async function updateData<T>(key: string, array: Array<T>) {
     await alt.Utils.waitFor(() => ready, 30000);
 
     await new Promise((resolve: Function) => {
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (!ready) {
                 return;
             }
 
-            alt.clearInterval(interval);
+            clearInterval(interval.id);
             resolve();
         }, 100);
     });
@@ -218,7 +218,7 @@ if (!hasInitialized) {
 
     let didGetFirstCallback = false;
 
-    alt.setTimeout(() => {
+    alt.Timers.setTimeout(() => {
         if (didGetFirstCallback) {
             return;
         }
@@ -235,7 +235,7 @@ if (!hasInitialized) {
         console.log(`\r\n`);
         alt.logWarning(`Process will now exit`);
 
-        alt.setTimeout(() => {
+        alt.Timers.setTimeout(() => {
             process.exit();
         }, 5000);
     }, 5000);
@@ -246,5 +246,5 @@ if (!hasInitialized) {
         receive(message.data);
     };
 
-    alt.setInterval(tick, DEFAULT_CONFIG.STREAM_CONFIG.TimeBetweenUpdates);
+    alt.Timers.setInterval(tick, DEFAULT_CONFIG.STREAM_CONFIG.TimeBetweenUpdates);
 }

@@ -112,7 +112,7 @@ export async function fetch(player: alt.Player): Promise<string | null> {
     const id = player.id;
 
     fetchRequests[id] = undefined;
-    alt.emitClient(player, SYSTEM_EVENTS.QUICK_TOKEN_FETCH);
+    player.emit(SYSTEM_EVENTS.QUICK_TOKEN_FETCH);
     await new Promise((resolve: Function) => {
         let attempts = 0;
         const interval = alt.setInterval(() => {
@@ -170,4 +170,4 @@ export function override(functionName: keyof JwtFuncs, callback: any): void {
     Overrides[functionName] = callback;
 }
 
-alt.onClient(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, handleFetchRequest);
+alt.Events.onPlayer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, handleFetchRequest);

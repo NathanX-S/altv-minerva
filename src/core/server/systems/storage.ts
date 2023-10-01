@@ -189,7 +189,7 @@ export function closeOnDisconnect(player: alt.Player, id: string): boolean {
     return true;
 }
 
-alt.on('playerDisconnect', (player: alt.Player) => {
+alt.Events.on('playerDisconnect', (player: alt.Player) => {
     const index = boundIdentifiers.findIndex((x) => x.id === player.id);
     if (index <= 0) {
         return;

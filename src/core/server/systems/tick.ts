@@ -6,7 +6,7 @@ import * as Athena from '../api';
 
 const timeBetweenPings = 4950;
 
-alt.onClient(SYSTEM_EVENTS.PLAYER_TICK, handlePing);
+alt.Events.on(SYSTEM_EVENTS.PLAYER_TICK, handlePing);
 
 /**
  * Used to save the player every once in a while.

@@ -62,7 +62,7 @@ export function clear(player: number | alt.Player) {
     delete JobInstances[player];
 }
 
-alt.on('playerDisconnect', (player: alt.Player) => {
+alt.Events.on('playerDisconnect', (player: alt.Player) => {
     const id = player.id;
 
     if (!JobInstances[id]) {
