@@ -5,7 +5,7 @@ import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 const pingEvery = 5000;
 
 function startTick() {
-    alt.setInterval(handlePing, pingEvery);
+    alt.Timers.setInterval(handlePing, pingEvery);
 }
 
 /**

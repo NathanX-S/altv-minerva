@@ -43,9 +43,9 @@ export default defineComponent({
     },
     mounted() {
         if ('alt' in window) {
-            alt.on(`${ComponentName}:Set`, this.setActions);
-            alt.on(`${ComponentName}:KeyPress`, this.handleKeyBinds);
-            alt.emit(`${ComponentName}:Ready`);
+            alt.Events.on(`${ComponentName}:Set`, this.setActions);
+            alt.Events.on(`${ComponentName}:KeyPress`, this.handleKeyBinds);
+            alt.Events.emit(`${ComponentName}:Ready`);
         } else {
             this.setActions(DefaultData);
         }
@@ -125,14 +125,14 @@ export default defineComponent({
             if (selection && selection.eventName) {
                 this.setActions(null);
                 if ('alt' in window) {
-                    alt.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
-                    alt.emit(`${ComponentName}:Trigger`, selection);
+                    alt.Events.emit('play:Sound', 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+                    alt.Events.emit(`${ComponentName}:Trigger`, selection);
                 }
                 return;
             }
 
             if ('alt' in window) {
-                alt.emit('play:Sound', 'NAV_LEFT_RIGHT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+                alt.Events.emit('play:Sound', 'NAV_LEFT_RIGHT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
             }
 
             if (verticalSelection <= 0) {
@@ -171,13 +171,13 @@ export default defineComponent({
                     this.setActions(null);
 
                     if ('alt' in window) {
-                        alt.emit(`${ComponentName}:Close`);
+                        alt.Events.emit(`${ComponentName}:Close`);
                     }
                     return;
                 }
 
                 if ('alt' in window) {
-                    alt.emit('play:Sound', 'NAV_LEFT_RIGHT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+                    alt.Events.emit('play:Sound', 'NAV_LEFT_RIGHT', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
                 }
 
                 this.actions = this.history.pop();
@@ -188,7 +188,7 @@ export default defineComponent({
             // UP
             if (keyCode === 38) {
                 if ('alt' in window) {
-                    alt.emit('play:Sound', 'NAV_UP_DOWN', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+                    alt.Events.emit('play:Sound', 'NAV_UP_DOWN', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
                 }
 
                 this.selection -= 1;
@@ -213,7 +213,7 @@ export default defineComponent({
             // Down
             if (keyCode === 40) {
                 if ('alt' in window) {
-                    alt.emit('play:Sound', 'NAV_UP_DOWN', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
+                    alt.Events.emit('play:Sound', 'NAV_UP_DOWN', 'HUD_FRONTEND_DEFAULT_SOUNDSET');
                 }
 
                 this.selection += 1;

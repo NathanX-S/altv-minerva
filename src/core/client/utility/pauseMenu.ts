@@ -27,7 +27,7 @@ export function disable() {
         return;
     }
 
-    interval = alt.setInterval(Internal.tick, 0);
+    interval = alt.Timers.setInterval(Internal.tick, 0);
 }
 
 /**

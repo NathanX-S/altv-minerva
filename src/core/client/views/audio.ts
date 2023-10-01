@@ -20,7 +20,7 @@ class InternalFunctions implements ViewModel {
      */
     static async open() {
         if (!interval) {
-            interval = alt.setInterval(InternalFunctions.handleQueue, 100);
+            interval = alt.Timers.setInterval(InternalFunctions.handleQueue, 100);
         }
 
         AthenaClient.webview.registerPersistentPage(PAGE_NAME);

@@ -113,8 +113,8 @@ const Internal = {
             });
         });
 
-        alt.setInterval(Internal.weaponUpdateTick, 500);
-        alt.onClient(SYSTEM_EVENTS.PLAYER_EMIT_AMMUNITION_UPDATE, Internal.handleUpdate);
+        alt.Timers.setInterval(Internal.weaponUpdateTick, 500);
+        alt.Events.onPlayer(SYSTEM_EVENTS.PLAYER_EMIT_AMMUNITION_UPDATE, Internal.handleUpdate);
         alt.log(`~lc~Default System: ~g~${SYSTEM_NAME}`);
     },
 };

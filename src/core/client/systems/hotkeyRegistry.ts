@@ -28,8 +28,8 @@ const keyModifier = {
 
 const Internal = {
     init() {
-        alt.on('keydown', Internal.keyDown);
-        alt.on('keyup', Internal.keyUp);
+        alt.Events.on('keydown', Internal.keyDown);
+        alt.Events.on('keyup', Internal.keyUp);
         alt.everyTick(Internal.keyHeld);
     },
     isValidRestrictions(data: KeyBindRestrictions): boolean {

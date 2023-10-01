@@ -53,7 +53,7 @@ export async function create(shard: IShard) {
         scaleform.passFunction('SHOW_SHARD_WASTED_MP_MESSAGE', shard.title);
     }
 
-    interval = alt.setInterval(() => {
+    interval = alt.Timers.setInterval(() => {
         scaleform.render(0.5, 0.5, 1, 1);
     }, 0);
 

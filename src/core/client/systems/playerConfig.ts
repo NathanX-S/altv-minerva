@@ -49,4 +49,4 @@ export function addCallback<CustomKeys>(key: PlayerConfigKeys | CustomKeys, call
     callbacks[keyName].push(callback);
 }
 
-alt.on('localMetaChange', InternalFunctions.process);
+alt.Events.on('localMetaChange', InternalFunctions.process);

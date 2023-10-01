@@ -7,7 +7,7 @@ export function load(pos: alt.IVector3): Promise<boolean> {
         // noinspection JSSuspiciousNameCombination
         native.newLoadSceneStartSphere(pos.x, pos.y, pos.z ?? native.getApproxHeightForPoint(pos.x, pos.y), 2, 1);
 
-        timerHandle = alt.setInterval(() => {
+        timerHandle = alt.Timers.setInterval(() => {
             if (!native.isNewLoadSceneActive()) {
                 return resolve(false);
             }

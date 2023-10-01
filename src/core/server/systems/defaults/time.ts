@@ -46,7 +46,7 @@ const Internal = {
         }
 
         Athena.player.events.on('selected-character', updatePlayer);
-        alt.setInterval(Internal.handleWeatherUpdate, TIME_BETWEEN_UPDATES);
+        alt.Timers.setInterval(Internal.handleWeatherUpdate, TIME_BETWEEN_UPDATES);
         alt.log(`~lc~Default System: ~g~Time`);
     },
 };

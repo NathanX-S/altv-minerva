@@ -52,7 +52,7 @@ export default defineComponent({
     methods: {
         closePage() {
             if ('alt' in window) {
-                alt.emit(WebViewEventNames.CLOSE_PAGE);
+                alt.Events.emit(WebViewEventNames.CLOSE_PAGE);
             }
         },
     },

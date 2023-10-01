@@ -40,7 +40,7 @@ export async function isReady(): Promise<boolean> {
     }
 
     return new Promise((resolve) => {
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (!uid) {
                 return;
             }

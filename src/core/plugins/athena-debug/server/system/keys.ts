@@ -12,7 +12,7 @@ let lastStoredData: LastStoredData;
 
 const KeysConst = {
     init() {
-        alt.onClient(ATHENA_DEBUG_EVENTS.ClientToServer.FORWARD, KeysConst.flagPosition);
+        alt.Events.onPlayer(ATHENA_DEBUG_EVENTS.ClientToServer.FORWARD, KeysConst.flagPosition);
     },
     flagPosition(player: alt.Player) {
         lastStoredData = {

@@ -38,4 +38,4 @@ export function clearTimeCycleEffect() {
 
 alt.onServer(SYSTEM_EVENTS.SCREEN_TIMECYCLE_EFFECT, setTimeCycleEffect);
 alt.onServer(SYSTEM_EVENTS.SCREEN_TIMECYCLE_EFFECT_CLEAR, clearTimeCycleEffect);
-alt.on('disconnect', clearTimeCycleEffect);
+alt.Events.on('disconnect', clearTimeCycleEffect);

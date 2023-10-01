@@ -109,7 +109,7 @@ const InternalFunctions = {
      */
     async isCameraUpdating() {
         return new Promise((resolve: Function) => {
-            const interval = alt.setInterval(() => {
+            const interval = alt.Timers.setInterval(() => {
                 if (isUpdating) {
                     return;
                 }

@@ -58,9 +58,9 @@ export default defineComponent({
     },
     mounted() {
         if ('alt' in window) {
-            alt.on(`${ComponentName}:SetLocale`, this.setLocales);
-            alt.on(`${ComponentName}:Data`, this.setData);
-            alt.emit(`${ComponentName}:Ready`);
+            alt.Events.on(`${ComponentName}:SetLocale`, this.setLocales);
+            alt.Events.on(`${ComponentName}:Data`, this.setData);
+            alt.Events.emit(`${ComponentName}:Ready`);
         }
     },
     unmounted() {
@@ -90,14 +90,14 @@ export default defineComponent({
                 return;
             }
 
-            alt.emit(`${ComponentName}:Select`);
+            alt.Events.emit(`${ComponentName}:Select`);
         },
         close() {
             if (!('alt' in window)) {
                 return;
             }
 
-            alt.emit(WebViewEventNames.CLOSE_PAGE);
+            alt.Events.emit(WebViewEventNames.CLOSE_PAGE);
         },
     },
 });

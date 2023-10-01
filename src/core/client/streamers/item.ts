@@ -76,7 +76,7 @@ const InternalFunctions = {
         }
 
         if (!interval) {
-            interval = alt.setInterval(InternalFunctions.handleDrawItems, 0);
+            interval = alt.Timers.setInterval(InternalFunctions.handleDrawItems, 0);
         }
     },
 
@@ -162,6 +162,6 @@ export function getDropped(id: number): CreatedDrop | undefined {
     return closestItems.find((x) => x.createdObject && x.createdObject.scriptID === id);
 }
 
-alt.on('connectionComplete', InternalFunctions.init);
-alt.on('disconnect', InternalFunctions.stop);
+alt.Events.on('connectionComplete', InternalFunctions.init);
+alt.Events.on('disconnect', InternalFunctions.stop);
 alt.onServer(SYSTEM_EVENTS.POPULATE_ITEM_DROPS, InternalFunctions.populate);

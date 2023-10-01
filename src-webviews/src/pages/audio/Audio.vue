@@ -29,9 +29,9 @@ export default defineComponent({
     },
     mounted() {
         if ('alt' in window) {
-            alt.on(`${ComponentName}:Play`, this.playAudio);
-            alt.on(`${ComponentName}:Stop`, this.stopAudio);
-            alt.on(`${ComponentName}:TriggerQueue`, this.dequeue);
+            alt.Events.on(`${ComponentName}:Play`, this.playAudio);
+            alt.Events.on(`${ComponentName}:Stop`, this.stopAudio);
+            alt.Events.on(`${ComponentName}:TriggerQueue`, this.dequeue);
         } else {
             setInterval(() => {
                 this.addToQueue('@plugins/sounds/core-items/test');

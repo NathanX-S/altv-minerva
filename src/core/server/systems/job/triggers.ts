@@ -22,7 +22,7 @@ export function tryEventCall(player: alt.Player, objective: Objective) {
     }
 
     if (objective.eventCall.isServer) {
-        alt.emit(objective.eventCall.eventName, player);
+        alt.Events.emit(objective.eventCall.eventName, player);
     } else {
         player.emit(objective.eventCall.eventName);
     }

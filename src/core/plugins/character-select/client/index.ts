@@ -85,6 +85,6 @@ function done() {
 
 alt.onServer(CharSelectEvents.toClient.done, done);
 alt.onServer(CharSelectEvents.toClient.update, updatePreview);
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     native.destroyAllCams(true);
 });

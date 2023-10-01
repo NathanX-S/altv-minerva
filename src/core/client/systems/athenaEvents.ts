@@ -25,7 +25,7 @@ function init(): void {
         interval = null;
     }
 
-    interval = alt.setInterval(tick, 250);
+    interval = alt.Timers.setInterval(tick, 250);
 }
 
 /**

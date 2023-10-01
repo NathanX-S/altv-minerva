@@ -20,7 +20,7 @@ export async function load(model: number | string): Promise<boolean> {
             return;
         }
 
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (count >= 100) {
                 resolve(false);
                 alt.clearInterval(interval);

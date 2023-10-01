@@ -7,7 +7,7 @@ function loadParticleDictionary(dictionary: string): Promise<boolean> {
     return new Promise((resolve: Function): void => {
         let count = 0;
 
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             count += 1;
 
             if (native.hasNamedPtfxAssetLoaded(dictionary)) {
@@ -45,7 +45,7 @@ export async function handlePlayParticle(data: Particle): Promise<void> {
     }
 
     const endTime = Date.now() + data.duration;
-    const interval = alt.setInterval(() => {
+    const interval = alt.Timers.setInterval(() => {
         native.useParticleFxAsset(data.dict);
         native.startParticleFxNonLoopedAtCoord(
             data.name,

@@ -211,7 +211,7 @@ export function getFromScriptId(scriptId: number): CreatedObject | undefined {
     return undefined;
 }
 
-alt.on('disconnect', InternalFunctions.stop);
+alt.Events.on('disconnect', InternalFunctions.stop);
 alt.onServer(SYSTEM_EVENTS.POPULATE_OBJECTS, InternalFunctions.populate);
 alt.onServer(SYSTEM_EVENTS.MOVE_OBJECT, InternalFunctions.moveObject);
 alt.onServer(SYSTEM_EVENTS.APPEND_OBJECT, addObject);

@@ -26,7 +26,7 @@ const Internal = {
             return;
         }
 
-        alt.on('keyup', Internal.handleKeyPress);
+        alt.Events.on('keyup', Internal.handleKeyPress);
     },
     handleChanges(_inventory: Array<Item>, _toolbar: Array<Item>) {
         if (!enabled) {
@@ -66,7 +66,7 @@ const Internal = {
 
         if (Date.now() < debounce) {
             if (typeof interval === 'undefined') {
-                interval = alt.setInterval(Internal.drawCooldown, 0);
+                interval = alt.Timers.setInterval(Internal.drawCooldown, 0);
             }
 
             AthenaClient.systems.sound.play2d('error', 0.2);
@@ -84,7 +84,7 @@ const Internal = {
         }
 
         if (typeof interval === 'undefined') {
-            interval = alt.setInterval(Internal.drawCooldown, 0);
+            interval = alt.Timers.setInterval(Internal.drawCooldown, 0);
         }
 
         lastKey = KeyBinds[key];

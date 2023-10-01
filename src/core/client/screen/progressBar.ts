@@ -75,7 +75,7 @@ export function create(progressBar: ProgressBar) {
 
     clear();
     if (!interval) {
-        interval = alt.setInterval(drawBars, 0);
+        interval = alt.Timers.setInterval(drawBars, 0);
     }
 }
 

@@ -27,7 +27,7 @@ const PedController = {
         addedPeds = peds;
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawPeds, 500);
+            interval = alt.Timers.setInterval(handleDrawPeds, 500);
         }
     },
 
@@ -234,7 +234,7 @@ export function append(pedData: IPed) {
 
     localPeds.push(pedData);
     if (!interval) {
-        interval = alt.setInterval(handleDrawPeds, 500);
+        interval = alt.Timers.setInterval(handleDrawPeds, 500);
     }
 }
 
@@ -272,8 +272,8 @@ export function remove(uid: string) {
     isRemoving = false;
 }
 
-alt.on('connectionComplete', PedController.init);
-alt.on('disconnect', PedController.removeAll);
+alt.Events.on('connectionComplete', PedController.init);
+alt.Events.on('disconnect', PedController.removeAll);
 alt.onServer(SYSTEM_EVENTS.REMOVE_GLOBAL_PED, PedController.removeGlobalPed);
 alt.onServer(SYSTEM_EVENTS.POPULATE_PEDS, PedController.populate);
 alt.onServer(SYSTEM_EVENTS.PLAY_ANIMATION_FOR_PED, PedController.playAnimation);

@@ -66,7 +66,7 @@ export async function create(credit: ICredit) {
     scaleform.passFunction('ADD_NAMES_TO_CREDIT_BLOCK', identifier, credit.name, 100.1, ';', true);
     scaleform.passFunction('SHOW_CREDIT_BLOCK', identifier, 2, 'X', 1);
 
-    interval = alt.setInterval(() => {
+    interval = alt.Timers.setInterval(() => {
         scaleform.render(0.5, 0.5, 0.71, 0.68);
     }, 0);
 

@@ -47,7 +47,7 @@ const ClientMarkerController = {
         }
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawMarkers, 0);
+            interval = alt.Timers.setInterval(handleDrawMarkers, 0);
         }
     },
 
@@ -62,7 +62,7 @@ const ClientMarkerController = {
         addedMarkers = markers;
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawMarkers, 0);
+            interval = alt.Timers.setInterval(handleDrawMarkers, 0);
         }
     },
 
@@ -142,8 +142,8 @@ function handleDrawMarkers() {
     }
 }
 
-alt.on('connectionComplete', ClientMarkerController.init);
-alt.on('disconnect', ClientMarkerController.stop);
+alt.Events.on('connectionComplete', ClientMarkerController.init);
+alt.Events.on('disconnect', ClientMarkerController.stop);
 alt.onServer(SYSTEM_EVENTS.POPULATE_MARKERS, ClientMarkerController.populate);
 alt.onServer(SYSTEM_EVENTS.APPEND_MARKER, ClientMarkerController.append);
 alt.onServer(SYSTEM_EVENTS.REMOVE_MARKER, ClientMarkerController.remove);

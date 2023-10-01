@@ -40,7 +40,7 @@ export function create(screen: IErrorScreen) {
         alt.addGxtText('warning_text2', screen.text2);
     }
 
-    interval = alt.setInterval(() => {
+    interval = alt.Timers.setInterval(() => {
         if (alt.isConsoleOpen()) {
             return;
         }

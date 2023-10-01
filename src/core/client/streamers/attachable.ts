@@ -148,6 +148,6 @@ const ClientAttachableSystem = {
     },
 };
 
-alt.on('streamSyncedMetaChange', ClientAttachableSystem.attachablesChanged);
-alt.on('gameEntityCreate', ClientAttachableSystem.create);
-alt.on('gameEntityDestroy', ClientAttachableSystem.destroy);
+alt.Events.on('streamSyncedMetaChange', ClientAttachableSystem.attachablesChanged);
+alt.Events.on('gameEntityCreate', ClientAttachableSystem.create);
+alt.Events.on('gameEntityDestroy', ClientAttachableSystem.destroy);

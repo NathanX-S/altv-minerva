@@ -140,7 +140,7 @@ export const PedCharacter = {
     async destroy() {
         return new Promise((resolve: Function) => {
             let attempts = 0;
-            const interval = alt.setInterval(() => {
+            const interval = alt.Timers.setInterval(() => {
                 if (id === undefined || id === null) {
                     alt.clearInterval(interval);
                     return resolve();
@@ -166,4 +166,4 @@ export const PedCharacter = {
     },
 };
 
-alt.on('disconnect', PedCharacter.destroy);
+alt.Events.on('disconnect', PedCharacter.destroy);

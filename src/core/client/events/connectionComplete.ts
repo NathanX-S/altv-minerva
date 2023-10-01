@@ -5,7 +5,7 @@ import { SHARED_CONFIG } from '@AthenaShared/configurations/shared';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { onTicksStart } from './onTicksStart';
 
-alt.on('connectionComplete', handleConnectionComplete);
+alt.Events.on('connectionComplete', handleConnectionComplete);
 alt.setWatermarkPosition(4);
 
 async function handleConnectionComplete() {

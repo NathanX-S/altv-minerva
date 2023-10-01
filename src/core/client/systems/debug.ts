@@ -35,7 +35,7 @@ export const DebugController = {
             alt.log(JSON.stringify(aimPos));
         }
 
-        alt.emit('debug:Time');
+        alt.Events.emit('debug:Time');
     },
 };
 

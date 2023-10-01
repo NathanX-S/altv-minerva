@@ -208,7 +208,7 @@ const ProgressBarConst = {
         if (typeof document === 'undefined') {
             document = new alt.RmlDocument('/client/rmlui/progressbar/index.rml');
             document.show();
-            interval = alt.setInterval(InternalFunctions.update, 0);
+            interval = alt.Timers.setInterval(InternalFunctions.update, 0);
         }
 
         const index = InternalFunctions.getIndexOfElement(bar.uid);
@@ -234,7 +234,7 @@ const ProgressBarConst = {
     },
 };
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
         alt.clearInterval(interval);

@@ -56,9 +56,9 @@ class InternalFunctions implements ViewModel {
 
         if (typeof option.emitClient === 'string') {
             if (Array.isArray(option.data)) {
-                alt.emit(option.emitClient, ...option.data);
+                alt.Events.emit(option.emitClient, ...option.data);
             } else {
-                alt.emit(option.emitClient);
+                alt.Events.emit(option.emitClient);
             }
         }
 
@@ -147,7 +147,7 @@ export async function open(label: string, options: Array<IWheelOptionExt>, setMo
     }
 
     native.triggerScreenblurFadeIn(250);
-    _interval = alt.setInterval(InternalFunctions.tick, 0);
+    _interval = alt.Timers.setInterval(InternalFunctions.tick, 0);
 }
 
 /**

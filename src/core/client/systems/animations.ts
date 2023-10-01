@@ -20,7 +20,7 @@ export async function loadAnimation(dict: string, count: number = 0): Promise<bo
             return;
         }
 
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             count += 1;
 
             if (native.hasAnimDictLoaded(dict)) {

@@ -121,7 +121,7 @@ export function remove(uid: string): boolean {
     }
 
     InternalController.refresh();
-    alt.emitAllClients(SYSTEM_EVENTS.REMOVE_GLOBAL_OBJECT, uid);
+    alt.Events.emitAllPlayers(SYSTEM_EVENTS.REMOVE_GLOBAL_OBJECT, uid);
     return true;
 }
 

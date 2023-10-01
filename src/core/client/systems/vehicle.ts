@@ -13,8 +13,8 @@ const Internal = {
         alt.onServer(VEHICLE_EVENTS.SET_SEATBELT, VehicleController.enableSeatBelt);
         alt.onServer(VEHICLE_EVENTS.SET_INTO, VehicleController.setIntoVehicle);
         alt.onServer(SYSTEM_EVENTS.VEHICLE_ENGINE, VehicleController.toggleEngine);
-        alt.on('enteredVehicle', VehicleController.enterVehicle);
-        alt.on('leftVehicle', VehicleController.removeSeatBelt);
+        alt.Events.on('enteredVehicle', VehicleController.enterVehicle);
+        alt.Events.on('leftVehicle', VehicleController.removeSeatBelt);
         VehicleController.registerKeybinds();
     },
 };
@@ -113,7 +113,7 @@ export const VehicleController = {
         const isVehicleReady = await new Promise((resolve: Function) => {
             let attempts = 0;
 
-            const interval = alt.setInterval(() => {
+            const interval = alt.Timers.setInterval(() => {
                 attempts += 1;
 
                 if (attempts >= 100) {

@@ -710,10 +710,10 @@ export function message(player: alt.Player, msg: string) {
  *     });
  * }
  *
- * alt.onClient('from-client-event-doSomething', (player: alt.Player) => {
+ * alt.Events.onPlayer('from-client-event-doSomething', (player: alt.Player) => {
  *     //
  * });
- * alt.onClient('from-client-event-doNothing', (player: alt.Player) => {
+ * alt.Events.onPlayer('from-client-event-doNothing', (player: alt.Player) => {
  *     //
  * });
  * ```

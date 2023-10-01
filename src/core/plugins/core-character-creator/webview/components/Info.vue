@@ -216,7 +216,7 @@ export default defineComponent({
                 return;
             }
 
-            alt.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.VERIFY_NAME, name);
+            alt.Events.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.VERIFY_NAME, name);
         },
         handleNameAvailable(result: boolean) {
             this.valid.name = result;
@@ -255,7 +255,7 @@ export default defineComponent({
                 return;
             }
 
-            alt.emit(
+            alt.Events.emit(
                 CHARACTER_CREATOR_WEBVIEW_EVENTS.DONE,
                 JSON.parse(JSON.stringify(this.data)),
                 JSON.parse(JSON.stringify(this.infodata)),
@@ -265,7 +265,7 @@ export default defineComponent({
     },
     mounted() {
         if ('alt' in window) {
-            alt.on(CHARACTER_CREATOR_WEBVIEW_EVENTS.VERIFY_NAME, this.handleNameAvailable);
+            alt.Events.on(CHARACTER_CREATOR_WEBVIEW_EVENTS.VERIFY_NAME, this.handleNameAvailable);
         }
     },
     unmounted() {

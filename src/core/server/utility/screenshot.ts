@@ -26,7 +26,7 @@ export class AthenaScreenshot {
         return new Promise((resolve: Function) => {
             let tries = 0;
 
-            const interval = alt.setInterval(() => {
+            const interval = alt.Timers.setInterval(() => {
                 tries += 1;
 
                 if (tries > MAX_TRIES) {
@@ -72,4 +72,4 @@ export class AthenaScreenshot {
     }
 }
 
-alt.onClient(SYSTEM_EVENTS.SCREENSHOT_POPULATE_DATA, AthenaScreenshot.buildData);
+alt.Events.onPlayer(SYSTEM_EVENTS.SCREENSHOT_POPULATE_DATA, AthenaScreenshot.buildData);

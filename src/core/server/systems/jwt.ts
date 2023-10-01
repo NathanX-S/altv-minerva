@@ -115,7 +115,7 @@ export async function fetch(player: alt.Player): Promise<string | null> {
     player.emit(SYSTEM_EVENTS.QUICK_TOKEN_FETCH);
     await new Promise((resolve: Function) => {
         let attempts = 0;
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (typeof fetchRequests[id] !== 'undefined') {
                 alt.clearInterval(interval);
                 return resolve();

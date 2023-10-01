@@ -211,7 +211,7 @@ const InternalFunctions = {
 
     async isDoneUpdating(): Promise<void> {
         return new Promise((resolve: Function) => {
-            const interval = alt.setInterval(() => {
+            const interval = alt.Timers.setInterval(() => {
                 if (isUpdating) {
                     return;
                 }
@@ -356,7 +356,7 @@ export async function get(): Promise<alt.WebView> {
     return new Promise((resolve: Function) => {
         let attempts = 0;
 
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (attempts >= 255) {
                 alt.clearInterval(interval);
                 return resolve(undefined);
@@ -698,8 +698,8 @@ export function isAnyMenuOpen(excludeDead = false): boolean {
     return false;
 }
 
-alt.on('keyup', InternalFunctions.handleKeyDownEvent);
-alt.on('disconnect', dispose);
+alt.Events.on('keyup', InternalFunctions.handleKeyDownEvent);
+alt.Events.on('disconnect', dispose);
 alt.onceServer(SYSTEM_EVENTS.WEBVIEW_INFO, create);
 alt.onServer(WebViewEventNames.ON_SERVER, InternalFunctions.onServer);
 alt.onServer(WebViewEventNames.CLOSE_PAGES, (pages: Array<string>) => {

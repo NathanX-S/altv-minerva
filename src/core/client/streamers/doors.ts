@@ -25,7 +25,7 @@ const ClientDoorController = {
         doors = streamedDoors;
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawMarkers, alt.debug ? 0 : 500);
+            interval = alt.Timers.setInterval(handleDrawMarkers, alt.debug ? 0 : 500);
         }
     },
 };
@@ -54,6 +54,6 @@ function handleDrawMarkers() {
     }
 }
 
-alt.on('connectionComplete', ClientDoorController.init);
-alt.on('disconnect', ClientDoorController.stop);
+alt.Events.on('connectionComplete', ClientDoorController.init);
+alt.Events.on('disconnect', ClientDoorController.stop);
 alt.onServer(SYSTEM_EVENTS.POPULATE_DOORS, ClientDoorController.populate);

@@ -272,4 +272,4 @@ const NoClip = {
     },
 };
 
-alt.on('syncedMetaChange', NoClip.init);
+alt.Events.on('syncedMetaChange', NoClip.init);

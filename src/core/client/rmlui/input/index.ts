@@ -118,7 +118,7 @@ export function create(inputInfo: InputBoxInfo, skipMenuCheck = false): Promise<
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.on('keyup', InternalFunctions.handleKeyUp);
+    alt.Events.on('keyup', InternalFunctions.handleKeyUp);
     alt.showCursor(true);
     alt.toggleRmlControls(true);
     alt.toggleGameControls(false);
@@ -153,7 +153,7 @@ export async function cancel() {
     });
 }
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
         alt.log('input | Destroyed RMLUI Document on Disconnect');

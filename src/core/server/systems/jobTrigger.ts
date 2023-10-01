@@ -7,8 +7,8 @@ const LastTriggers: { [id: string]: JobTrigger } = {};
 
 const Internal = {
     init() {
-        alt.onClient(VIEW_EVENTS_JOB_TRIGGER.ACCEPT, Internal.accept);
-        alt.onClient(VIEW_EVENTS_JOB_TRIGGER.CANCEL, Internal.cancel);
+        alt.Events.onPlayer(VIEW_EVENTS_JOB_TRIGGER.ACCEPT, Internal.accept);
+        alt.Events.onPlayer(VIEW_EVENTS_JOB_TRIGGER.CANCEL, Internal.cancel);
     },
 
     /**
@@ -31,7 +31,7 @@ const Internal = {
         const data = LastTriggers[player.id];
 
         if (data.event) {
-            alt.emit(data.event, player);
+            alt.Events.emit(data.event, player);
         }
 
         if (data.acceptCallback && typeof data.acceptCallback === 'function') {
@@ -65,7 +65,7 @@ const Internal = {
         const data = LastTriggers[player.id];
 
         if (data.cancelEvent) {
-            alt.emit(data.cancelEvent, player);
+            alt.Events.emit(data.cancelEvent, player);
         }
 
         if (data.cancelCallback && typeof data.cancelCallback === 'function') {

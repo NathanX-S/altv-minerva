@@ -3,7 +3,7 @@ import * as alt from 'alt-client';
 const cmdName = 'rmluicontrols';
 
 if (alt.debug) {
-    alt.on('consoleCommand', (name: string) => {
+    alt.Events.on('consoleCommand', (name: string) => {
         if (name !== cmdName) {
             return;
         }

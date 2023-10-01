@@ -41,7 +41,7 @@ const ClientWorldNotificationController = {
         }
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawNotifications, 0);
+            interval = alt.Timers.setInterval(handleDrawNotifications, 0);
         }
     },
 
@@ -49,7 +49,7 @@ const ClientWorldNotificationController = {
         addedNotifications = notifications;
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawNotifications, 0);
+            interval = alt.Timers.setInterval(handleDrawNotifications, 0);
         }
     },
 
@@ -119,8 +119,8 @@ function handleDrawNotifications() {
     }
 }
 
-alt.on('connectionComplete', ClientWorldNotificationController.init);
-alt.on('disconnect', ClientWorldNotificationController.stop);
+alt.Events.on('connectionComplete', ClientWorldNotificationController.init);
+alt.Events.on('disconnect', ClientWorldNotificationController.stop);
 alt.onServer(SYSTEM_EVENTS.POPULATE_WORLD_NOTIFICATIONS, ClientWorldNotificationController.populate);
 alt.onServer(SYSTEM_EVENTS.APPEND_WORLD_NOTIFICATION, ClientWorldNotificationController.append);
 alt.onServer(SYSTEM_EVENTS.REMOVE_WORLD_NOTIFICATION, ClientWorldNotificationController.remove);

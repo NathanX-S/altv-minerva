@@ -613,18 +613,18 @@ function addCallback(type: 'open' | 'close', callback: PlayerCallback | PlayerCl
 
 export const InventoryView = {
     init() {
-        alt.on('playerDisconnect', Internal.disconnect);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.USE, Internal.use);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.DROP, Internal.drop);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.SPLIT, Internal.split);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.SWAP, Internal.swap);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.UNEQUIP, Internal.unequip);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.COMBINE, Internal.combine);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.GIVE, Internal.give);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.OPEN, Internal.callbacks.open);
-        alt.onClient(INVENTORY_EVENTS.TO_SERVER.CLOSE, Internal.callbacks.close);
-        alt.onClient(EVENTS.ACCEPT, Internal.giveAccept);
-        alt.onClient(EVENTS.DECLINE, Internal.giveDecline);
+        alt.Events.on('playerDisconnect', Internal.disconnect);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.USE, Internal.use);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.DROP, Internal.drop);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.SPLIT, Internal.split);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.SWAP, Internal.swap);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.UNEQUIP, Internal.unequip);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.COMBINE, Internal.combine);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.GIVE, Internal.give);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.OPEN, Internal.callbacks.open);
+        alt.Events.onPlayer(INVENTORY_EVENTS.TO_SERVER.CLOSE, Internal.callbacks.close);
+        alt.Events.onPlayer(EVENTS.ACCEPT, Internal.giveAccept);
+        alt.Events.onPlayer(EVENTS.DECLINE, Internal.giveDecline);
         Athena.player.events.on('pickup-item', Internal.pickupItem);
     },
     callbacks: {

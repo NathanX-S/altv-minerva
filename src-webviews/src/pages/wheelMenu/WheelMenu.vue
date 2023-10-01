@@ -157,14 +157,14 @@ export default defineComponent({
                 return;
             }
 
-            alt.emit(VIEW_EVENTS_WHEEL_MENU.EXECUTE, uid);
+            alt.Events.emit(VIEW_EVENTS_WHEEL_MENU.EXECUTE, uid);
         },
         close() {
             if (!('alt' in window)) {
                 return;
             }
 
-            alt.emit(WebViewEventNames.CLOSE_PAGE);
+            alt.Events.emit(WebViewEventNames.CLOSE_PAGE);
         },
         handleScroll(e) {
             const totalPages = Math.floor(this.options.length / this.maxOptions);
@@ -212,8 +212,8 @@ export default defineComponent({
         this.generatePoints();
 
         if ('alt' in window) {
-            alt.on(VIEW_EVENTS_WHEEL_MENU.ADD_OPTIONS, this.addOptions);
-            alt.emit(VIEW_EVENTS_WHEEL_MENU.READY);
+            alt.Events.on(VIEW_EVENTS_WHEEL_MENU.ADD_OPTIONS, this.addOptions);
+            alt.Events.emit(VIEW_EVENTS_WHEEL_MENU.READY);
             return;
         }
 

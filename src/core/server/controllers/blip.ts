@@ -46,7 +46,7 @@ export function append(blip: Blip): string {
         globalBlips.push(blip);
     }
 
-    alt.emitAllClients(SYSTEM_EVENTS.APPEND_BLIP, blip);
+    alt.Events.emitAllPlayers(SYSTEM_EVENTS.APPEND_BLIP, blip);
     return blip.uid;
 }
 
@@ -80,7 +80,7 @@ export function remove(uid: string): boolean {
         return false;
     }
 
-    alt.emitAllClients(SYSTEM_EVENTS.REMOVE_BLIP, uid);
+    alt.Events.emitAllPlayers(SYSTEM_EVENTS.REMOVE_BLIP, uid);
     globalBlips.splice(index, 1);
     return true;
 }

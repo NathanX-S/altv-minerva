@@ -24,7 +24,7 @@ const Internal = {
 
         Athena.player.events.on('respawned', Internal.unequipAllWeapons);
         Athena.player.events.on('selected-character', Internal.processPlayer);
-        alt.onClient(SYSTEM_EVENTS.PLAYER_TOOLBAR_INVOKE, Internal.invoke);
+        alt.Events.onPlayer(SYSTEM_EVENTS.PLAYER_TOOLBAR_INVOKE, Internal.invoke);
         alt.log(`~lc~Default System: ~g~${SYSTEM_NAME}`);
     },
     /**

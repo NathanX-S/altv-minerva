@@ -223,7 +223,7 @@ export function create(sprite: SpriteInfo) {
     if (typeof document === 'undefined') {
         document = new alt.RmlDocument('/client/rmlui/sprites/index.rml');
         document.show();
-        interval = alt.setInterval(InternalFunctions.update, 0);
+        interval = alt.Timers.setInterval(InternalFunctions.update, 0);
     }
 
     if (sprite.path.includes('@plugins')) {
@@ -273,7 +273,7 @@ export function update(uid: string, sprite: Partial<SpriteInfo>) {
     elements[index] = { ...elements[index], ...sprite };
 }
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
         alt.clearInterval(interval);

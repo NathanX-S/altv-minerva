@@ -65,7 +65,7 @@ export class Scaleform {
 export function requestScaleForm(scaleformName: string): Promise<Scaleform> {
     return new Promise((resolve: Function) => {
         const instance = new Scaleform(native.requestScaleformMovie(scaleformName));
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (!instance.hasLoaded()) {
                 return;
             }

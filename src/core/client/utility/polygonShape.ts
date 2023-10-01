@@ -31,5 +31,5 @@ function drawTick() {
 
 alt.onServer(SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, (uid: string, vertices: Array<alt.IVector2>) => {
     drawables[uid] = vertices;
-    interval = alt.setInterval(drawTick, 0);
+    interval = alt.Timers.setInterval(drawTick, 0);
 });

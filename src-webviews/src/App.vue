@@ -184,8 +184,8 @@ export default defineComponent({
             return;
         }
 
-        alt.on(WebViewEventNames.SET_PAGES, this.handleSetPages);
-        alt.emit('view:Ready');
+        alt.Events.on(WebViewEventNames.SET_PAGES, this.handleSetPages);
+        alt.Events.emit('view:Ready');
     },
 });
 </script>

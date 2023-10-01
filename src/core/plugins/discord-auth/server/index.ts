@@ -150,6 +150,6 @@ async function handleToken(player: alt.Player, token: string) {
 
 Athena.systems.plugins.registerPlugin(PLUGIN_NAME, () => {
     Athena.systems.loginFlow.add('authentication', 1, beginTokenRequest);
-    alt.onClient(DiscordAuthEvents.toServer.pushToken, handleToken);
-    alt.setInterval(cleanupSessions, 5000);
+    alt.Events.onPlayer(DiscordAuthEvents.toServer.pushToken, handleToken);
+    alt.Timers.setInterval(cleanupSessions, 5000);
 });

@@ -89,7 +89,7 @@ export function remove(uid: string): boolean {
 
     globalPeds.splice(index, 1);
     InternalFunctions.refresh();
-    alt.emitAllClients(SYSTEM_EVENTS.REMOVE_GLOBAL_PED, uid);
+    alt.Events.emitAllPlayers(SYSTEM_EVENTS.REMOVE_GLOBAL_PED, uid);
     return true;
 }
 
@@ -168,7 +168,7 @@ export function addToPlayer(player: alt.Player, pedData: IPed): string {
  * @param {Animation} animation
  */
 export function playAnimation(uid: string, animation: Animation) {
-    alt.emitAllClients(SYSTEM_EVENTS.PLAY_ANIMATION_FOR_PED, uid, animation);
+    alt.Events.emitAllPlayers(SYSTEM_EVENTS.PLAY_ANIMATION_FOR_PED, uid, animation);
 }
 
 Athena.systems.plugins.addCallback(InternalFunctions.init);

@@ -302,7 +302,7 @@ export function create(inputInfo: CommandInput, skipMenuCheck = false): Promise<
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.on('keyup', handleKeyUp);
+    alt.Events.on('keyup', handleKeyUp);
     alt.showCursor(true);
     alt.toggleRmlControls(true);
     alt.toggleGameControls(false);
@@ -358,7 +358,7 @@ export function isOpen(): boolean {
     return isCommandInputOpen;
 }
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document === 'undefined') {
         return;
     }

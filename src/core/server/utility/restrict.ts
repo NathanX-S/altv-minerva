@@ -144,7 +144,7 @@ function verifyRestrictions(player: alt.Player, restrictions: Restrictions): boo
  *     notify: 'You are not part of the police force.',
  * });
  *
- * alt.onClient('something-from-a-client', doPoliceWorkRestricted);
+ * alt.Events.onPlayer('something-from-a-client', doPoliceWorkRestricted);
  * ```
  *
  *

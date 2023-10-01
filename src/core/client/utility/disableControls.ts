@@ -17,7 +17,7 @@ export function disableAllControls(value: boolean) {
     }
 
     if (value) {
-        everyTickControls = alt.setInterval(handleDisablingControls, 0);
+        everyTickControls = alt.Timers.setInterval(handleDisablingControls, 0);
         return;
     }
 }
@@ -29,7 +29,7 @@ export function disableAllAttacks(value: boolean) {
     }
 
     if (value) {
-        everyTickAttacks = alt.setInterval(handleDisablingAttacks, 0);
+        everyTickAttacks = alt.Timers.setInterval(handleDisablingAttacks, 0);
         return;
     }
 }

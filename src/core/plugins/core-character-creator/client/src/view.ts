@@ -57,7 +57,7 @@ class InternalFunctions {
         await AthenaClient.camera.pedEdit.create(PedCharacter.get(), { x: -0.25, y: 0, z: 0 });
         await AthenaClient.camera.pedEdit.setCamParams(0.6, 50);
         await CharacterSystem.applyEquipment(PedCharacter.get(), null, true);
-        readyInterval = alt.setInterval(InternalFunctions.waitForReady, 100);
+        readyInterval = alt.Timers.setInterval(InternalFunctions.waitForReady, 100);
     }
 
     static close() {

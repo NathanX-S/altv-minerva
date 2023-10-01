@@ -7,7 +7,7 @@ import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 let interval: number | undefined;
 
 function toggleOn() {
-    interval = alt.setInterval(disableDefaultBehavior, 0);
+    interval = alt.Timers.setInterval(disableDefaultBehavior, 0);
 }
 
 function disableDefaultBehavior(): void {

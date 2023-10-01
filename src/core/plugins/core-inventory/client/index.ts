@@ -209,7 +209,7 @@ function init() {
     });
 }
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     native.clearPedInPauseMenu();
     native.setFrontendActive(false);
 });

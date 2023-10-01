@@ -64,7 +64,7 @@ const ClientTextLabelController = {
         }
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawTextlabels, 0);
+            interval = alt.Timers.setInterval(handleDrawTextlabels, 0);
         }
     },
 
@@ -80,7 +80,7 @@ const ClientTextLabelController = {
         labels = labels.filter((x) => !x.isServerWide).concat(serverLabels);
 
         if (!interval) {
-            interval = alt.setInterval(handleDrawTextlabels, 0);
+            interval = alt.Timers.setInterval(handleDrawTextlabels, 0);
         }
     },
 
@@ -141,8 +141,8 @@ function handleDrawTextlabels() {
     }
 }
 
-alt.on('connectionComplete', ClientTextLabelController.init);
-alt.on('disconnect', ClientTextLabelController.stop);
+alt.Events.on('connectionComplete', ClientTextLabelController.init);
+alt.Events.on('disconnect', ClientTextLabelController.stop);
 alt.onServer(SYSTEM_EVENTS.APPEND_TEXTLABELS, ClientTextLabelController.append);
 alt.onServer(SYSTEM_EVENTS.POPULATE_TEXTLABELS, ClientTextLabelController.populate);
 alt.onServer(SYSTEM_EVENTS.REMOVE_TEXTLABEL, ClientTextLabelController.remove);

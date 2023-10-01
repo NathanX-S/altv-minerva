@@ -22,7 +22,7 @@ const LerpObject = {
         native.freezeEntityPosition(id, true);
 
         return new Promise((resolve) => {
-            const objectInterval = alt.setInterval(() => {
+            const objectInterval = alt.Timers.setInterval(() => {
                 const pos = native.getEntityCoords(id, false);
                 dist = distance(pos, to);
 

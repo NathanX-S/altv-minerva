@@ -46,7 +46,7 @@ const InternalFunctions = {
             optionsElement.appendChild(newOption);
         }
 
-        interval = alt.setInterval(InternalFunctions.tick, 0);
+        interval = alt.Timers.setInterval(InternalFunctions.tick, 0);
     },
     updateIndex() {
         const element = document.getElementByID(`option-${optionIndex}`);
@@ -181,7 +181,7 @@ export function create(pos: alt.IVector3, options: Array<OptionFor3DMenu>, maxDi
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.on('keyup', InternalFunctions.handleKeyUp);
+    alt.Events.on('keyup', InternalFunctions.handleKeyUp);
     InternalFunctions.init(pos, options, maxDistance);
 }
 
@@ -202,7 +202,7 @@ const FUNCTION_BINDS = {
     [KEYS.ENTER_KEY]: InternalFunctions.select,
 };
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
         alt.log('menu3d | Destroyed RMLUI Document on Disconnect');

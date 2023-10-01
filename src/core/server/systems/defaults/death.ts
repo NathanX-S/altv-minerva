@@ -103,7 +103,7 @@ const Internal = {
         }
 
         Athena.player.events.on('selected-character', Internal.respawn);
-        alt.on('playerDeath', Internal.handleDefaultDeath);
+        alt.Events.on('playerDeath', Internal.handleDefaultDeath);
         alt.log(`~lc~Default System: ~g~Death`);
     },
 };

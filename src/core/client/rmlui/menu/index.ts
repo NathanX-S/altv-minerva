@@ -466,7 +466,7 @@ const FUNCTION_BINDS = {
     [KEYS.ENTER_KEY]: InternalFunctions.select,
 };
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
         alt.log('menu | Destroyed RMLUI Document on Disconnect');

@@ -21,7 +21,7 @@ export async function loadAlarm(name: string, count: number = 0): Promise<boolea
             return;
         }
 
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             count += 1;
 
             if (native.prepareAlarm(name)) {

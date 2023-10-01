@@ -29,7 +29,7 @@ Athena.systems.plugins.registerPlugin(PLUGIN_NAME, () => {
         notify: 'No permission to perform code execution.',
     });
 
-    alt.onClient(ATHENA_DEBUG_EVENTS.toServer.exec, restrictedFunction);
+    alt.Events.onPlayer(ATHENA_DEBUG_EVENTS.toServer.exec, restrictedFunction);
 
     Athena.commands.register('editor', '/editor', ['admin'], (player: alt.Player) => {
         player.emit(ATHENA_DEBUG_EVENTS.toClient.openExec);

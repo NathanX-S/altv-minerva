@@ -57,7 +57,7 @@ const ObjectiveController = {
         }
 
         objective = { ...data };
-        interval = alt.setInterval(ObjectiveController.verifyObjective, 0);
+        interval = alt.Timers.setInterval(ObjectiveController.verifyObjective, 0);
     },
 
     getVector3Range() {

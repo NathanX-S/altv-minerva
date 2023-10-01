@@ -73,7 +73,7 @@ const InternalFunctions = {
             AthenaClient.webview.registerOverlay(PAGE_NAME, InternalFunctions.updateMessages);
             AthenaClient.webview.ready(PAGE_NAME, InternalFunctions.updateMessages);
             AthenaClient.systems.messenger.registerHistoryCallback(InternalFunctions.updateMessagesListener);
-            alt.on('keyup', InternalFunctions.handleKeyPress);
+            alt.Events.on('keyup', InternalFunctions.handleKeyPress);
             hasRegistered = true;
         }
     },

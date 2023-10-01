@@ -149,7 +149,7 @@ export default defineComponent({
 
             if (this.selection >= this.navOptions.length - 1 && this.controlsEnabled) {
                 if ('alt' in window) {
-                    alt.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.DISABLE_CONTROLS, true);
+                    alt.Events.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.DISABLE_CONTROLS, true);
                 }
 
                 this.controlsEnabled = false;
@@ -163,7 +163,7 @@ export default defineComponent({
 
             if (!this.controlsEnabled) {
                 if ('alt' in window) {
-                    alt.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.DISABLE_CONTROLS, false);
+                    alt.Events.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.DISABLE_CONTROLS, false);
                 }
 
                 this.controlsEnabled = true;
@@ -184,7 +184,7 @@ export default defineComponent({
                 return;
             }
 
-            alt.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.READY_SETUP_COMPLETE);
+            alt.Events.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.READY_SETUP_COMPLETE);
         },
         setParameter(parameter: string, value: any, arrayIndex: number = null) {
             if (typeof value !== 'number' && typeof value !== 'object') {
@@ -328,7 +328,7 @@ export default defineComponent({
                 return;
             }
 
-            alt.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.SYNC, JSON.parse(JSON.stringify(this.data)));
+            alt.Events.emit(CHARACTER_CREATOR_WEBVIEW_EVENTS.SYNC, JSON.parse(JSON.stringify(this.data)));
         },
         resetSelection() {
             this.selection = 0;
@@ -356,8 +356,8 @@ export default defineComponent({
         });
 
         if ('alt' in window) {
-            alt.on(CHARACTER_CREATOR_WEBVIEW_EVENTS.READY, this.setReady);
-            alt.on(CHARACTER_CREATOR_WEBVIEW_EVENTS.SET_DATA, this.setData);
+            alt.Events.on(CHARACTER_CREATOR_WEBVIEW_EVENTS.READY, this.setReady);
+            alt.Events.on(CHARACTER_CREATOR_WEBVIEW_EVENTS.SET_DATA, this.setData);
         }
     },
     unmounted() {

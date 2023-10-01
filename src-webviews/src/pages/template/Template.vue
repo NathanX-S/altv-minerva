@@ -39,9 +39,9 @@ export default defineComponent({
     mounted() {
         // Bind Events to Methods
         if ('alt' in window) {
-            // alt.on('x', this.whatever);
-            alt.on(`${ComponentName}:SendSomeData`, this.sendSomeData);
-            alt.emit(`${ComponentName}:Ready`);
+            // alt.Events.on('x', this.whatever);
+            alt.Events.on(`${ComponentName}:SendSomeData`, this.sendSomeData);
+            alt.Events.emit(`${ComponentName}:Ready`);
         }
 
         // Add Keybinds for In-Menu
@@ -65,7 +65,7 @@ export default defineComponent({
         handleKeyPress(e) {
             // Escape Key
             if (e.keyCode === 27 && 'alt' in window) {
-                alt.emit(`${ComponentName}:Close`);
+                alt.Events.emit(`${ComponentName}:Close`);
             }
         },
         sendSomeData(arg1: string) {

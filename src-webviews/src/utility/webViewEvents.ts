@@ -15,7 +15,7 @@ class InternalFunctions {
             return;
         }
 
-        alt.on(WebViewEventNames.ON_EMIT, InternalFunctions.handleEmits);
+        alt.Events.on(WebViewEventNames.ON_EMIT, InternalFunctions.handleEmits);
     }
 
     /**
@@ -51,7 +51,7 @@ export default class WebViewEvents {
             return;
         }
 
-        alt.emit(WebViewEventNames.CLOSE_PAGE);
+        alt.Events.emit(WebViewEventNames.CLOSE_PAGE);
     }
 
     /**
@@ -68,7 +68,7 @@ export default class WebViewEvents {
             return;
         }
 
-        alt.emit(WebViewEventNames.EMIT_READY, pageName, ...args);
+        alt.Events.emit(WebViewEventNames.EMIT_READY, pageName, ...args);
     }
 
     /**
@@ -87,7 +87,7 @@ export default class WebViewEvents {
             return;
         }
 
-        alt.emit(WebViewEventNames.EMIT_SERVER, eventName, ...args);
+        alt.Events.emit(WebViewEventNames.EMIT_SERVER, eventName, ...args);
     }
 
     /**
@@ -107,7 +107,7 @@ export default class WebViewEvents {
             return;
         }
 
-        alt.emit(WebViewEventNames.EMIT_CLIENT, eventName, ...args);
+        alt.Events.emit(WebViewEventNames.EMIT_CLIENT, eventName, ...args);
     }
 
     /**
@@ -140,7 +140,14 @@ export default class WebViewEvents {
             return;
         }
 
-        alt.emit(WebViewEventNames.EMIT_CLIENT, WebViewEventNames.PLAY_SOUND, soundName, 0, volume, soundInstantID);
+        alt.Events.emit(
+            WebViewEventNames.EMIT_CLIENT,
+            WebViewEventNames.PLAY_SOUND,
+            soundName,
+            0,
+            volume,
+            soundInstantID,
+        );
     }
 
     /**
@@ -157,7 +164,7 @@ export default class WebViewEvents {
             return;
         }
 
-        alt.emit(WebViewEventNames.EMIT_CLIENT, WebViewEventNames.PLAY_SOUND_FRONTEND, audioName, ref);
+        alt.Events.emit(WebViewEventNames.EMIT_CLIENT, WebViewEventNames.PLAY_SOUND_FRONTEND, audioName, ref);
     }
 }
 

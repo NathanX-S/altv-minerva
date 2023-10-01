@@ -73,7 +73,7 @@ export async function create(_scriptID: number, offset: alt.IVector3 = null, _is
         native.renderScriptCams(true, false, 0, true, false, 0);
     }
 
-    cameraControlsInterval = alt.setInterval(handleControls, 0);
+    cameraControlsInterval = alt.Timers.setInterval(handleControls, 0);
 }
 
 /**
@@ -388,7 +388,7 @@ export function handleControls() {
         if (
             !native.isEntityPlayingAnim(isLocalPlayer ? alt.Player.local.scriptID : scriptID, 'nm@hands', 'hands_up', 3)
         ) {
-            alt.emit('animation:Play', {
+            alt.Events.emit('animation:Play', {
                 dict: 'nm@hands',
                 name: 'hands_up',
                 duration: -1,
@@ -398,11 +398,11 @@ export function handleControls() {
     }
 }
 
-alt.on('connectionComplete', () => {
+alt.Events.on('connectionComplete', () => {
     destroy();
 });
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     destroy();
 });
 

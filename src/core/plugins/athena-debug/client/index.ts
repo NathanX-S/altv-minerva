@@ -41,7 +41,7 @@ function init() {
         },
     });
 
-    alt.on('keyup', (key: number) => {
+    alt.Events.on('keyup', (key: number) => {
         if (key !== F1_KEY) {
             return;
         }

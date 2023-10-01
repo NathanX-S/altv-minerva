@@ -126,7 +126,7 @@ export function create(info: QuestionInfo): Promise<boolean> {
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.on('keyup', InternalFunctions.handleKeyUp);
+    alt.Events.on('keyup', InternalFunctions.handleKeyUp);
     alt.showCursor(true);
     alt.toggleRmlControls(true);
     alt.toggleGameControls(false);
@@ -158,7 +158,7 @@ export async function cancel() {
     });
 }
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document === 'undefined') {
         return;
     }

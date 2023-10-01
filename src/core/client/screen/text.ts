@@ -135,7 +135,7 @@ export function addTemporaryText(identifier, msg, x, y, scale, r, g, b, a, ms) {
         tempInterval = null;
     }
 
-    tempInterval = alt.setInterval(handleDrawTemporaryText, 0);
+    tempInterval = alt.Timers.setInterval(handleDrawTemporaryText, 0);
 }
 
 /**

@@ -21,7 +21,7 @@ const Internal = {
             return;
         }
 
-        alt.on('vehicleDestroy', Internal.handleDestroy);
+        alt.Events.on('vehicleDestroy', Internal.handleDestroy);
         alt.log(`~lc~Default System: ~g~${SYSTEM_NAME}`);
     },
     async handleDestroy(vehicle: alt.Vehicle) {

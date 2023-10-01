@@ -163,7 +163,7 @@ export default defineComponent({
         },
         handleExit() {
             if ('alt' in window) {
-                alt.emit(WebViewEventNames.CLOSE_PAGE);
+                alt.Events.emit(WebViewEventNames.CLOSE_PAGE);
             }
         },
         submit() {
@@ -176,7 +176,7 @@ export default defineComponent({
             }
 
             if ('alt' in window) {
-                alt.emit(`${ComponentName}:Submit`, results);
+                alt.Events.emit(`${ComponentName}:Submit`, results);
             }
         },
         relayClosePage(pageName: string) {
@@ -187,8 +187,8 @@ export default defineComponent({
         document.addEventListener('keyup', this.handlePress);
 
         if ('alt' in window) {
-            alt.on(`${ComponentName}:SetMenu`, this.setMenu);
-            alt.emit(`${ComponentName}:Ready`);
+            alt.Events.on(`${ComponentName}:SetMenu`, this.setMenu);
+            alt.Events.emit(`${ComponentName}:Ready`);
         } else {
             this.setMenu('Generic Example', TestData, { description: 'Hello, what the chicken...' });
         }

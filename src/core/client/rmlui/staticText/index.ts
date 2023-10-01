@@ -91,7 +91,7 @@ export function upsert(drawable: StaticTextInfo): void {
     if (typeof document === 'undefined') {
         document = new alt.RmlDocument('/client/rmlui/staticText/index.rml');
         document.show();
-        interval = alt.setInterval(InternalFunctions.tick, 0);
+        interval = alt.Timers.setInterval(InternalFunctions.tick, 0);
     }
 
     const drawablesElement = document.getElementByID('drawables');
@@ -132,7 +132,7 @@ export function remove(uid: string) {
     InternalFunctions.removeElement(drawablesElement, existingElement);
 }
 
-alt.on('disconnect', () => {
+alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
         alt.log('staticText | Destroyed RMLUI Document on Disconnect');

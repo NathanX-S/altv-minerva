@@ -96,4 +96,4 @@ function removeAll() {
 alt.onServer(SYSTEM_EVENTS.POPULATE_BLIPS, populate);
 alt.onServer(SYSTEM_EVENTS.APPEND_BLIP, append);
 alt.onServer(SYSTEM_EVENTS.REMOVE_BLIP, remove);
-alt.on('disconnect', removeAll);
+alt.Events.on('disconnect', removeAll);

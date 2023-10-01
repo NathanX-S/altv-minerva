@@ -37,7 +37,7 @@ async function loadPlugins() {
     }
 
     hasFinishedLoading = true;
-    alt.emit(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY);
+    alt.Events.emit(SYSTEM_EVENTS.BOOTUP_ENABLE_ENTRY);
 }
 
 /**
@@ -97,7 +97,7 @@ export function addCallback(callback: Function) {
  */
 export async function isDoneLoading(): Promise<void> {
     return new Promise((resolve: Function) => {
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (!hasFinishedLoading) {
                 return;
             }

@@ -192,9 +192,9 @@ async function handleRecovery(player: alt.Player, seedPhrase: string, newPasswor
 
 Athena.systems.plugins.registerPlugin(PLUGIN_NAME, () => {
     Athena.systems.loginFlow.add('authentication', 1, beginLoginRequest);
-    alt.onClient(AuthEvents.toServer.tryLogin, handleLogin);
-    alt.onClient(AuthEvents.toServer.tryRegister, handleRegister);
-    alt.onClient(AuthEvents.toServer.tryRecovery, handleRecovery);
-    alt.onClient(AuthEvents.toServer.finishLogin, handleFinish);
-    alt.setInterval(cleanupSessions, 5000);
+    alt.Events.onPlayer(AuthEvents.toServer.tryLogin, handleLogin);
+    alt.Events.onPlayer(AuthEvents.toServer.tryRegister, handleRegister);
+    alt.Events.onPlayer(AuthEvents.toServer.tryRecovery, handleRecovery);
+    alt.Events.onPlayer(AuthEvents.toServer.finishLogin, handleFinish);
+    alt.Timers.setInterval(cleanupSessions, 5000);
 });

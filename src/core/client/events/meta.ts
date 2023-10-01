@@ -14,4 +14,4 @@ function handleSetMeta(key: string, value: any) {
     alt.Player.local.meta[key] = value;
 }
 
-alt.on('localMetaChange', handleSetMeta);
+alt.Events.on('localMetaChange', handleSetMeta);

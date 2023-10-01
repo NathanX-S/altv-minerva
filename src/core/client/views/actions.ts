@@ -37,7 +37,7 @@ class ActionsView implements ViewModel {
             ActionsView.close(true);
         });
 
-        alt.on('keyup', ActionsView.keyUp);
+        alt.Events.on('keyup', ActionsView.keyUp);
     }
 
     /**
@@ -78,7 +78,7 @@ class ActionsView implements ViewModel {
             return;
         }
 
-        alt.emit(action.eventName, action.data);
+        alt.Events.emit(action.eventName, action.data);
     }
 
     static async ready() {

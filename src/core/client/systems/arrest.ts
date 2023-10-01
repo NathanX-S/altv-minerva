@@ -14,7 +14,7 @@ const ArrestController = {
         }
 
         cuffer = _cuffer;
-        alt.setInterval(ArrestController.handleCuff, 500);
+        alt.Timers.setInterval(ArrestController.handleCuff, 500);
     },
 
     uncuff(target: alt.Player) {},
