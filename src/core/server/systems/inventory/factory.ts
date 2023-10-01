@@ -28,12 +28,12 @@ const InternalFunctions = {
  */
 export async function isDoneLoadingAsync(): Promise<void> {
     return new Promise((resolve: Function) => {
-        const interval = alt.setInterval(() => {
+        const interval = alt.Timers.setInterval(() => {
             if (!isDoneLoading) {
                 return;
             }
 
-            alt.clearInterval(interval);
+            clearInterval(interval.id);
             resolve();
         }, 0);
     });

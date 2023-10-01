@@ -18,7 +18,7 @@ class InternalFunctions {
      */
     static verifyName(player: alt.Player, name: string) {
         const isValidName = Athena.systems.character.isNameTaken(name);
-        alt.emitClient(player, CHARACTER_CREATOR_EVENTS.VERIFY_NAME, isValidName);
+        player.emit(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, isValidName);
     }
 
     /**
@@ -73,8 +73,7 @@ class InternalFunctions {
             CHARACTER_CREATOR_CONFIG.CHARACTER_CREATOR_POS.z,
         );
 
-        alt.emitClient(
-            player,
+        player.emit(
             CHARACTER_CREATOR_EVENTS.SHOW,
             CHARACTER_CREATOR_CONFIG.CHARACTER_CREATOR_POS,
             CHARACTER_CREATOR_CONFIG.CHARACTER_CREATOR_ROT,
@@ -92,7 +91,7 @@ export class CharacterCreatorView {
         // This can be overwritten by changing the callback for this function.
         Athena.systems.character.setCreatorCallback(InternalFunctions.show);
 
-        alt.onClient(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, InternalFunctions.verifyName);
-        alt.onClient(CHARACTER_CREATOR_EVENTS.DONE, InternalFunctions.done);
+        alt.Events.onPlayer(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, InternalFunctions.verifyName);
+        alt.Events.onPlayer(CHARACTER_CREATOR_EVENTS.DONE, InternalFunctions.done);
     }
 }

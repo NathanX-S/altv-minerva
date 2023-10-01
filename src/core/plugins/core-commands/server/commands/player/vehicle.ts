@@ -97,7 +97,7 @@ Athena.commands.register('seatbelt', '/seatbelt', [], (player: alt.Player) => {
         ? Athena.player.emit.notification(player, LocaleController.get(LOCALE_KEYS.PLAYER_SEATBELT_ON))
         : Athena.player.emit.notification(player, LocaleController.get(LOCALE_KEYS.PLAYER_SEATBELT_OFF));
 
-    alt.emitClient(player, VEHICLE_EVENTS.SET_SEATBELT, currentState);
+    player.emit(VEHICLE_EVENTS.SET_SEATBELT, currentState);
 });
 
 function setSeatbeltToFalse(player: alt.Player, vehicle: alt.Vehicle) {
@@ -111,11 +111,11 @@ function setSeatbeltToFalse(player: alt.Player, vehicle: alt.Vehicle) {
     }
 
     SeatbeltState[index].state = false;
-    alt.emitClient(player, VEHICLE_EVENTS.SET_SEATBELT, SeatbeltState[index].state);
+    player.emit(VEHICLE_EVENTS.SET_SEATBELT, SeatbeltState[index].state);
 }
 
-alt.on('playerEnteredVehicle', setSeatbeltToFalse);
-alt.on('playerLeftVehicle', setSeatbeltToFalse);
-alt.on('playerDisconnect', (player: alt.Player) => {
+alt.Events.on('playerEnteredVehicle', setSeatbeltToFalse);
+alt.Events.on('playerLeftVehicle', setSeatbeltToFalse);
+alt.Events.on('playerDisconnect', (player: alt.Player) => {
     delete SeatbeltState[player.id];
 });

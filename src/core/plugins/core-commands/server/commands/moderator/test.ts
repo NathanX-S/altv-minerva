@@ -61,7 +61,7 @@ Athena.commands.register(
             pos: { ...player.pos },
         });
 
-        alt.setTimeout(() => {
+        alt.Timers.setTimeout(() => {
             if (!player || !player.valid) return;
             Athena.controllers.worldNotification.removeFromPlayer(player, uid);
         }, 5000);
@@ -255,11 +255,11 @@ Athena.commands.register('testactionmenu', '/testactionmenu - A test action menu
     );
 });
 
-alt.onClient('hello:From:Client', (player) => {
+alt.Events.onPlayer('hello:From:Client', (player) => {
     Athena.player.emit.message(player, `Got menu option from client.`);
 });
 
-alt.onClient('animation:Action:Server', (player, data: Animation) => {
+alt.Events.onPlayer('animation:Action:Server', (player, data: Animation) => {
     if (!data) return;
 
     Athena.player.emit.animation(player, data.dict, data.name, data.flags, data.duration);

@@ -53,7 +53,7 @@ function leave(player: alt.Player, vehicle: alt.Vehicle, seat: number) {
         return;
     }
 
-    alt.setTimeout(() => {
+    alt.Timers.setTimeout(() => {
         try {
             vehicle.destroy();
         } catch (err) {}
@@ -89,8 +89,8 @@ function removeEntity(entity: alt.Entity) {
     }
 }
 
-alt.on('playerEnteringVehicle', entering);
-alt.on('playerEnteredVehicle', enter);
-alt.on('playerLeftVehicle', leave);
-alt.on('vehicleDestroy', destroyed);
-alt.on('removeEntity', removeEntity);
+alt.Events.on('playerEnteringVehicle', entering);
+alt.Events.on('playerEnteredVehicle', enter);
+alt.Events.on('playerLeftVehicle', leave);
+alt.Events.on('vehicleDestroy', destroyed);
+alt.Events.on('removeEntity', removeEntity);

@@ -184,10 +184,10 @@ function handleDisconnect(player: alt.Player) {
 
 Athena.systems.plugins.registerPlugin(PLUGIN_NAME, () => {
     Athena.systems.loginFlow.add('character-select', 99, show);
-    alt.on('playerDisconnect', handleDisconnect);
-    alt.onClient(CharSelectEvents.toServer.next, handleNext);
-    alt.onClient(CharSelectEvents.toServer.prev, handlePrev);
-    alt.onClient(CharSelectEvents.toServer.select, handleSelect);
-    alt.onClient(CharSelectEvents.toServer.delete, handleDelete);
-    alt.onClient(CharSelectEvents.toServer.new, handleNew);
+    alt.Events.on('playerDisconnect', handleDisconnect);
+    alt.Events.onPlayer(CharSelectEvents.toServer.next, handleNext);
+    alt.Events.onPlayer(CharSelectEvents.toServer.prev, handlePrev);
+    alt.Events.onPlayer(CharSelectEvents.toServer.select, handleSelect);
+    alt.Events.onPlayer(CharSelectEvents.toServer.delete, handleDelete);
+    alt.Events.onPlayer(CharSelectEvents.toServer.new, handleNew);
 });

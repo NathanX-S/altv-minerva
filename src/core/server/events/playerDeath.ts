@@ -51,4 +51,4 @@ function handleDeath(victim: alt.Player, killer: alt.Entity, weaponHash: any): v
     }
 }
 
-alt.on('playerDeath', handleDeath);
+alt.Events.on('playerDeath', handleDeath);
