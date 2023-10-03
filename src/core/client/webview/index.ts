@@ -1,6 +1,6 @@
 export { Page } from './page';
-import * as native from 'natives';
-import * as alt from 'alt-client';
+import * as native from '@altv/natives';
+import * as alt from '@altv/client';
 
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { WebViewEventNames } from '@AthenaShared/enums/webViewEvents';

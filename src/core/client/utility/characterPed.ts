@@ -1,5 +1,5 @@
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 import * as AthenaClient from '@AthenaClient/api';
 import { Appearance } from '@AthenaShared/interfaces/appearance';
 import { CharacterSystem } from '@AthenaClient/systems/character';

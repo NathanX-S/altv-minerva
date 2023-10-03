@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 alt.loadRmlFont('/client/rmlui/fonts/arial.ttf', 'arial', false, false);
 alt.loadRmlFont('/client/rmlui/fonts/inter-regular.ttf', 'inter', false, false);

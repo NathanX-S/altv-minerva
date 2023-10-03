@@ -1,5 +1,5 @@
-import * as alt from 'alt-client';
-import * as natives from 'natives';
+import * as alt from '@altv/client';
+import * as natives from '@altv/natives';
 import * as AthenaClient from '@AthenaClient/api';
 
 import JobEnums, { Objective } from '@AthenaShared/interfaces/job';

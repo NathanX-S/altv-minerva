@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 interface MenuOptionBase<T = Function> {
     /**

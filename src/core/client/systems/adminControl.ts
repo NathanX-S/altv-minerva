@@ -1,5 +1,5 @@
 import { AdminControl, AdminControlEvents } from '@AthenaShared/interfaces/adminControl';
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 let AdminControls: Array<AdminControl> = [];
 const callbacks: Array<(controls: typeof AdminControls) => void> = [];

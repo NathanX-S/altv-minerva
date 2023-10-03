@@ -1,5 +1,5 @@
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 
 const zeroVector = { x: 0, y: 0, z: 0 };
 

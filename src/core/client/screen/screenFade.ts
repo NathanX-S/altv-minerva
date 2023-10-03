@@ -1,6 +1,6 @@
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 
 /**
  * Removes the black filter on a screen over time.

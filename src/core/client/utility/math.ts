@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 /**
  * It's a function that takes two vectors and returns a vector.

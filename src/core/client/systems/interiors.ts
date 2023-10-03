@@ -1,5 +1,5 @@
-import alt from 'alt-client';
-import natives from 'natives';
+import * as alt from '@altv/client';
+import natives from '@altv/natives';
 import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 
 function fixMissingInteriors() {

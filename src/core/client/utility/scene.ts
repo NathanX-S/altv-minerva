@@ -1,5 +1,5 @@
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 
 export function load(pos: alt.IVector3): Promise<boolean> {
     let timerHandle: number;

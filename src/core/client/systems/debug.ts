@@ -1,5 +1,5 @@
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 import { KEY_BINDS } from '@AthenaShared/enums/keyBinds';
 import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 import * as AthenaClient from '@AthenaClient/api';

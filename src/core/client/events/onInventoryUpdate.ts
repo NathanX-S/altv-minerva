@@ -1,6 +1,6 @@
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { Item } from '@AthenaShared/interfaces/item';
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 type InventoryUpdateCallback = (inventory: Array<Item>, toolbar: Array<Item>, totalWeight: number) => void;
 

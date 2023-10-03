@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 import { PLAYER_SYNCED_META } from '@AthenaShared/enums/playerSynced';
 import IAttachable from '@AthenaShared/interfaces/iAttachable';
 

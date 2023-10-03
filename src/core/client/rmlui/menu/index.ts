@@ -1,5 +1,5 @@
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 import * as AthenaClient from '@AthenaClient/api';
 import { rgbaToHexAlpha } from '@AthenaShared/utility/color';
 import { Invoke, Toggle, Selection, Range, MenuInfo } from './menuInterfaces';

@@ -42,8 +42,8 @@ const defaultServerCode =
     `\r\n// Reminder that this is JavaScript, do not write TypeScript`;
 
 const defaultClientCode =
-    `import * as alt from 'alt-client'; // Do Not Remove` +
-    `\r\nimport * as native from 'natives'; // Do Not Remove` +
+    `import * as alt from '@altv/client';; // Do Not Remove` +
+    `\r\nimport * as native from '@altv/natives'; // Do Not Remove` +
     `\r\nimport * as AthenaClient from 'src/core/client/api/index'; // Do Not Remove` +
     `\r\n// Reminder that this is JavaScript, do not write TypeScript`;
 

@@ -1,5 +1,5 @@
-import alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 import * as AthenaClient from '@AthenaClient/api';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { LOCALE_KEYS } from '@AthenaShared/locale/languages/keys';

@@ -1,5 +1,5 @@
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 const callbacks: Array<Function> = [];
 

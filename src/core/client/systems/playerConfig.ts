@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 import { PlayerConfigKeys } from '@AthenaShared/enums/playerConfigKeys';
 import { Account } from '@AthenaShared/interfaces/iAccount';
 import { Character } from '@AthenaShared/interfaces/character';

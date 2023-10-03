@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 import * as AthenaClient from '@AthenaClient/api';
 import { CHAT_WEBVIEW_EVENTS } from '../shared/events';
 import { MessageInfo } from '@AthenaClient/systems/messenger';

@@ -1,4 +1,4 @@
-import * as natives from 'natives';
+import * as natives from '@altv/natives';
 import { SCREEN_EFFECTS } from '@AthenaShared/enums/screenEffects';
 
 /**

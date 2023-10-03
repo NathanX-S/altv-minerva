@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 import { MESSENGER_EVENTS } from '@AthenaShared/enums/messenger';
 import { MessageCommand } from '@AthenaShared/interfaces/messageCommand';

@@ -1,8 +1,8 @@
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import * as AthenaClient from '@AthenaClient/api';
 import { Door } from '@AthenaShared/interfaces/door';
-import * as alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 
 let doors: Array<Door> = [];
 let interval: number;

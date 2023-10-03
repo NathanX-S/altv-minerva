@@ -1,4 +1,4 @@
-import * as native from 'natives';
+import * as native from '@altv/natives';
 
 /**
  * Create a simple GTA:V Notification.

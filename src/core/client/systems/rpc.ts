@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 /**
  * Handle an RPC event from server-side, and return a result back to the server.

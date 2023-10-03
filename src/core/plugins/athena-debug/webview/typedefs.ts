@@ -7,7 +7,7 @@ declare module "src/core/client/camera/gameplay" {
     export function enable(): void;
 }
 declare module "src/core/client/camera/pedEdit" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function create(_scriptID: number, offset?: alt.IVector3, _isLocalPlayer?: boolean): Promise<void>;
     export function calculateCamOffset(offset: alt.IVector3): alt.IVector3;
     export function setCameraOffset(offset: alt.IVector3): void;
@@ -246,7 +246,7 @@ declare module "src/core/shared/interfaces/iObject" {
     }
 }
 declare module "src/core/client/streamers/object" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { IObject } from "src/core/shared/interfaces/iObject";
     export type CreatedObject = IObject & {
         createdObject?: alt.Object;
@@ -263,7 +263,7 @@ declare module "src/core/client/menus/object" {
     export function open(object: CreatedObject): void;
 }
 declare module "src/core/client/menus/player" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { IWheelOptionExt } from "src/core/shared/interfaces/wheelMenu";
     export type PlayerMenuInjection = (target: alt.Player, options: Array<IWheelOptionExt>) => Array<IWheelOptionExt>;
     export function addInjection(callback: PlayerMenuInjection): void;
@@ -290,7 +290,7 @@ declare module "src/core/shared/enums/vehicle" {
     };
 }
 declare module "src/core/client/menus/vehicle" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { IWheelOptionExt } from "src/core/shared/interfaces/wheelMenu";
     export type VehicleMenuInjection = (target: alt.Vehicle, options: Array<IWheelOptionExt>) => Array<IWheelOptionExt>;
     export function addInjection(callback: VehicleMenuInjection): void;
@@ -341,7 +341,7 @@ declare module "src/core/shared/utility/color" {
     export function rgbaToHexAlpha(color: alt.RGBA): string;
 }
 declare module "src/core/client/rmlui/menu/menuInterfaces" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     interface MenuOptionBase<T = Function> {
         title: string;
         description: string;
@@ -390,7 +390,7 @@ declare module "src/core/client/rmlui/menu3d/menu3DInterfaces" {
     }
 }
 declare module "src/core/client/rmlui/menu3d/index" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { OptionFor3DMenu } from "src/core/client/rmlui/menu3d/menu3DInterfaces";
     export function create(pos: alt.IVector3, options: Array<OptionFor3DMenu>, maxDistance?: number): void;
     export function close(): Promise<void>;
@@ -429,7 +429,7 @@ declare module "src/core/client/rmlui/question/index" {
     export function cancel(): Promise<void>;
 }
 declare module "src/core/client/rmlui/sprites/index" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export interface SpriteInfo {
         uid: string;
         path: string;
@@ -443,7 +443,7 @@ declare module "src/core/client/rmlui/sprites/index" {
     export function update(uid: string, sprite: Partial<SpriteInfo>): void;
 }
 declare module "src/core/client/rmlui/staticText/staticTextInterfaces" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export interface StaticTextInfo {
         uid: string;
         text: string;
@@ -512,12 +512,12 @@ declare module "src/core/client/screen/errorScreen" {
     export function create(screen: IErrorScreen): void;
 }
 declare module "src/core/client/screen/marker" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function draw(type: number, pos: alt.IVector3, scale: alt.IVector3, color: alt.RGBA, bobUpAndDown?: boolean, faceCamera?: boolean, rotate?: boolean): void;
     export function drawSimple(type: number, pos: alt.IVector3, rot: alt.IVector3, scale: alt.IVector3, color: alt.RGBA, faceCam: boolean): void;
 }
 declare module "src/core/client/screen/minimap" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function getWidth(asPercent?: boolean): number;
     export function getHeight(asPercent?: boolean): number;
     export function getTopLeft(asPercent?: boolean): alt.IVector2;
@@ -653,7 +653,7 @@ declare module "src/core/client/screen/screenFade" {
     export function toBlack(timeInMs: number): Promise<void>;
 }
 declare module "src/core/client/screen/text" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function drawText2D(text: string, pos: alt.IVector2, scale: number, color: alt.RGBA, alignment?: number, padding?: number): void;
     export function drawRectangle(pos: alt.IVector3, size: alt.IVector2, color: alt.RGBA): void;
     export function drawRectangle2D(pos: alt.IVector2, size: alt.IVector2, color: alt.RGBA): void;
@@ -661,7 +661,7 @@ declare module "src/core/client/screen/text" {
     export function addTemporaryText(identifier: any, msg: any, x: any, y: any, scale: any, r: any, g: any, b: any, a: any, ms: any): void;
 }
 declare module "src/core/client/screen/screenText" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export interface TextProperties {
         paddingLeft?: number;
         paddingRight?: number;
@@ -711,7 +711,7 @@ declare module "src/core/client/screen/spinner" {
     export function create(data: ISpinner): void;
 }
 declare module "src/core/client/screen/texture" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function drawTexture2D(dictionary: string, name: string, position: alt.IVector2, scale?: number, opacity?: number): void;
     export function drawTexture(dictionary: string, name: string, position: alt.Vector3, scale?: number): void;
 }
@@ -848,7 +848,7 @@ declare module "src/core/shared/interfaces/blip" {
     }
 }
 declare module "src/core/client/streamers/blip" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { Blip } from "src/core/shared/interfaces/blip";
     export function append(blipData: Blip): alt.PointBlip;
     export function remove(uid: string): void;
@@ -936,7 +936,7 @@ declare module "src/core/shared/interfaces/item" {
     export type ItemEx<T> = BaseItem<DefaultItemBehavior, T> & StoredItem<T>;
 }
 declare module "src/core/client/streamers/item" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { ItemDrop } from "src/core/shared/interfaces/item";
     export type CreatedDrop = ItemDrop & {
         createdObject?: alt.Object;
@@ -1126,7 +1126,7 @@ declare module "src/core/shared/enums/keyBinds" {
     };
 }
 declare module "src/core/client/systems/entitySelector" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { Interaction } from "src/core/shared/interfaces/interaction";
     export type ValidEntityTypes = 'object' | 'pos' | 'npc' | 'player' | 'vehicle' | 'interaction';
     export type TargetInfo = {
@@ -1216,7 +1216,7 @@ declare module "src/core/shared/enums/messenger" {
     };
 }
 declare module "src/core/client/systems/messenger" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { MessageCommand } from "src/core/shared/interfaces/messageCommand";
     export type MessageInfo = {
         timestamp: number;
@@ -1322,7 +1322,7 @@ declare module "src/core/client/views/audio" {
     }
 }
 declare module "src/core/client/systems/sound" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function frontend(audioName: string, ref: string): void;
     export function handlePlayAudioPositional(pos: alt.Vector3, soundName: string, soundInstantID?: string): void;
     export function play3d(entity: alt.Entity, soundName: string, soundInstantID?: string): void;
@@ -1368,7 +1368,7 @@ declare module "src/core/client/systems/index" {
     export * as wheelMenu from "src/core/client/views/wheelMenu";
 }
 declare module "src/core/client/utility/directionToVector" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export class DirectionVector {
         private position;
         private rotation;
@@ -1404,7 +1404,7 @@ declare module "src/core/client/utility/directionToVector" {
     }
 }
 declare module "src/core/client/utility/math" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function getCrossProduct(v1: alt.Vector3, v2: alt.Vector3): alt.Vector3;
     export function getNormalizedVector(vector: alt.Vector3): alt.Vector3;
     export function degToRad(degrees: number): number;
@@ -1430,7 +1430,7 @@ declare module "src/core/shared/utility/random" {
     export function getRandomElement<T>(elements: Array<T>): T;
 }
 declare module "src/core/client/utility/scene" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function load(pos: alt.IVector3): Promise<boolean>;
 }
 declare module "src/core/client/utility/scenarios" {
@@ -1656,7 +1656,7 @@ declare module "src/core/shared/interfaces/webview" {
 }
 declare module "src/core/client/webview/index" {
     export { Page } from "src/core/client/webview/page";
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export type AnyCallback = ((...args: any[]) => void) | ((...args: any[]) => Promise<void>) | Function;
     export function create(url: string): void;
     export function setOverlaysVisible(value: boolean, doNotUpdate?: boolean): Promise<void>;
@@ -1680,7 +1680,7 @@ declare module "src/core/client/webview/index" {
     export function isAnyMenuOpen(excludeDead?: boolean): boolean;
 }
 declare module "src/core/client/world/position" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     const DefaultData: {
         minStart: number;
         iterations: number;
@@ -1711,7 +1711,7 @@ declare module "src/core/client/api/index" {
     export * as world from "src/core/client/world/index";
 }
 declare module "src/core/client/camera/cinematic" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export interface iCameraNode {
         pos: alt.IVector3;
         rot?: alt.IVector3;
@@ -1898,7 +1898,7 @@ declare module "src/core/client/menus/animationMenus/waitAnims" {
 declare module "src/core/client/menus/animation" { }
 declare module "src/core/client/rmlui/fonts/index" { }
 declare module "src/core/client/screen/mouse" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export function getScaledCursorPosition(): alt.IVector2;
 }
 declare module "src/core/shared/enums/playerSynced" {
@@ -2123,7 +2123,7 @@ declare module "src/core/shared/flags/pedflags" {
     }
 }
 declare module "src/core/client/systems/vehicle" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     export const VehicleController: {
         registerKeybinds(): void;
         emitEngine(): void;
@@ -2635,7 +2635,7 @@ declare module "src/core/client/systems/alarm" {
     export function stopAllAlarms(): Promise<void>;
 }
 declare module "src/core/client/utility/characterPed" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     import { Appearance } from "src/core/shared/interfaces/appearance";
     export const PedCharacter: {
         create(isMale: boolean, _pos: alt.IVector3, _rot?: alt.IVector3 | number): Promise<number>;
@@ -2652,7 +2652,7 @@ declare module "src/core/client/utility/disableControls" {
     export function handleDisablingAttacks(): void;
 }
 declare module "src/core/client/utility/raycast" {
-    import * as alt from 'alt-client';
+    import * as alt from '@altv/client';;
     const Raycast: {
         performRaycast(start: alt.IVector3, end: alt.IVector3, flags: number, radius: number, useShapeTest?: boolean): [number, boolean, alt.IVector3, alt.IVector3, number];
         positionFromCamera(flags?: number, useShapeTest?: boolean, radius?: number): alt.IVector3 | null;

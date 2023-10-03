@@ -1,5 +1,5 @@
-import alt from 'alt-client';
-import * as native from 'natives';
+import * as alt from '@altv/client';
+import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { Particle } from '@AthenaShared/interfaces/particle';
 

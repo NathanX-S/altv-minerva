@@ -1,4 +1,4 @@
-import * as alt from 'alt-client';
+import * as alt from '@altv/client';
 
 /**
  * Sets meta on our local player without sharing it with anyone.
