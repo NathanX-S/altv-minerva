@@ -18,7 +18,7 @@ let optionIndex: number = 0;
 let document: alt.RmlDocument;
 let pauseControl = false;
 let nextDebounce = Date.now() + 0;
-let everyTick: number;
+let everyTick: alt.Timers.EveryTick;
 
 const InternalFunctions = {
     init(info: MenuInfo) {
@@ -132,7 +132,7 @@ const InternalFunctions = {
         AthenaClient.systems.sound.frontend('CANCEL', 'HUD_FREEMODE_SOUNDSET');
 
         alt.Player.local.isMenuOpen = false;
-        alt.clearEveryTick(everyTick);
+        everyTick.destroy();
     },
     /**
      * Called when pressing enter.
@@ -235,7 +235,7 @@ const InternalFunctions = {
         InternalFunctions.updateIndex();
         AthenaClient.systems.sound.frontend('NAV_UP_DOWN', 'HUD_FREEMODE_SOUNDSET');
 
-        if (alt.debug) {
+        if (alt.isDebug) {
             alt.log(`NAV_UP -> ${optionIndex}`);
         }
     },
@@ -256,7 +256,7 @@ const InternalFunctions = {
         InternalFunctions.updateIndex();
         AthenaClient.systems.sound.frontend('NAV_UP_DOWN', 'HUD_FREEMODE_SOUNDSET');
 
-        if (alt.debug) {
+        if (alt.isDebug) {
             alt.log(`NAV_DOWN -> ${optionIndex}`);
         }
     },
@@ -306,7 +306,7 @@ const InternalFunctions = {
 
         InternalFunctions.updateValue();
 
-        if (alt.debug) {
+        if (alt.isDebug) {
             alt.log(`NAV_LEFT -> ${option.value}`);
         }
     },
@@ -356,7 +356,7 @@ const InternalFunctions = {
 
         InternalFunctions.updateValue();
 
-        if (alt.debug) {
+        if (alt.isDebug) {
             alt.log(`NAV_RIGHT -> ${option.value}`);
         }
     },
@@ -375,7 +375,7 @@ const InternalFunctions = {
                 return;
             }
 
-            if (!alt.isKeyDown(key)) {
+            if (!alt.getKeyState(key).isDown) {
                 return;
             }
 
@@ -418,13 +418,13 @@ export function create(info: MenuInfo): void {
     }
 
     if (typeof document === 'undefined') {
-        document = new alt.RmlDocument('/client/rmlui/menu/index.rml');
+        document = alt.RmlDocument.create({ url: '/client/rmlui/menu/index.rml' });
         document.show();
     }
 
     pauseControl = false;
     alt.Player.local.isMenuOpen = true;
-    everyTick = alt.everyTick(InternalFunctions.handleKeyHeld);
+    everyTick = alt.Timers.everyTick(InternalFunctions.handleKeyHeld);
     InternalFunctions.init(info);
 }
 /**

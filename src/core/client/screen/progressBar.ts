@@ -8,7 +8,7 @@ const barWidth = 0.08; // Based on percentages of screen.
 const barHeight = 0.02;
 const bars: Array<ProgressBar> = [];
 
-let interval;
+let interval: alt.Timers.Interval;
 let pause = false;
 
 function drawBars() {
@@ -104,10 +104,10 @@ export function remove(uid: string) {
  */
 export function clear() {
     if (bars.length <= 0) {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = null;
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.PROGRESSBAR_CREATE, create);
-alt.onServer(SYSTEM_EVENTS.PROGRESSBAR_REMOVE, remove);
+alt.Events.onServer(SYSTEM_EVENTS.PROGRESSBAR_CREATE, create);
+alt.Events.onServer(SYSTEM_EVENTS.PROGRESSBAR_REMOVE, remove);

@@ -2,7 +2,6 @@ import * as Athena from '@AthenaServer/api';
 import * as alt from '@altv/server';
 import { PLAYER_SYNCED_META } from '@AthenaShared/enums/playerSynced';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
-import { View_Events_Input_Menu } from '@AthenaShared/enums/views';
 import { ANIMATION_FLAGS } from '@AthenaShared/flags/animationFlags';
 import IAttachable from '@AthenaShared/interfaces/iAttachable';
 import ICredit from '@AthenaShared/interfaces/iCredit';
@@ -37,7 +36,7 @@ export function startAlarm(player: alt.Player, name: string): void {
         return;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_ALARM_START, name);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_START, name);
 }
 
 /**
@@ -54,7 +53,7 @@ export function stopAlarm(player: alt.Player, name: string) {
         return;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP, name);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP, name);
 }
 
 /**
@@ -70,7 +69,7 @@ export function stopAllAlarms(player: alt.Player) {
         return;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP_ALL);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP_ALL);
 }
 
 /**
@@ -99,7 +98,7 @@ export function animation(
         return;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_ANIMATION, dictionary, name, flags, duration);
 }
 
 /**
@@ -125,7 +124,7 @@ export function clearAnimation(player: alt.Player) {
         },
     ];
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, tasks);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, tasks);
 }
 
 /**
@@ -145,7 +144,7 @@ export function scenario(player: alt.Player, name: string, duration: number): vo
         return;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SCENARIO, name, duration);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SCENARIO, name, duration);
 }
 
 /**
@@ -159,7 +158,7 @@ export function meta(player: alt.Player, key: string, value: any): void {
         return Overrides.meta(player, key, value);
     }
 
-    player.setLocalMeta(key, value);
+    player.meta[key] = value;
 }
 
 /**
@@ -195,14 +194,14 @@ export function particle(player: alt.Player, particle: Particle, emitToNearbyPla
     }
 
     if (!emitToNearbyPlayers) {
-        alt.emitClient(player, SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, particle);
+        player.emit(SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, particle);
         return;
     }
 
     const closestPlayers = Athena.getters.players.inRangeWithDistance(player.pos, 10);
     for (let i = 0; i < closestPlayers.length; i++) {
         const player = closestPlayers[i].player;
-        alt.emitClient(player, SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, particle);
+        player.emit(SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, particle);
     }
 }
 
@@ -217,7 +216,7 @@ export function createMissionText(player: alt.Player, text: string, duration?: n
         return Overrides.createMissionText(player, text, duration);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_MISSION_TEXT, text, duration);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_MISSION_TEXT, text, duration);
 }
 
 /**
@@ -246,7 +245,7 @@ export function createProgressBar(player: alt.Player, progressbar: ProgressBar):
         progressbar.uid = sha256Random(JSON.stringify(progressbar));
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PROGRESSBAR_CREATE, progressbar);
+    player.emit(SYSTEM_EVENTS.PROGRESSBAR_CREATE, progressbar);
     return progressbar.uid;
 }
 
@@ -273,7 +272,7 @@ export function removeProgressBar(player: alt.Player, uid: string) {
         return Overrides.removeProgressBar(player, uid);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PROGRESSBAR_REMOVE, uid);
+    player.emit(SYSTEM_EVENTS.PROGRESSBAR_REMOVE, uid);
 }
 
 /**
@@ -294,7 +293,7 @@ export function sound2D(player: alt.Player, audioName: string, volume: number = 
         return Overrides.sound2D(player, audioName, volume, soundInstantID);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, audioName, volume, soundInstantID);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, audioName, volume, soundInstantID);
 }
 
 /**
@@ -315,7 +314,7 @@ export function sound3D(player: alt.Player, audioName: string, target: alt.Entit
         return Overrides.sound3D(player, audioName, target, soundInstantID);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, target, audioName, soundInstantID);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, target, audioName, soundInstantID);
 }
 
 /**
@@ -338,7 +337,7 @@ export function soundStop(player: alt.Player, soundInstantID?: string): void {
         return Overrides.soundStop(player, soundInstantID);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_STOP, soundInstantID);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_STOP, soundInstantID);
 }
 
 /**
@@ -360,7 +359,7 @@ export function soundFrontend(player: alt.Player, audioName: string, ref: string
         return Overrides.soundFrontend(player, audioName, ref);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_FRONTEND_SOUND, audioName, ref);
 }
 
 /**
@@ -372,7 +371,7 @@ export function taskTimeline(player: alt.Player, tasks: Array<Task | TaskCallbac
         return Overrides.taskTimeline(player, tasks);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, tasks);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, tasks);
 }
 
 /**
@@ -391,7 +390,7 @@ export function createSpinner(player: alt.Player, spinner: ISpinner) {
         return Overrides.createSpinner(player, spinner);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SPINNER, spinner);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SPINNER, spinner);
 }
 
 /**
@@ -411,7 +410,7 @@ export function clearSpinner(player: alt.Player) {
         return Overrides.clearSpinner(player);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SPINNER_CLEAR);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SPINNER_CLEAR);
 }
 
 /**
@@ -430,7 +429,7 @@ export function createErrorScreen(player: alt.Player, screen: IErrorScreen) {
         return Overrides.createErrorScreen(player, screen);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN, screen);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN, screen);
 }
 
 /**
@@ -448,7 +447,7 @@ export function clearErrorScreen(player: alt.Player) {
         return Overrides.clearErrorScreen(player);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN_CLEAR);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN_CLEAR);
 }
 
 /**
@@ -467,7 +466,7 @@ export function createShard(player: alt.Player, shard: IShard) {
         return Overrides.createShard(player, shard);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SHARD, shard);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SHARD, shard);
 }
 
 /**
@@ -485,7 +484,7 @@ export function clearShard(player: alt.Player) {
         return Overrides.clearShard(player);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SHARD_CLEAR);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SHARD_CLEAR);
 }
 
 /**
@@ -506,7 +505,7 @@ export function createCredits(player: alt.Player, credits: ICredit) {
         return Overrides.createCredits(player, credits);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_CREDITS, credits);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_CREDITS, credits);
 }
 
 /**
@@ -524,7 +523,7 @@ export function clearCredits(player: alt.Player) {
         return Overrides.clearCredits(player);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_CREDITS_CLEAR);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_CREDITS_CLEAR);
 }
 
 /**
@@ -573,12 +572,12 @@ export function objectAttach(player: alt.Player, attachable: IAttachable, remove
         player.attachables.push(attachable);
     }
 
-    player.setStreamSyncedMeta(PLAYER_SYNCED_META.ATTACHABLES, player.attachables);
+    player.syncedMeta[PLAYER_SYNCED_META.ATTACHABLES] = player.attachables;
 
     if (removeAfterMilliseconds >= 0) {
         const uid = attachable.uid;
 
-        alt.setTimeout(() => {
+        alt.Timers.setTimeout(() => {
             if (!player || !player.valid) {
                 return;
             }
@@ -628,7 +627,7 @@ export function objectRemove(player: alt.Player, uid: string) {
         }
 
         player.attachables.splice(i, 1);
-        player.setStreamSyncedMeta(PLAYER_SYNCED_META.ATTACHABLES, player.attachables);
+        player.syncedMeta[PLAYER_SYNCED_META.ATTACHABLES] = player.attachables;
         return;
     }
 }
@@ -654,7 +653,7 @@ export function tempObjectLerp(
         return Overrides.tempObjectLerp(player, model, start, end, speed);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_TEMP_OBJECT_LERP, model, start, end, speed);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_TEMP_OBJECT_LERP, model, start, end, speed);
 }
 
 /**
@@ -670,7 +669,7 @@ export function wheelMenu(player: alt.Player, label: string, wheelItems: Array<I
         return Overrides.wheelMenu(player, label, wheelItems);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_WHEEL_MENU, label, wheelItems, true);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_WHEEL_MENU, label, wheelItems, true);
 }
 
 /**

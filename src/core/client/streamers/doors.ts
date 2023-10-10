@@ -5,7 +5,7 @@ import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 
 let doors: Array<Door> = [];
-let interval: number;
+let interval: alt.Timers.Interval;
 
 /**
  * Do Not Export Internal Only
@@ -19,13 +19,13 @@ const ClientDoorController = {
             return;
         }
 
-        alt.clearInterval(interval);
+        interval.destroy();
     },
     populate(streamedDoors: Array<Door>) {
         doors = streamedDoors;
 
         if (!interval) {
-            interval = alt.Timers.setInterval(handleDrawMarkers, alt.debug ? 0 : 500);
+            interval = alt.Timers.setInterval(handleDrawMarkers, alt.isDebug ? 0 : 500);
         }
     },
 };
@@ -36,7 +36,7 @@ function handleDrawMarkers() {
     }
 
     for (let door of doors) {
-        if (alt.debug) {
+        if (alt.isDebug) {
             const dist = AthenaClient.utility.vector.distance2d(alt.Player.local.pos, door.pos);
             if (dist > 5) {
                 continue;
@@ -56,4 +56,4 @@ function handleDrawMarkers() {
 
 alt.Events.on('connectionComplete', ClientDoorController.init);
 alt.Events.on('disconnect', ClientDoorController.stop);
-alt.onServer(SYSTEM_EVENTS.POPULATE_DOORS, ClientDoorController.populate);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_DOORS, ClientDoorController.populate);

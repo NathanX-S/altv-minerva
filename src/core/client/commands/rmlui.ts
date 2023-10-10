@@ -2,15 +2,15 @@ import * as alt from '@altv/client';
 
 const cmdName = 'rmluicontrols';
 
-if (alt.debug) {
+if (alt) {
     alt.Events.on('consoleCommand', (name: string) => {
         if (name !== cmdName) {
             return;
         }
 
-        const state = alt.rmlControlsEnabled();
-        alt.toggleRmlControls(!state);
-        alt.showCursor(!state);
+        const state = alt.areRmlControlsActive();
+        alt.setRmlControlsActive(!state);
+        alt.Cursor.visible = !state;
         alt.log(`Toggled Controls to: ${!state}`);
     });
 }

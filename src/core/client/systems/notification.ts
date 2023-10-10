@@ -43,4 +43,4 @@ export function addCallback(callback: NotificationCallback) {
     callbacks.push(callback);
 }
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_NOTIFICATION, handler);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_NOTIFICATION, handler);

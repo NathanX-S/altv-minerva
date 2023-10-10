@@ -12,4 +12,4 @@ function setTime(hour: number, minute: number) {
     native.pauseClock(true);
 }
 
-alt.onServer(SYSTEM_EVENTS.SET_GAME_TIME, setTime);
+alt.Events.onServer(SYSTEM_EVENTS.SET_GAME_TIME, setTime);

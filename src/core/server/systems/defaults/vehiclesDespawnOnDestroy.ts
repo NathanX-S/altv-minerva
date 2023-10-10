@@ -28,7 +28,7 @@ const Internal = {
         const data = Athena.document.vehicle.get(vehicle);
         Athena.vehicle.events.trigger('vehicle-destroyed', vehicle, data ? data : undefined);
 
-        alt.setTimeout(() => {
+        alt.Timers.setTimeout(() => {
             if (!vehicle || !vehicle.valid) {
                 return;
             }

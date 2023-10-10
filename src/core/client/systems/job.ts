@@ -8,7 +8,7 @@ import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 import { KEY_BINDS } from '@AthenaShared/enums/keyBinds';
 
 let objective: Objective | null;
-let interval: number;
+let interval: alt.Timers.Interval;
 let cooldown: number;
 let blip: alt.Blip;
 let isPressed = false;
@@ -25,7 +25,7 @@ const ObjectiveController = {
      */
     handleSync(data: Objective | null) {
         if (interval) {
-            alt.clearInterval(interval);
+            interval.destroy();
             interval = null;
         }
 
@@ -41,13 +41,8 @@ const ObjectiveController = {
         }
 
         if (data.blip) {
-            blip = new alt.PointBlip(data.blip.pos.x, data.blip.pos.y, data.blip.pos.z);
+            blip = alt.PointBlip.create({ pos: data.blip.pos });
             blip.scale = data.blip.scale;
-
-            // Beta Feature? Not implemented yet.
-            if (blip.hasOwnProperty('size')) {
-                blip.size = { x: data.blip.scale, y: data.blip.scale } as alt.Vector2;
-            }
 
             blip.sprite = data.blip.sprite;
             blip.color = data.blip.color;
@@ -166,12 +161,12 @@ const ObjectiveController = {
             return;
         }
 
-        alt.emitServer(JobEnums.ObjectiveEvents.JOB_VERIFY);
+        alt.Events.emitServer(JobEnums.ObjectiveEvents.JOB_VERIFY);
     },
 };
 
-alt.onServer(JobEnums.ObjectiveEvents.JOB_SYNC, ObjectiveController.handleSync);
-alt.onServer(JobEnums.ObjectiveEvents.JOB_UPDATE, ObjectiveController.updateObjective);
+alt.Events.onServer(JobEnums.ObjectiveEvents.JOB_SYNC, ObjectiveController.handleSync);
+alt.Events.onServer(JobEnums.ObjectiveEvents.JOB_UPDATE, ObjectiveController.updateObjective);
 onTicksStart.add(() => {
     AthenaClient.systems.hotkeys.add({
         key: KEY_BINDS.INTERACT,

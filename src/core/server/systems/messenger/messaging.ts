@@ -70,7 +70,7 @@ export function sendToPlayers(players: Array<alt.Player>, msg: string) {
         return Overrides.sendToPlayers(players, msg);
     }
 
-    alt.emitClient(players, MESSENGER_EVENTS.TO_CLIENT.MESSAGE, msg);
+    alt.Events.emitPlayers(players, MESSENGER_EVENTS.TO_CLIENT.MESSAGE, msg);
 }
 
 /**

@@ -77,8 +77,8 @@ export function byDatabaseID(id: string): alt.Vehicle | undefined {
  */
 export function isValidModel(model: number): boolean {
     try {
-        const vehicle = new alt.Vehicle(model, 0, 0, 0, 0, 0, 0);
-        alt.nextTick(() => {
+        const vehicle = alt.Vehicle.create({ model: model, pos: new alt.Vector3(0, 0, 0) });
+        alt.Timers.nextTick(() => {
             vehicle.destroy();
         });
         return true;
@@ -123,7 +123,7 @@ export async function inFrontOf(entity: alt.Entity, startDistance = 6): Promise<
                 z: entity.pos.z - 1,
             };
 
-            const colshape = new alt.ColshapeSphere(fwdPos.x, fwdPos.y, fwdPos.z, 2);
+            const colshape = alt.ColShapeSphere.create({ pos: fwdPos, radius: 2 });
 
             await alt.Utils.wait(10);
 

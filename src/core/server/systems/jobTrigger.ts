@@ -94,7 +94,7 @@ export function create(player: alt.Player, data: JobTrigger) {
     }
 
     LastTriggers[player.id] = data;
-    alt.emitClient(player, VIEW_EVENTS_JOB_TRIGGER.OPEN, deepCloneObject(data));
+    player.emit(VIEW_EVENTS_JOB_TRIGGER.OPEN, deepCloneObject(data));
 }
 
 interface JobTriggerFuncs {

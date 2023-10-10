@@ -8,8 +8,8 @@ let id = -1;
 
 function init(location: typeof screenPoint) {
     screenPoint = location;
-    id = alt.Player.local.getSyncedMeta(PLAYER_SYNCED_META.IDENTIFICATION_ID) as number;
-    alt.everyTick(tick);
+    id = alt.Player.local.syncedMeta[PLAYER_SYNCED_META.IDENTIFICATION_ID] as number;
+    alt.Timers.everyTick(tick);
     alt.log(`Display ID: ${id}`);
 }
 
@@ -17,4 +17,4 @@ function tick() {
     AthenaClient.screen.text.drawText2D(`ID ${id}`, screenPoint, 0.4, new alt.RGBA(255, 255, 255, 150));
 }
 
-alt.onServer(SYSTEM_EVENTS.SHOW_SCREEN_PLAYER_ID, init);
+alt.Events.onServer(SYSTEM_EVENTS.SHOW_SCREEN_PLAYER_ID, init);

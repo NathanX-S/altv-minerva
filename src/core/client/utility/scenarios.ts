@@ -2,7 +2,7 @@ import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SCENARIO, playScenario);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SCENARIO, playScenario);
 
 /**
  * Play an animation for the local player.
@@ -22,7 +22,7 @@ export async function playScenario(name: string, duration: number): Promise<void
 
     native.taskStartScenarioInPlace(alt.Player.local.scriptID, name, -1, false);
 
-    alt.setTimeout(() => {
+    alt.Timers.setTimeout(() => {
         if (native.isPedUsingScenario(alt.Player.local.scriptID, name)) {
             native.clearPedTasksImmediately(alt.Player.local.scriptID);
         }

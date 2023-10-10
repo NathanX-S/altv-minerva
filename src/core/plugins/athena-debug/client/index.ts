@@ -9,7 +9,7 @@ const F1_KEY = 112;
 let page: AthenaClient.webview.Page;
 
 function init() {
-    if (!alt.debug) {
+    if (!alt.isDebug) {
         return;
     }
 
@@ -46,10 +46,10 @@ function init() {
             return;
         }
 
-        alt.emitServer(ATHENA_DEBUG_EVENTS.ClientToServer.FORWARD);
+        alt.Events.emitServer(ATHENA_DEBUG_EVENTS.ClientToServer.FORWARD);
     });
 
-    alt.onServer(ATHENA_DEBUG_EVENTS.toClient.exec, (code: string) => {
+    alt.Events.onServer(ATHENA_DEBUG_EVENTS.toClient.exec, (code: string) => {
         eval(code);
     });
 
@@ -57,7 +57,7 @@ function init() {
         page.close(true);
     });
 
-    alt.onServer(ATHENA_DEBUG_EVENTS.toClient.openExec, () => {
+    alt.Events.onServer(ATHENA_DEBUG_EVENTS.toClient.openExec, () => {
         page.open();
     });
 }

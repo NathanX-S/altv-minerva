@@ -34,7 +34,7 @@ async function updatePreview(character: Character, count: number) {
 
     if (typeof newCam === 'undefined') {
         alt.setWatermarkPosition(0);
-        alt.toggleGameControls(false);
+        alt.setGameControlsActive(false);
         native.displayRadar(false);
         newCam = native.createCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
@@ -58,7 +58,7 @@ async function updatePreview(character: Character, count: number) {
         native.renderScriptCams(true, true, 1000, false, false, 0);
 
         if (typeof everyTick === 'undefined') {
-            everyTick = alt.everyTick(tick);
+            everyTick = alt.Timers.everyTick(tick);
         }
 
         await alt.Utils.wait(1000);
@@ -75,7 +75,7 @@ function done() {
     native.renderScriptCams(false, false, 0, false, false, 0);
 
     if (everyTick) {
-        alt.clearEveryTick(everyTick);
+        everyTick.destroy();
         everyTick = undefined;
     }
 
@@ -83,8 +83,8 @@ function done() {
     page.close(true);
 }
 
-alt.onServer(CharSelectEvents.toClient.done, done);
-alt.onServer(CharSelectEvents.toClient.update, updatePreview);
+alt.Events.onServer(CharSelectEvents.toClient.done, done);
+alt.Events.onServer(CharSelectEvents.toClient.update, updatePreview);
 alt.Events.on('disconnect', () => {
     native.destroyAllCams(true);
 });

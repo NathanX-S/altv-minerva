@@ -127,7 +127,7 @@ const InternalFunctions = {
         if (colshape.interaction && colshape.interaction.description) {
             Athena.controllers.worldNotification.addToPlayer(entity, {
                 uid: colshape.interaction.description,
-                pos: { x: colshape.pos.x, y: colshape.pos.y, z: colshape.pos.z + 1.5 },
+                pos: { x: colshape.colShape.pos.x, y: colshape.colShape.pos.y, z: colshape.colShape.pos.z + 1.5 },
                 text: colshape.interaction.description,
                 type: WORLD_NOTIFICATION_TYPE.ARROW_BOTTOM,
             });

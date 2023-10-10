@@ -19,7 +19,7 @@ import { PlayerConfigKeys } from '@AthenaShared/enums/playerConfigKeys';
  * @param {*} value
  */
 export function set<CustomKeys>(player: alt.Player, key: PlayerConfigKeys | CustomKeys, value: any): void {
-    player.setLocalMeta(String(key), value);
+    player.meta[String(key)] = value;
 }
 
 export default { set };

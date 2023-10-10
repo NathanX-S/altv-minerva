@@ -43,7 +43,7 @@ const InternalController = {
         Athena.systems.streamer.updateData(KEY, globalDoors);
     },
     update(player: alt.Player, doors: Array<Door>) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_DOORS, doors);
+        player.emit(SYSTEM_EVENTS.POPULATE_DOORS, doors);
     },
 };
 

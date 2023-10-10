@@ -116,7 +116,7 @@ export function open(vehicle: alt.Vehicle) {
         color: isLocked ? 'green' : 'red',
         icon: isLocked ? 'icon-lock-open' : 'icon-lock',
         callback() {
-            alt.emitServer(VEHICLE_EVENTS.SET_LOCK, vehicle);
+            alt.Events.emitServer(VEHICLE_EVENTS.SET_LOCK, vehicle);
         },
     });
 
@@ -126,7 +126,7 @@ export function open(vehicle: alt.Vehicle) {
             options.push({
                 name: `Door ${i}`,
                 callback: (vehicle: alt.Vehicle, door: number) => {
-                    alt.emitServer(VEHICLE_EVENTS.SET_DOOR, vehicle, door);
+                    alt.Events.emitServer(VEHICLE_EVENTS.SET_DOOR, vehicle, door);
                 },
                 data: [vehicle, i],
             });

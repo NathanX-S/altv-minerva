@@ -79,7 +79,7 @@ export function getHistory(): Array<{ timestamp: number; msg: string }> {
  * @param {string} msg
  */
 export function send(msg: string) {
-    alt.emitServer(MESSENGER_EVENTS.TO_SERVER.MESSAGE, msg);
+    alt.Events.emitServer(MESSENGER_EVENTS.TO_SERVER.MESSAGE, msg);
 }
 
 /**
@@ -103,6 +103,6 @@ export function getCommands(): Array<Omit<MessageCommand<alt.Player>, 'callback'
 }
 
 onTicksStart.add(() => {
-    alt.onServer(MESSENGER_EVENTS.TO_CLIENT.MESSAGE, emit);
-    alt.onServer(MESSENGER_EVENTS.TO_CLIENT.COMMANDS, setCommands);
+    alt.Events.onServer(MESSENGER_EVENTS.TO_CLIENT.MESSAGE, emit);
+    alt.Events.onServer(MESSENGER_EVENTS.TO_CLIENT.COMMANDS, setCommands);
 });

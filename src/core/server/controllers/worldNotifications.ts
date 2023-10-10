@@ -81,7 +81,7 @@ export function removeFromPlayer(player: alt.Player, uid: string) {
         throw new Error(`Did not specify a uid for notifiction removal. WorldNotificationController.removeFromPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.REMOVE_WORLD_NOTIFICATION, uid);
+    player.emit(SYSTEM_EVENTS.REMOVE_WORLD_NOTIFICATION, uid);
 }
 
 /**
@@ -99,7 +99,7 @@ export function addToPlayer(player: alt.Player, notification: IWorldNotification
         notification.uid = Athena.utility.hash.sha256Random(JSON.stringify(notification));
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.APPEND_WORLD_NOTIFICATION, notification);
+    player.emit(SYSTEM_EVENTS.APPEND_WORLD_NOTIFICATION, notification);
     return notification.uid;
 }
 
@@ -113,7 +113,7 @@ export function update(player: alt.Player, notifications: Array<IWorldNotificati
         return Overrides.update(player, notifications);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.POPULATE_WORLD_NOTIFICATIONS, notifications);
+    player.emit(SYSTEM_EVENTS.POPULATE_WORLD_NOTIFICATIONS, notifications);
 }
 
 Athena.systems.plugins.addCallback(InternalFunctions.init);

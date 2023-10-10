@@ -67,7 +67,7 @@ export const CharacterSystem = {
         if (typeof appearance.hairDlc === 'undefined' || appearance.hairDlc === 0) {
             native.setPedComponentVariation(ped, 2, appearance.hair, 0, 0);
         } else {
-            alt.setPedDlcClothes(ped, appearance.hairDlc, 2, appearance.hair, 0, 0);
+            alt.setDlcClothes(ped, appearance.hairDlc, 2, appearance.hair, 0, 0);
         }
 
         native.setPedHairTint(ped, appearance.hairColor1, appearance.hairColor2);
@@ -185,4 +185,4 @@ export const CharacterSystem = {
     },
 };
 
-alt.onServer(SYSTEM_EVENTS.SET_PLAYER_DECORATIONS, CharacterSystem.applyHairOverlay);
+alt.Events.onServer(SYSTEM_EVENTS.SET_PLAYER_DECORATIONS, CharacterSystem.applyHairOverlay);

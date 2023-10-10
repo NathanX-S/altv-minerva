@@ -13,7 +13,7 @@ import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 
 const TIME_BETWEEN_UPDATES = 30000; // 30 Seconds
 let enabled = true;
-let interval: number;
+let interval: alt.Timers.Interval;
 let minute;
 let hour;
 
@@ -46,7 +46,7 @@ const Internal = {
         }
 
         Athena.player.events.on('selected-character', updatePlayer);
-        alt.Timers.setInterval(Internal.handleWeatherUpdate, TIME_BETWEEN_UPDATES);
+        interval = alt.Timers.setInterval(Internal.handleWeatherUpdate, TIME_BETWEEN_UPDATES);
         alt.log(`~lc~Default System: ~g~Time`);
     },
 };
@@ -86,7 +86,7 @@ export function disable() {
     enabled = false;
 
     if (typeof interval !== 'undefined') {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = undefined;
     }
 

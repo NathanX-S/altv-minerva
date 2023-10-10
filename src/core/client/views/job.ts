@@ -15,7 +15,7 @@ let trigger: JobTrigger;
  */
 class InternalFunctions implements ViewModel {
     static init() {
-        alt.onServer(VIEW_EVENTS_JOB_TRIGGER.OPEN, InternalFunctions.open);
+        alt.Events.onServer(VIEW_EVENTS_JOB_TRIGGER.OPEN, InternalFunctions.open);
     }
 
     static async open(_trigger: JobTrigger) {
@@ -40,20 +40,20 @@ class InternalFunctions implements ViewModel {
         AthenaClient.webview.showCursor(true);
 
         // Turn off game controls, hide the hud.
-        alt.toggleGameControls(false);
+        alt.setGameControlsActive(false);
 
         // Let the rest of the script know this menu is open.
         alt.Player.local.isMenuOpen = true;
     }
 
     static accept() {
-        alt.emitServer(VIEW_EVENTS_JOB_TRIGGER.ACCEPT);
-        alt.toggleGameControls(true);
+        alt.Events.emitServer(VIEW_EVENTS_JOB_TRIGGER.ACCEPT);
+        alt.setGameControlsActive(true);
         InternalFunctions.close(true, true);
     }
 
     static async close(doNotCancel = false, shouldClosePage = false) {
-        alt.toggleGameControls(true);
+        alt.setGameControlsActive(true);
 
         const view = await AthenaClient.webview.get();
         view.off(`${PAGE_NAME}:Ready`, InternalFunctions.ready);
@@ -72,7 +72,7 @@ class InternalFunctions implements ViewModel {
             return;
         }
 
-        alt.emitServer(VIEW_EVENTS_JOB_TRIGGER.CANCEL);
+        alt.Events.emitServer(VIEW_EVENTS_JOB_TRIGGER.CANCEL);
     }
 
     static async ready() {

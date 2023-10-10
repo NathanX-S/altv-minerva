@@ -2,9 +2,9 @@ import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_START, startAlarm);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP, stopAlarm);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP_ALL, stopAllAlarms);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_START, startAlarm);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP, stopAlarm);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ALARM_STOP_ALL, stopAllAlarms);
 
 const MaxLoadAttempts = 25;
 
@@ -25,13 +25,13 @@ export async function loadAlarm(name: string, count: number = 0): Promise<boolea
             count += 1;
 
             if (native.prepareAlarm(name)) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(true);
                 return;
             }
 
             if (count >= MaxLoadAttempts) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(false);
                 return;
             }

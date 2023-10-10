@@ -17,7 +17,7 @@ export function temporary(vehicleInfo: VehicleSpawnInfo, deleteOnLeave = false):
         return Overrides.temporary(vehicleInfo, deleteOnLeave);
     }
 
-    const vehicle = new alt.Vehicle(vehicleInfo.model, vehicleInfo.pos, vehicleInfo.rot);
+    const vehicle = alt.Vehicle.create({ model: vehicleInfo.model, pos: vehicleInfo.pos, rot: vehicleInfo.rot });
     vehicle.manualEngineControl = true;
 
     Athena.vehicle.tempVehicles.add(vehicle, { deleteOnLeave });
@@ -44,7 +44,7 @@ export function temporaryOwned(player: alt.Player, vehicleInfo: VehicleSpawnInfo
         return Overrides.temporaryOwned(player, vehicleInfo, deleteOnLeave);
     }
 
-    const vehicle = new alt.Vehicle(vehicleInfo.model, vehicleInfo.pos, vehicleInfo.rot);
+    const vehicle = alt.Vehicle.create({ model: vehicleInfo.model, pos: vehicleInfo.pos, rot: vehicleInfo.rot });
     vehicle.manualEngineControl = true;
 
     Athena.vehicle.tempVehicles.add(vehicle, { owner: player.id, deleteOnLeave });
@@ -75,11 +75,11 @@ export function persistent(document: OwnedVehicle): alt.Vehicle | undefined {
         return undefined;
     }
 
-    const vehicle = new alt.Vehicle(document.model, document.pos, document.rot);
+    const vehicle = alt.Vehicle.create({ model: document.model, pos: document.pos, rot: document.rot });
     vehicle.manualEngineControl = true;
 
     if (document.plate) {
-        vehicle.numberPlateText = document.plate;
+        vehicle.numberplateText = document.plate;
     }
 
     if (document.state) {

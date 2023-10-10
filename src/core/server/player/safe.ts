@@ -18,13 +18,13 @@ export function setPosition(player: alt.Player, x: number, y: number, z: number,
         Athena.player.events.trigger('player-pos-set', player, player.pos);
     }
 
+    const pos = new alt.Vector3(x, y, z);
     if (!player.hasModel) {
         player.hasModel = true;
-        player.spawn(x, y, z, 0);
+        player.spawn(pos, 0);
         player.model = `mp_m_freemode_01`;
     }
 
-    const pos = new alt.Vector3(x, y, z);
     if (player.vehicle && player.vehicle.driver === player) {
         player.vehicle.pos = pos;
     } else {
@@ -179,7 +179,7 @@ export function setDimension(player: alt.Player, value: number) {
     }
 
     player.dimension = value;
-    player.setSyncedMeta(PLAYER_SYNCED_META.DIMENSION, value);
+    player.syncedMeta[PLAYER_SYNCED_META.DIMENSION] = value;
 }
 
 interface SafeFunctions {

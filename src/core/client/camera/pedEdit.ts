@@ -4,7 +4,7 @@ import * as AthenaClient from '@AthenaClient/api';
 
 let isLocalPlayer = false;
 let scriptID: number;
-let cameraControlsInterval: number;
+let cameraControlsInterval: alt.Timers.Interval;
 let camera: number;
 let zpos = 0;
 let fov = 90;
@@ -138,7 +138,7 @@ export async function destroy() {
     }
 
     if (cameraControlsInterval !== undefined && cameraControlsInterval !== null) {
-        alt.clearInterval(cameraControlsInterval);
+        cameraControlsInterval.destroy();
         cameraControlsInterval = null;
     }
 
@@ -237,7 +237,7 @@ export async function runQueue() {
     native.renderScriptCams(true, true, queueRef.easeTime, true, false, 0);
 
     await new Promise((resolve: Function) => {
-        alt.setTimeout(() => {
+        alt.Timers.setTimeout(() => {
             resolve();
         }, queueRef.easeTime);
     });
@@ -296,7 +296,7 @@ export function handleControls() {
     }
 
     const [_, width] = native.getActualScreenResolution(0, 0);
-    const cursor = alt.getCursorPos();
+    const cursor = alt.Cursor.pos;
     const _x = cursor.x;
     let oldHeading = native.getEntityHeading(isLocalPlayer ? alt.Player.local.scriptID : scriptID);
 

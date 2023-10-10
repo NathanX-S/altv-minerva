@@ -16,7 +16,7 @@ function handleExec(player: alt.Player, type: string, code: string) {
 }
 
 Athena.systems.plugins.registerPlugin(PLUGIN_NAME, () => {
-    if (!alt.debug) {
+    if (!alt.isDebug) {
         return;
     }
 

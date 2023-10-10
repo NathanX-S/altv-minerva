@@ -20,7 +20,7 @@ const InternalFunctions = {
     },
 
     update(player: alt.Player, peds: Array<IPed>) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_PEDS, peds);
+        player.emit(SYSTEM_EVENTS.POPULATE_PEDS, peds);
     },
 
     /**
@@ -116,7 +116,7 @@ export function removeFromPlayer(player: alt.Player, uid: string) {
         throw new Error(`Did not specify a uid for ped removal. PedController.removeFromPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.REMOVE_PED, uid);
+    player.emit(SYSTEM_EVENTS.REMOVE_PED, uid);
 }
 
 /**
@@ -144,7 +144,7 @@ export function addToPlayer(player: alt.Player, pedData: IPed): string {
         pedData.uid = Athena.utility.hash.sha256Random(JSON.stringify(pedData));
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.APPEND_PED, pedData);
+    player.emit(SYSTEM_EVENTS.APPEND_PED, pedData);
     return pedData.uid;
 }
 

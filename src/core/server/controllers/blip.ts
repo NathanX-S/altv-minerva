@@ -116,7 +116,7 @@ export function removeFromPlayer(player: alt.Player, uid: string) {
         throw new Error(`Did not specify a uid for object removal. ObjectController.removeFromPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.REMOVE_BLIP, uid);
+    player.emit(SYSTEM_EVENTS.REMOVE_BLIP, uid);
 }
 
 /**
@@ -152,7 +152,7 @@ export function addToPlayer(player: alt.Player, blipData: Blip) {
         throw new Error(`Object ${JSON.stringify(blipData)} does not have a uid. ObjectController.addToPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.APPEND_BLIP, blipData);
+    player.emit(SYSTEM_EVENTS.APPEND_BLIP, blipData);
 }
 
 /**
@@ -172,7 +172,7 @@ export function populateGlobalBlips(player: alt.Player) {
         return Overrides.populateGlobalBlips(player);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.POPULATE_BLIPS, globalBlips);
+    player.emit(SYSTEM_EVENTS.POPULATE_BLIPS, globalBlips);
 }
 
 interface BlipControllerFuncs

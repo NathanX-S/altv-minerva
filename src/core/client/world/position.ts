@@ -60,8 +60,8 @@ export function isEntityBlockingPosition(pos: alt.IVector3, range = 0.8, maxDist
     });
 
     const altPos = new alt.Vector3(pos);
-    const A = alt.getCamPos();
-    const AB = altPos.sub(A).normalize();
+    const A = alt.Cam.pos;
+    const AB = altPos.sub(A).normalized;
     for (let i = 0; i < 100; i++) {
         const ABMult = AB.mul(range * i);
         const finalPos = A.add(ABMult);

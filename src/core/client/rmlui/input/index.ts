@@ -1,5 +1,6 @@
 import * as alt from '@altv/client';
 import * as native from '@altv/natives';
+import { Events } from '@altv/shared';
 import * as AthenaClient from '@AthenaClient/api';
 
 const ESCAPE_KEY = 27;
@@ -44,6 +45,7 @@ type MessageCallback = (msg: string | undefined) => void;
 let document: alt.RmlDocument;
 let internalCallback: MessageCallback;
 let wasMenuCheckSkipped = false;
+let event: Events.EventHandler;
 
 const InternalFunctions = {
     focus(inputInfo: InputBoxInfo) {
@@ -113,15 +115,15 @@ export function create(inputInfo: InputBoxInfo, skipMenuCheck = false): Promise<
     }
 
     if (typeof document === 'undefined') {
-        document = new alt.RmlDocument('/client/rmlui/input/index.rml');
+        document = alt.RmlDocument.create({ url: '/client/rmlui/input/index.rml' });
         document.show();
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.Events.on('keyup', InternalFunctions.handleKeyUp);
-    alt.showCursor(true);
-    alt.toggleRmlControls(true);
-    alt.toggleGameControls(false);
+    event = alt.Events.on('keyup', InternalFunctions.handleKeyUp);
+    alt.Cursor.visible = true;
+    alt.setRmlControlsActive(true);
+    alt.setGameControlsActive(false);
     InternalFunctions.focus(inputInfo);
 
     return new Promise((resolve: MessageCallback) => {
@@ -136,10 +138,12 @@ export async function cancel() {
     }
 
     internalCallback = undefined;
-    alt.off('keyup', InternalFunctions.handleKeyUp);
-    alt.showCursor(false);
-    alt.toggleRmlControls(false);
-    alt.toggleGameControls(true);
+    if (event) {
+        event.destroy();
+    }
+    alt.Cursor.visible = false;
+    alt.setRmlControlsActive(false);
+    alt.setGameControlsActive(true);
     native.triggerScreenblurFadeOut(250);
     native.displayHud(true);
     native.displayRadar(true);

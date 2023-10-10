@@ -77,8 +77,8 @@ function getClosestPlayers() {
             continue;
         }
 
-        const id: number = playerList[i].getSyncedMeta(PLAYER_SYNCED_META.IDENTIFICATION_ID) as number;
-        const name: string = playerList[i].getSyncedMeta(PLAYER_SYNCED_META.NAME) as string;
+        const id: number = playerList[i].syncedMeta[PLAYER_SYNCED_META.IDENTIFICATION_ID] as number;
+        const name: string = playerList[i].syncedMeta[PLAYER_SYNCED_META.NAME] as string;
 
         if (typeof id === 'undefined' || typeof name === 'undefined') {
             continue;
@@ -105,7 +105,7 @@ function init() {
                 AthenaClient.webview.emit(INVENTORY_EVENTS.TO_WEBVIEW.SET_WEIGHT_STATE, isWeightEnabled);
                 AthenaClient.webview.emit(INVENTORY_EVENTS.TO_WEBVIEW.SET_SIZE, inventorySize);
                 AthenaClient.webview.emit(INVENTORY_EVENTS.TO_WEBVIEW.SET_MAX_WEIGHT, maxWeight);
-                alt.emitServer(INVENTORY_EVENTS.TO_SERVER.OPEN);
+                alt.Events.emitServer(INVENTORY_EVENTS.TO_SERVER.OPEN);
 
                 // Draws a ped clone in-menu; but not currently working during this version of alt:V
                 // Will be available in next build...
@@ -158,7 +158,7 @@ function init() {
                     );
                 }
 
-                alt.emitServer(INVENTORY_EVENTS.TO_SERVER.CLOSE);
+                alt.Events.emitServer(INVENTORY_EVENTS.TO_SERVER.CLOSE);
                 AthenaClient.systems.sound.play2d(
                     `@plugins/sounds/${INVENTORY_CONFIG.PLUGIN_FOLDER_NAME}/inv_close.ogg`,
                     0.2,
@@ -200,11 +200,11 @@ function init() {
     AthenaClient.systems.playerConfig.addCallback('inventory-max-weight', onInventoryMaxWeightChange);
     AthenaClient.webview.on(INVENTORY_EVENTS.FROM_WEBVIEW.GET_CLOSEST_PLAYERS, getClosestPlayers);
 
-    alt.onServer(INVENTORY_EVENTS.TO_CLIENT.OPEN, () => {
+    alt.Events.onServer(INVENTORY_EVENTS.TO_CLIENT.OPEN, () => {
         page.open();
     });
 
-    alt.onServer(INVENTORY_EVENTS.TO_CLIENT.CLOSE, () => {
+    alt.Events.onServer(INVENTORY_EVENTS.TO_CLIENT.CLOSE, () => {
         page.close(true);
     });
 }

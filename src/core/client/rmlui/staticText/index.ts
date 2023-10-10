@@ -6,7 +6,7 @@ import { StaticTextInfo } from './staticTextInterfaces';
 type StaticTextExt = StaticTextInfo & { delete?: boolean; element?: alt.RmlElement };
 
 let document: alt.RmlDocument;
-let interval: number;
+let interval: alt.Timers.EveryTick;
 let drawables: Map<string, StaticTextExt> = new Map();
 
 function roundToTwo(value: number) {
@@ -15,7 +15,7 @@ function roundToTwo(value: number) {
 
 const InternalFunctions = {
     destroy() {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = undefined;
 
         document.destroy();
@@ -89,9 +89,9 @@ const InternalFunctions = {
  */
 export function upsert(drawable: StaticTextInfo): void {
     if (typeof document === 'undefined') {
-        document = new alt.RmlDocument('/client/rmlui/staticText/index.rml');
+        document = alt.RmlDocument.create({ url: '/client/rmlui/staticText/index.rml' });
         document.show();
-        interval = alt.Timers.setInterval(InternalFunctions.tick, 0);
+        interval = alt.Timers.everyTick(InternalFunctions.tick);
     }
 
     const drawablesElement = document.getElementByID('drawables');

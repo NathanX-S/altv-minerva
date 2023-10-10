@@ -21,7 +21,7 @@ export class AthenaScreenshot {
      *
      */
     static async takeScreenshot(player: alt.Player): Promise<string | null> {
-        alt.emitClient(player, SYSTEM_EVENTS.SCREENSHOT_CREATE);
+        player.emit(SYSTEM_EVENTS.SCREENSHOT_CREATE);
 
         return new Promise((resolve: Function) => {
             let tries = 0;
@@ -30,7 +30,7 @@ export class AthenaScreenshot {
                 tries += 1;
 
                 if (tries > MAX_TRIES) {
-                    alt.clearInterval(interval);
+                    interval.destroy();
                     delete pendingScreenshots[player.id];
                     return resolve(null);
                 }
@@ -39,7 +39,7 @@ export class AthenaScreenshot {
                     return;
                 }
 
-                alt.clearInterval(interval);
+                interval.destroy();
                 const fullData = AthenaBuffer.fromBuffer(pendingScreenshots[player.id].data);
                 delete pendingScreenshots[player.id];
                 return resolve(fullData);

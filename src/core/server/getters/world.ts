@@ -8,7 +8,12 @@ import * as alt from '@altv/server';
  * @return {Promise<boolean>}
  */
 export async function positionIsClear(pos: alt.IVector3, lookFor: 'vehicle' | 'player' | 'all'): Promise<boolean> {
-    const colshape = new alt.ColshapeCylinder(pos.x, pos.y, pos.z - 1, 2, 2);
+    pos.z -= 1;
+    const colshape = alt.ColShapeCylinder.create({
+        pos: pos,
+        radius: 2,
+        height: 2,
+    });
     await alt.Utils.wait(10);
 
     let entity: alt.Entity;

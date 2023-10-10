@@ -4,7 +4,7 @@ import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import ISpinner from '@AthenaShared/interfaces/iSpinner';
 
-let timeout: number;
+let timeout: alt.Timers.Timeout;
 
 /**
  * Used to clear the last set spinner.
@@ -12,7 +12,7 @@ let timeout: number;
  */
 export function clear() {
     if (timeout) {
-        alt.clearTimeout(timeout);
+        timeout.destroy();
         timeout = null;
     }
 
@@ -36,9 +36,9 @@ export function create(data: ISpinner) {
     native.endTextCommandBusyspinnerOn(data.type);
 
     if (data.duration >= 0) {
-        timeout = alt.setTimeout(clear, data.duration);
+        timeout = alt.Timers.setTimeout(clear, data.duration);
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SPINNER, create);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SPINNER_CLEAR, clear);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SPINNER, create);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SPINNER_CLEAR, clear);

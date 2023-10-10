@@ -1,6 +1,7 @@
 import * as alt from '@altv/client';
 import * as AthenaClient from '@AthenaClient/api';
 import { OptionFor3DMenu } from './menu3DInterfaces';
+import { Events } from '@altv/shared';
 
 const KEYS = {
     ESCAPE_KEY: 27,
@@ -16,7 +17,8 @@ let internalPos: alt.IVector3;
 let internalOptions: Array<OptionFor3DMenu>;
 let optionIndex: number = 0;
 let document: alt.RmlDocument;
-let interval: number;
+let interval: alt.Timers.EveryTick;
+let event: Events.EventHandler;
 
 function roundToTwo(value: number) {
     return Math.round(value * 100 + Number.EPSILON) / 100;
@@ -46,7 +48,7 @@ const InternalFunctions = {
             optionsElement.appendChild(newOption);
         }
 
-        interval = alt.Timers.setInterval(InternalFunctions.tick, 0);
+        interval = alt.Timers.everyTick(InternalFunctions.tick);
     },
     updateIndex() {
         const element = document.getElementByID(`option-${optionIndex}`);
@@ -57,7 +59,7 @@ const InternalFunctions = {
      *
      */
     close(skipSound = false) {
-        alt.clearInterval(interval);
+        interval.destroy();
 
         if (typeof document !== 'undefined') {
             document.destroy();
@@ -72,7 +74,9 @@ const InternalFunctions = {
         }
 
         alt.Player.local.isMenuOpen = false;
-        alt.off('keyup', InternalFunctions.handleKeyUp);
+        if (event) {
+            event.destroy();
+        }
     },
     /**
      * Called when pressing enter.
@@ -176,12 +180,12 @@ export function create(pos: alt.IVector3, options: Array<OptionFor3DMenu>, maxDi
     }
 
     if (typeof document === 'undefined') {
-        document = new alt.RmlDocument('/client/rmlui/menu3d/index.rml');
+        document = alt.RmlDocument.create({ url: '/client/rmlui/menu3d/index.rml' });
         document.show();
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.Events.on('keyup', InternalFunctions.handleKeyUp);
+    event = alt.Events.on('keyup', InternalFunctions.handleKeyUp);
     InternalFunctions.init(pos, options, maxDistance);
 }
 

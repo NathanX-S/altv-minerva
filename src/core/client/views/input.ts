@@ -59,7 +59,7 @@ import * as AthenaClient from '@AthenaClient/api';
 //         }
 
 //         if (inputMenu.serverEvent) {
-//             alt.emitServer(inputMenu.serverEvent, null);
+//             alt.Events.emitServer(inputMenu.serverEvent, null);
 //         }
 //     }
 
@@ -69,7 +69,7 @@ import * as AthenaClient from '@AthenaClient/api';
 //         }
 
 //         if (inputMenu.serverEvent) {
-//             alt.emitServer(inputMenu.serverEvent, results);
+//             alt.Events.emitServer(inputMenu.serverEvent, results);
 //         }
 
 //         InternalFunctions.close(true, true);
@@ -93,4 +93,4 @@ import * as AthenaClient from '@AthenaClient/api';
 //     }
 // }
 
-// alt.onServer(View_Events_Input_Menu.SetMenu, InternalFunctions.show);
+// alt.Events.onServer(View_Events_Input_Menu.SetMenu, InternalFunctions.show);

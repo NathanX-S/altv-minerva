@@ -36,7 +36,7 @@ const InternalController = {
      *
      */
     update(player: alt.Player, labels: Array<TextLabel>) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_TEXTLABELS, labels);
+        player.emit(SYSTEM_EVENTS.POPULATE_TEXTLABELS, labels);
     },
 };
 
@@ -116,7 +116,7 @@ export function update(uid: string, label: Partial<TextLabel>, player: alt.Playe
     }
 
     label.isServerWide = false;
-    alt.emitClient(player, SYSTEM_EVENTS.UPDATE_TEXT_LABEL, { ...label, uid });
+    player.emit(SYSTEM_EVENTS.UPDATE_TEXT_LABEL, { ...label, uid });
     return true;
 }
 
@@ -170,7 +170,7 @@ export function removeFromPlayer(player: alt.Player, uid: string) {
         throw new Error(`Did not specify a uid for text label removal. TextLabelController.removeFromPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.REMOVE_TEXTLABEL, uid);
+    player.emit(SYSTEM_EVENTS.REMOVE_TEXTLABEL, uid);
 }
 
 /**
@@ -197,7 +197,7 @@ export function addToPlayer(player: alt.Player, textLabel: TextLabel): string {
     }
 
     textLabel.isServerWide = false;
-    alt.emitClient(player, SYSTEM_EVENTS.APPEND_TEXTLABELS, textLabel);
+    player.emit(SYSTEM_EVENTS.APPEND_TEXTLABELS, textLabel);
     return textLabel.uid;
 }
 

@@ -15,7 +15,7 @@ export function toAll(message: string, ...args: any[]) {
         return;
     }
 
-    alt.emitClient(onlinePlayers, SYSTEM_EVENTS.PLAYER_EMIT_NOTIFICATION, message, ...args);
+    alt.Events.emitPlayers(onlinePlayers, SYSTEM_EVENTS.PLAYER_EMIT_NOTIFICATION, message, ...args);
 }
 
 /**

@@ -162,7 +162,7 @@ export function criteria(player: alt.Player, objective: Objective): boolean {
                 break;
             }
 
-            if (vehicles[i].vehicle.destroyed) {
+            if (vehicles[i].vehicle.isDestroyed) {
                 allValid = false;
                 break;
             }

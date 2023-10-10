@@ -136,7 +136,7 @@ export async function select(player: alt.Player, character: Character) {
     Athena.player.sync.appearance(player);
     Athena.systems.inventory.clothing.update(player);
 
-    alt.emitClient(player, SYSTEM_EVENTS.TICKS_START);
+    player.emit(SYSTEM_EVENTS.TICKS_START);
 
     // Set player dimension to zero.
     Athena.player.safe.setDimension(player, 0);
@@ -147,7 +147,7 @@ export async function select(player: alt.Player, character: Character) {
         Athena.player.emit.message(player, `Dimension: ${data.dimension}`);
     }
 
-    alt.setTimeout(async () => {
+    alt.Timers.setTimeout(async () => {
         if (!player || !player.valid) {
             return;
         }
@@ -180,10 +180,10 @@ export async function select(player: alt.Player, character: Character) {
         // Synchronization
         Athena.player.sync.currencyData(player);
 
-        player.setSyncedMeta(PLAYER_SYNCED_META.NAME, data.name);
-        player.setSyncedMeta(PLAYER_SYNCED_META.PING, player.ping);
-        player.setSyncedMeta(PLAYER_SYNCED_META.POSITION, player.pos);
-        player.setSyncedMeta(PLAYER_SYNCED_META.DATABASE_ID, data._id.toString());
+        player.syncedMeta[PLAYER_SYNCED_META.NAME] = data.name;
+        player.syncedMeta[PLAYER_SYNCED_META.PING] = player.ping;
+        player.syncedMeta[PLAYER_SYNCED_META.POSITION] = player.pos;
+        player.syncedMeta[PLAYER_SYNCED_META.DATABASE_ID] = data._id.toString();
 
         // Propagation
         // Athena.controllers.chat.populateCommands(player);

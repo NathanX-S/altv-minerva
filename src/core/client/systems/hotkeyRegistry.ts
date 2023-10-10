@@ -30,7 +30,7 @@ const Internal = {
     init() {
         alt.Events.on('keydown', Internal.keyDown);
         alt.Events.on('keyup', Internal.keyUp);
-        alt.everyTick(Internal.keyHeld);
+        alt.Timers.everyTick(Internal.keyHeld);
     },
     isValidRestrictions(data: KeyBindRestrictions): boolean {
         if (typeof data === 'undefined') {
@@ -184,7 +184,7 @@ const Internal = {
 
         // Check Modifier Keys First
         Object.keys(keyModifier).forEach((keyName) => {
-            if (alt.isKeyDown(keyModifier[keyName].key)) {
+            if (alt.getKeyState(keyModifier[keyName].key).isDown) {
                 keyModifier[keyName].pressed = true;
                 isModifierDown = true;
             } else {
@@ -222,7 +222,7 @@ const Internal = {
                 continue;
             }
 
-            if (!alt.isKeyDown(keyInfo.key)) {
+            if (!alt.getKeyState(keyInfo.key).isDown) {
                 continue;
             }
 

@@ -39,7 +39,7 @@ export function getExtras(vehicle: alt.Vehicle): Array<VehicleExtra> {
     let extraData: Array<VehicleExtra> = [];
 
     for (let id = 0; id < 15; ++id) {
-        let state: boolean = !vehicle.getExtra(id);
+        let state: boolean = !vehicle.isExtraOn(id);
         extraData.push({ id, state });
     }
 
@@ -60,7 +60,7 @@ export function setExtra(vehicle: alt.Vehicle, extras: Array<VehicleExtra>) {
     }
 
     for (let extra of extras) {
-        vehicle.setExtra(extra.id, extra.state);
+        vehicle.toggleExtra(extra.id, extra.state);
     }
 }
 

@@ -4,7 +4,7 @@ import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 
 const drawables: { [uid: string]: Array<alt.IVector2> } = {};
-let interval: number | undefined;
+let interval: alt.Timers.EveryTick | undefined;
 
 function drawTick() {
     Object.keys(drawables).forEach((key) => {
@@ -29,7 +29,7 @@ function drawTick() {
     });
 }
 
-alt.onServer(SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, (uid: string, vertices: Array<alt.IVector2>) => {
+alt.Events.onServer(SYSTEM_EVENTS.DEBUG_COLSHAPE_VERTICES, (uid: string, vertices: Array<alt.IVector2>) => {
     drawables[uid] = vertices;
-    interval = alt.Timers.setInterval(drawTick, 0);
+    interval = alt.Timers.everyTick(drawTick);
 });

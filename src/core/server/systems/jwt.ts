@@ -117,17 +117,17 @@ export async function fetch(player: alt.Player): Promise<string | null> {
         let attempts = 0;
         const interval = alt.Timers.setInterval(() => {
             if (typeof fetchRequests[id] !== 'undefined') {
-                alt.clearInterval(interval);
+                interval.destroy();
                 return resolve();
             }
 
             if (typeof fetchRequests[id] === null) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 return resolve();
             }
 
             if (attempts >= 100) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 return resolve();
             }
 
@@ -141,7 +141,7 @@ export async function fetch(player: alt.Player): Promise<string | null> {
 
     const result = fetchRequests[id];
 
-    alt.nextTick(() => {
+    alt.Timers.nextTick(() => {
         delete fetchRequests[id];
     });
 

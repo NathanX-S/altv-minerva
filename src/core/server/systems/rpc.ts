@@ -1,4 +1,5 @@
 import * as alt from '@altv/server';
+import { Events } from '@altv/shared';
 import * as Athena from '@AthenaServer/api';
 
 export type Callback = (player: alt.Player, ...args: any[]) => void;
@@ -64,12 +65,13 @@ export function invoke(player: alt.Player, event: ServerRpcEvent, callback: Call
     const instancedName = Athena.utility.hash.sha256Random(`rpc:${player.id}:${event.eventName}`);
 
     const callbackHandler = (player: alt.Player, ...args: any[]) => {
-        alt.clearTimeout(timeout);
+        timeout.destroy();
         callback(player, ...args);
     };
 
+    let onceEvent: Events.EventHandler;
     const timeoutHandler = () => {
-        alt.offClient(instancedName, callbackHandler);
+        onceEvent.destroy();
         if (!event.kickOnNoResponse) {
             return;
         }
@@ -85,10 +87,10 @@ export function invoke(player: alt.Player, event: ServerRpcEvent, callback: Call
     };
 
     // Clear old event if time is exceeded
-    const timeout = alt.setTimeout(timeoutHandler, event.msTimeout);
+    const timeout = alt.Timers.setTimeout(timeoutHandler, event.msTimeout);
 
     // Automatically unregisters itself once a client has pushed up the data
-    alt.onceClient(instancedName, callbackHandler);
+    onceEvent = alt.Events.oncePlayer(instancedName, callbackHandler);
 
     // Call normal event name, and pass arguments down
     if (event.args) {

@@ -193,7 +193,7 @@ export async function inFrontOf(player: alt.Player, startDistance = 6): Promise<
                 z: player.pos.z - 1,
             };
 
-            const colshape = new alt.ColshapeSphere(fwdPos.x, fwdPos.y, fwdPos.z, 2);
+            const colshape = alt.ColShapeSphere.create({ pos: fwdPos, radius: 2 });
 
             await alt.Utils.wait(10);
 

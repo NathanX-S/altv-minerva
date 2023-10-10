@@ -77,7 +77,7 @@ export async function toPlayer(
     }
 
     try {
-        const veh = new alt.Vehicle(model, pos.x, pos.y, pos.z, 0, 0, 0);
+        const veh = alt.Vehicle.create({ model: model, pos: pos });
 
         await Athena.systems.global.increase('vehicleId');
         const id = await Athena.systems.global.getKey<number>('vehicleId');
@@ -143,7 +143,7 @@ export async function toDatabase(
     }
 
     try {
-        const veh = new alt.Vehicle(model, pos.x, pos.y, pos.z, 0, 0, 0);
+        const veh = alt.Vehicle.create({ model: model, pos: pos });
 
         await Athena.systems.global.increase('vehicleId');
         const id = await Athena.systems.global.getKey<number>('vehicleId');

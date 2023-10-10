@@ -209,7 +209,7 @@ export class Job {
         Athena.systems.job.instance.clear(this.player);
 
         if (this.player.valid) {
-            alt.emitClient(this.player, ObjectiveEvents.JOB_SYNC, null);
+            this.player.emit(ObjectiveEvents.JOB_SYNC, null);
             Athena.player.emit.message(this.player, reason);
         }
 
@@ -247,7 +247,7 @@ export class Job {
             Athena.player.emit.message(this.player, `Job Completed`);
             Athena.systems.job.instance.clear(this.player);
 
-            alt.emitClient(this.player, ObjectiveEvents.JOB_SYNC, null);
+            this.player.emit(ObjectiveEvents.JOB_SYNC, null);
             return;
         }
 
@@ -306,7 +306,7 @@ export class Job {
             Athena.systems.job.triggers.tryEventCall(this.player, objective);
         }
 
-        alt.emitClient(this.player, ObjectiveEvents.JOB_SYNC, deepCloneObject(objective));
+        this.player.emit(ObjectiveEvents.JOB_SYNC, deepCloneObject(objective));
     }
 
     /**

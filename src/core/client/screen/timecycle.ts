@@ -4,7 +4,7 @@ import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { RecommendedTimecycleTypes } from '@AthenaShared/enums/timecycleTypes';
 
-let timeout: number;
+let timeout: alt.Timers.Timeout;
 
 /**
  * Applies a time cycle effect to the player's screen.
@@ -20,11 +20,11 @@ export function setTimeCycleEffect(timeCycleName: RecommendedTimecycleTypes | st
     }
 
     if (timeout) {
-        alt.clearTimeout(timeout);
+        timeout.destroy();
         timeout = undefined;
     }
 
-    timeout = alt.setTimeout(clearTimeCycleEffect, timeInMs);
+    timeout = alt.Timers.setTimeout(clearTimeCycleEffect, timeInMs);
 }
 
 /**
@@ -36,6 +36,6 @@ export function clearTimeCycleEffect() {
     native.clearTimecycleModifier();
 }
 
-alt.onServer(SYSTEM_EVENTS.SCREEN_TIMECYCLE_EFFECT, setTimeCycleEffect);
-alt.onServer(SYSTEM_EVENTS.SCREEN_TIMECYCLE_EFFECT_CLEAR, clearTimeCycleEffect);
+alt.Events.onServer(SYSTEM_EVENTS.SCREEN_TIMECYCLE_EFFECT, setTimeCycleEffect);
+alt.Events.onServer(SYSTEM_EVENTS.SCREEN_TIMECYCLE_EFFECT_CLEAR, clearTimeCycleEffect);
 alt.Events.on('disconnect', clearTimeCycleEffect);

@@ -58,11 +58,11 @@ export async function changeTo(nextWeather: string, timeInSeconds: number) {
 
     prevWeather = nextWeather;
 
-    alt.setTimeout(() => {
+    alt.Timers.setTimeout(() => {
         native.setWeatherTypeNow(nextWeather);
         native.setWeatherTypeNowPersist(nextWeather);
         isTransitioning = false;
     }, timeInMs - 500);
 }
 
-alt.onServer(SYSTEM_EVENTS.WEATHER_CHANGE_TO, changeTo);
+alt.Events.onServer(SYSTEM_EVENTS.WEATHER_CHANGE_TO, changeTo);

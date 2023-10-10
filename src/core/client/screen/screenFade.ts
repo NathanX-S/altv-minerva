@@ -24,5 +24,5 @@ export async function toBlack(timeInMs: number) {
     native.doScreenFadeOut(timeInMs);
 }
 
-alt.onServer(SYSTEM_EVENTS.SCREEN_FADE_FROM_BLACK, fromBlack);
-alt.onServer(SYSTEM_EVENTS.SCREEN_FADE_TO_BLACK, toBlack);
+alt.Events.onServer(SYSTEM_EVENTS.SCREEN_FADE_FROM_BLACK, fromBlack);
+alt.Events.onServer(SYSTEM_EVENTS.SCREEN_FADE_TO_BLACK, toBlack);

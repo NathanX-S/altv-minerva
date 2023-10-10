@@ -8,7 +8,7 @@ import { IWorldNotification } from '@AthenaShared/interfaces/iWorldNotification'
 let addedNotifications: Array<IWorldNotification> = [];
 let localNotifications: Array<IWorldNotification> = [];
 let isRemoving = false;
-let interval: number;
+let interval: alt.Timers.EveryTick;
 
 const ClientWorldNotificationController = {
     init() {
@@ -21,7 +21,7 @@ const ClientWorldNotificationController = {
             return;
         }
 
-        alt.clearInterval(interval);
+        interval.destroy();
     },
 
     append(notification: IWorldNotification) {
@@ -41,7 +41,7 @@ const ClientWorldNotificationController = {
         }
 
         if (!interval) {
-            interval = alt.Timers.setInterval(handleDrawNotifications, 0);
+            interval = alt.Timers.everyTick(handleDrawNotifications);
         }
     },
 
@@ -49,7 +49,7 @@ const ClientWorldNotificationController = {
         addedNotifications = notifications;
 
         if (!interval) {
-            interval = alt.Timers.setInterval(handleDrawNotifications, 0);
+            interval = alt.Timers.everyTick(handleDrawNotifications);
         }
     },
 
@@ -121,6 +121,6 @@ function handleDrawNotifications() {
 
 alt.Events.on('connectionComplete', ClientWorldNotificationController.init);
 alt.Events.on('disconnect', ClientWorldNotificationController.stop);
-alt.onServer(SYSTEM_EVENTS.POPULATE_WORLD_NOTIFICATIONS, ClientWorldNotificationController.populate);
-alt.onServer(SYSTEM_EVENTS.APPEND_WORLD_NOTIFICATION, ClientWorldNotificationController.append);
-alt.onServer(SYSTEM_EVENTS.REMOVE_WORLD_NOTIFICATION, ClientWorldNotificationController.remove);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_WORLD_NOTIFICATIONS, ClientWorldNotificationController.populate);
+alt.Events.onServer(SYSTEM_EVENTS.APPEND_WORLD_NOTIFICATION, ClientWorldNotificationController.append);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_WORLD_NOTIFICATION, ClientWorldNotificationController.remove);

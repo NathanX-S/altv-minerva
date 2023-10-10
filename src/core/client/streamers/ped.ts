@@ -154,7 +154,7 @@ function handleDrawPeds() {
             native.setEntityInvincible(pedInfo[pedData.uid], true);
 
             const heading = pedData.heading ? pedData.heading : 0;
-            alt.nextTick(() => {
+            alt.Timers.nextTick(() => {
                 native.setEntityHeading(pedInfo[pedData.uid], heading);
 
                 if (pedData.randomizeAppearance) {
@@ -274,8 +274,8 @@ export function remove(uid: string) {
 
 alt.Events.on('connectionComplete', PedController.init);
 alt.Events.on('disconnect', PedController.removeAll);
-alt.onServer(SYSTEM_EVENTS.REMOVE_GLOBAL_PED, PedController.removeGlobalPed);
-alt.onServer(SYSTEM_EVENTS.POPULATE_PEDS, PedController.populate);
-alt.onServer(SYSTEM_EVENTS.PLAY_ANIMATION_FOR_PED, PedController.playAnimation);
-alt.onServer(SYSTEM_EVENTS.APPEND_PED, append);
-alt.onServer(SYSTEM_EVENTS.REMOVE_PED, remove);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_GLOBAL_PED, PedController.removeGlobalPed);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_PEDS, PedController.populate);
+alt.Events.onServer(SYSTEM_EVENTS.PLAY_ANIMATION_FOR_PED, PedController.playAnimation);
+alt.Events.onServer(SYSTEM_EVENTS.APPEND_PED, append);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_PED, remove);

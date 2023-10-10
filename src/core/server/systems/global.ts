@@ -45,7 +45,7 @@ export async function isReady(): Promise<boolean> {
                 return;
             }
 
-            alt.clearInterval(interval);
+            interval.destroy();
             return resolve(true);
         }, 100);
     });

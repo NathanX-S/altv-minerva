@@ -20,6 +20,7 @@ import './events/meta';
 import './events/onInventoryUpdate';
 import './events/onTicksStart';
 
+console.log('Past events.');
 // Interfaces - Always Load First
 import './extensions/meta';
 import './extensions/player';

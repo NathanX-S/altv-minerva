@@ -17,7 +17,7 @@ const KeyBinds = {
 let toolbar: Array<Item> = [];
 let debounce = Date.now();
 let enabled = true;
-let interval: number;
+let interval: alt.Timers.Interval;
 let lastKey: number;
 
 const Internal = {
@@ -37,9 +37,9 @@ const Internal = {
     },
     drawCooldown() {
         if (Date.now() > debounce) {
-            alt.clearInterval(interval);
+            interval.destroy();
             interval = undefined;
-            alt.emitServer(SYSTEM_EVENTS.PLAYER_TOOLBAR_INVOKE, lastKey);
+            alt.Events.emitServer(SYSTEM_EVENTS.PLAYER_TOOLBAR_INVOKE, lastKey);
             return;
         }
 
@@ -74,7 +74,7 @@ const Internal = {
         }
 
         if (typeof interval !== 'undefined') {
-            alt.clearInterval(interval);
+            interval.destroy();
         }
 
         debounce = Date.now() + DELAY_TIME;
@@ -97,5 +97,5 @@ export const ToolbarSystem = {
     },
 };
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_TOOLBAR_ENABLE, Internal.init);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_INVENTORY_SYNC, Internal.handleChanges);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_TOOLBAR_ENABLE, Internal.init);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_INVENTORY_SYNC, Internal.handleChanges);

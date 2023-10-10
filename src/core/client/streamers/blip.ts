@@ -2,10 +2,10 @@ import * as alt from '@altv/client';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { Blip } from '@AthenaShared/interfaces/blip';
 
-const addedBlips: Array<alt.PointBlip> = [];
+const addedBlips: Array<alt.Blip> = [];
 
-function create(blipData: Blip): alt.PointBlip {
-    const blip = new alt.PointBlip(blipData.pos.x, blipData.pos.y, blipData.pos.z);
+function create(blipData: Blip): alt.Blip {
+    const blip = alt.PointBlip.create({ pos: blipData.pos });
     blip.sprite = blipData.sprite;
     blip.color = blipData.color;
     blip.shortRange = blipData.shortRange;
@@ -19,11 +19,7 @@ function create(blipData: Blip): alt.PointBlip {
         blip['uid'] = blipData.uid;
     }
 
-    if (blip.hasOwnProperty('size')) {
-        blip.size = { x: blipData.scale, y: blipData.scale } as alt.Vector2;
-    } else {
-        blip.scale = blipData.scale;
-    }
+    blip.scale = blipData.scale;
 
     return blip;
 }
@@ -41,9 +37,9 @@ function populate(blips: Array<Blip>) {
  *
  *
  * @param {Blip} blipData
- * @return {alt.PointBlip}
+ * @return {alt.Blip}
  */
-export function append(blipData: Blip): alt.PointBlip {
+export function append(blipData: Blip): alt.Blip {
     const index = addedBlips.findIndex((x) => x['uid'] && blipData.uid === x['uid']);
     if (index >= 0) {
         const removedBlips = addedBlips.splice(index, 1);
@@ -93,7 +89,7 @@ function removeAll() {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.POPULATE_BLIPS, populate);
-alt.onServer(SYSTEM_EVENTS.APPEND_BLIP, append);
-alt.onServer(SYSTEM_EVENTS.REMOVE_BLIP, remove);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_BLIPS, populate);
+alt.Events.onServer(SYSTEM_EVENTS.APPEND_BLIP, append);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_BLIP, remove);
 alt.Events.on('disconnect', removeAll);

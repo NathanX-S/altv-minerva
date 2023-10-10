@@ -33,7 +33,7 @@ const LerpObject = {
                 native.setEntityCoords(id, posTick.x, posTick.y, posTick.z, false, false, false, false);
 
                 if (dist <= 0.05) {
-                    alt.clearInterval(objectInterval);
+                    objectInterval.destroy();
                     resolve(true);
                 }
             }, 1);
@@ -66,4 +66,4 @@ const LerpObject = {
     },
 };
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_TEMP_OBJECT_LERP, LerpObject.tempLerp);

@@ -12,7 +12,7 @@ export type ValidEntityTypes = 'object' | 'pos' | 'npc' | 'player' | 'vehicle' |
 export type TargetInfo = { id: number; pos: alt.IVector3; type: ValidEntityTypes; dist: number; height: number };
 
 let MAX_TARGETS = 50;
-let everyTick: number;
+let everyTick: alt.Timers.EveryTick;
 let selections: Array<TargetInfo> = [];
 let selectionIndex = 0;
 let lastSelection: TargetInfo;
@@ -26,7 +26,7 @@ let autoMode = false;
 
 const Internal = {
     init() {
-        everyTick = alt.everyTick(Internal.tick);
+        everyTick = alt.Timers.everyTick(Internal.tick);
 
         AthenaClient.systems.hotkeys.add({
             key: KEY_BINDS.INTERACT,
@@ -189,7 +189,7 @@ const Internal = {
                         0,
                     );
 
-                    alt.emitServer(SYSTEM_EVENTS.INTERACTION_PICKUP_ITEM, droppedItem._id);
+                    alt.Events.emitServer(SYSTEM_EVENTS.INTERACTION_PICKUP_ITEM, droppedItem._id);
                     break;
                 }
 
@@ -326,4 +326,4 @@ export function setToAutoMode() {
     autoMode = true;
 }
 
-alt.onServer(SYSTEM_EVENTS.TICKS_START, Internal.init);
+alt.Events.onServer(SYSTEM_EVENTS.TICKS_START, Internal.init);

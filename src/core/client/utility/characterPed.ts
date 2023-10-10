@@ -44,7 +44,7 @@ export const PedCharacter = {
         id = native.createPed(1, hash, _pos.x, _pos.y, _pos.z, 0, false, false);
 
         return new Promise(async (resolve: Function) => {
-            alt.nextTick(() => {
+            alt.Timers.nextTick(() => {
                 native.setEntityNoCollisionEntity(id, alt.Player.local.scriptID, false);
                 native.taskSetBlockingOfNonTemporaryEvents(id, true);
                 native.setBlockingOfNonTemporaryEvents(id, true);
@@ -142,19 +142,19 @@ export const PedCharacter = {
             let attempts = 0;
             const interval = alt.Timers.setInterval(() => {
                 if (id === undefined || id === null) {
-                    alt.clearInterval(interval);
+                    interval.destroy();
                     return resolve();
                 }
 
                 if (!native.doesEntityExist(id)) {
                     id = null;
-                    alt.clearInterval(interval);
+                    interval.destroy();
                     return resolve();
                 }
 
                 if (attempts >= 10) {
                     id = null;
-                    alt.clearInterval(interval);
+                    interval.destroy();
                     return resolve();
                 }
 

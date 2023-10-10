@@ -20,12 +20,12 @@ function updateToken(hash: string) {
 async function fetchToken() {
     const jwt = alt.LocalStorage.get(TOKEN_KEY_VALUE);
     if (typeof jwt === 'undefined' || jwt === null) {
-        alt.emitServer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, null);
+        alt.Events.emitServer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, null);
         return;
     }
 
-    alt.emitServer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, jwt);
+    alt.Events.emitServer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, jwt);
 }
 
-alt.onServer(SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, updateToken);
-alt.onServer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, fetchToken);
+alt.Events.onServer(SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, updateToken);
+alt.Events.onServer(SYSTEM_EVENTS.QUICK_TOKEN_FETCH, fetchToken);

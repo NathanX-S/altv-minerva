@@ -7,7 +7,7 @@ import ICredit from '@AthenaShared/interfaces/iCredit';
 import { requestScaleForm, Scaleform } from './scaleform';
 
 let scaleform: Scaleform;
-let interval: number;
+let interval: alt.Timers.Interval;
 let timeout: number;
 
 /**
@@ -21,13 +21,8 @@ export function clear() {
         scaleform = null;
     }
 
-    if (timeout) {
-        alt.clearTimeout(timeout);
-        timeout = null;
-    }
-
     if (interval) {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = null;
     }
 }
@@ -71,7 +66,7 @@ export async function create(credit: ICredit) {
     }, 0);
 
     if (credit.duration >= 0) {
-        alt.setTimeout(async () => {
+        alt.Timers.setTimeout(async () => {
             scaleform.passFunction('HIDE', identifier, 1, 3, 1);
             await alt.Utils.wait(3000);
             scaleform.passFunction('REMOVE_ALL');
@@ -80,5 +75,5 @@ export async function create(credit: ICredit) {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_CREDITS, create);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_CREDITS_CLEAR, clear);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_CREDITS, create);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_CREDITS_CLEAR, clear);

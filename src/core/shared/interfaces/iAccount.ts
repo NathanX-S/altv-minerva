@@ -41,10 +41,10 @@ export interface Account {
 
     /**
      * Hardware Identifiers associated with an account.
-     * @type {Array<string>}
+     * @type {Array<number>}
      *
      */
-    hardware: Array<string>;
+    hardware: Array<number>;
 
     /**
      * Time in milliseconds when they last logged in since epoch.

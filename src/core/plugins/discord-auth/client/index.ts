@@ -8,7 +8,7 @@ async function getDiscordToken(applicationIdentifier: string) {
         bearerToken = await alt.Discord.requestOAuth2Token(applicationIdentifier);
     } catch (err) {}
 
-    alt.emitServer(DiscordAuthEvents.toServer.pushToken, bearerToken);
+    alt.Events.emitServer(DiscordAuthEvents.toServer.pushToken, bearerToken);
 }
 
-alt.onServer(DiscordAuthEvents.toClient.requestToken, getDiscordToken);
+alt.Events.onServer(DiscordAuthEvents.toClient.requestToken, getDiscordToken);

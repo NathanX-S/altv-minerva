@@ -5,7 +5,7 @@ import * as AthenaClient from '@AthenaClient/api';
 import { ATHENA_EVENTS_PLAYER_CLIENT } from '@AthenaShared/enums/athenaEvents';
 import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 
-let interval: number;
+let interval: alt.Timers.Interval;
 let isUpdatingWaypoint = false;
 let lastWaypointData: alt.IVector3;
 
@@ -21,7 +21,7 @@ function tick(): void {
 
 function init(): void {
     if (interval) {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = null;
     }
 
@@ -47,7 +47,7 @@ export async function updateWaypoint(): Promise<void> {
         // Prevent emitting the data twice.
         if (lastWaypointData !== null) {
             lastWaypointData = null;
-            alt.emitServer(ATHENA_EVENTS_PLAYER_CLIENT.WAYPOINT, null);
+            alt.Events.emitServer(ATHENA_EVENTS_PLAYER_CLIENT.WAYPOINT, null);
         }
 
         isUpdatingWaypoint = false;
@@ -60,7 +60,7 @@ export async function updateWaypoint(): Promise<void> {
         // Prevent emitting the data twice.
         if (lastWaypointData !== null) {
             lastWaypointData = null;
-            alt.emitServer(ATHENA_EVENTS_PLAYER_CLIENT.WAYPOINT, null);
+            alt.Events.emitServer(ATHENA_EVENTS_PLAYER_CLIENT.WAYPOINT, null);
         }
 
         isUpdatingWaypoint = false;
@@ -104,7 +104,7 @@ export async function updateWaypoint(): Promise<void> {
 
     // Did not find the ground position
     lastWaypointData = foundWaypoint;
-    alt.emitServer(ATHENA_EVENTS_PLAYER_CLIENT.WAYPOINT, foundWaypoint);
+    alt.Events.emitServer(ATHENA_EVENTS_PLAYER_CLIENT.WAYPOINT, foundWaypoint);
     native.requestCollisionAtCoord(alt.Player.local.pos.x, alt.Player.local.pos.y, alt.Player.local.pos.z);
     native.clearFocus();
     isUpdatingWaypoint = false;

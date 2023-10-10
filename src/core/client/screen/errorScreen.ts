@@ -4,8 +4,7 @@ import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import IErrorScreen from '@AthenaShared/interfaces/iErrorScreen';
 
-let interval: number;
-let timeout: number;
+let interval: alt.Timers.Interval;
 
 /**
  * Clear the currently drawn error screen.
@@ -13,13 +12,8 @@ let timeout: number;
  *
  */
 export function clear() {
-    if (timeout) {
-        alt.clearTimeout(timeout);
-        timeout = null;
-    }
-
     if (interval) {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = null;
     }
 }
@@ -33,11 +27,11 @@ export function clear() {
 export function create(screen: IErrorScreen) {
     clear();
 
-    alt.addGxtText('warning_error', screen.title);
-    alt.addGxtText('warning_text', screen.text);
+    alt.Gxt.add('warning_error', screen.title);
+    alt.Gxt.add('warning_text', screen.text);
 
     if (screen.text2) {
-        alt.addGxtText('warning_text2', screen.text2);
+        alt.Gxt.add('warning_text2', screen.text2);
     }
 
     interval = alt.Timers.setInterval(() => {
@@ -60,9 +54,9 @@ export function create(screen: IErrorScreen) {
     }, 0);
 
     if (screen.duration >= 0) {
-        alt.setTimeout(clear, screen.duration);
+        alt.Timers.setTimeout(clear, screen.duration);
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN, create);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN_CLEAR, clear);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN, create);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ERROR_SCREEN_CLEAR, clear);

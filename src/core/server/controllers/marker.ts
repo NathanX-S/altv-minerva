@@ -33,7 +33,7 @@ const InternalController = {
      *
      */
     update(player: alt.Player, markers: Array<Marker>) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_MARKERS, markers);
+        player.emit(SYSTEM_EVENTS.POPULATE_MARKERS, markers);
     },
 };
 
@@ -128,7 +128,7 @@ export function removeFromPlayer(player: alt.Player, uid: string) {
         throw new Error(`Did not specify a uid for marker removal. ServerMarkerController.removeFromPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.REMOVE_MARKER, uid);
+    player.emit(SYSTEM_EVENTS.REMOVE_MARKER, uid);
 }
 
 /**
@@ -156,7 +156,7 @@ export function addToPlayer(player: alt.Player, marker: Marker): string {
         marker.uid = sha256Random(JSON.stringify(marker));
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.APPEND_MARKER, marker);
+    player.emit(SYSTEM_EVENTS.APPEND_MARKER, marker);
     return marker.uid;
 }
 

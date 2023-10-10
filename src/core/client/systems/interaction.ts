@@ -10,8 +10,8 @@ let interactionTemporary: string = null;
 
 const Internal = {
     init() {
-        alt.onServer(SYSTEM_EVENTS.INTERACTION_TEMPORARY, Internal.set.temporary);
-        alt.onServer(SYSTEM_EVENTS.PLAYER_SET_INTERACTION, Internal.set.primary);
+        alt.Events.onServer(SYSTEM_EVENTS.INTERACTION_TEMPORARY, Internal.set.temporary);
+        alt.Events.onServer(SYSTEM_EVENTS.PLAYER_SET_INTERACTION, Internal.set.primary);
     },
     set: {
         temporary(eventName: string | null) {
@@ -31,11 +31,11 @@ const Internal = {
  */
 export function invoke() {
     if (typeof interactionTemporary === 'string') {
-        alt.emitServer(interactionTemporary);
+        alt.Events.emitServer(interactionTemporary);
         return;
     }
 
-    alt.emitServer(SYSTEM_EVENTS.INTERACTION);
+    alt.Events.emitServer(SYSTEM_EVENTS.INTERACTION);
 }
 
 /**

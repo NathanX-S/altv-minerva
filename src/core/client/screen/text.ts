@@ -2,7 +2,7 @@ import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 
 const temporaryText = [];
-let tempInterval: number | undefined;
+let tempInterval: alt.Timers.Interval | undefined;
 
 /**
  * Draw text on your screen in a 2D position with an every tick.
@@ -118,20 +118,20 @@ export function addTemporaryText(identifier, msg, x, y, scale, r, g, b, a, ms) {
 
     if (index !== -1) {
         try {
-            alt.clearTimeout(temporaryText[index].timeout);
+            temporaryText[index].timeout.destory();
             temporaryText[index].timeout = null;
         } catch (err) {}
         temporaryText.splice(index, 1);
     }
 
-    const timeout = alt.setTimeout(() => {
+    const timeout = alt.Timers.setTimeout(() => {
         removeText(identifier);
     }, ms);
 
     temporaryText.push({ identifier, msg, x, y, scale, r, g, b, a, timeout });
 
     if (tempInterval) {
-        alt.clearInterval(tempInterval);
+        tempInterval.destroy();
         tempInterval = null;
     }
 
@@ -152,7 +152,7 @@ function removeText(identifier: string): void {
     temporaryText.splice(index, 1);
 
     if (temporaryText.length <= 0) {
-        alt.clearInterval(tempInterval);
+        tempInterval.destroy();
         tempInterval = null;
     }
 }

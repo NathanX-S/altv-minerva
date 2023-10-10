@@ -57,7 +57,7 @@ export function tryAnimation(player: alt.Player, objective: Objective) {
             player.rot = objective.animation.rotation as alt.Vector3;
         }
 
-        alt.nextTick(() => {
+        alt.Timers.nextTick(() => {
             Athena.player.emit.animation(
                 player,
                 objective.animation.dict,

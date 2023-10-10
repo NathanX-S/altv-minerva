@@ -18,7 +18,7 @@ async function handleOpen() {
 
     const result = await AthenaClient.rmlui.question.create({ placeholder: lastEvent.question, blur: true });
     const eventToCall = result ? lastEvent.onClientEvents.accept : lastEvent.onClientEvents.decline;
-    alt.emitServer(eventToCall, lastEvent.data);
+    alt.Events.emitServer(eventToCall, lastEvent.data);
     lastEvent = undefined;
 }
 
@@ -34,7 +34,7 @@ function init() {
         keyDown: handleOpen,
     });
 
-    alt.onServer(SYSTEM_EVENTS.ACCEPT_DECLINE_EVENT_SET, setAcceptDeclineEvent);
+    alt.Events.onServer(SYSTEM_EVENTS.ACCEPT_DECLINE_EVENT_SET, setAcceptDeclineEvent);
 }
 
 onTicksStart.add(init);

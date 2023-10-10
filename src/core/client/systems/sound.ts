@@ -4,11 +4,11 @@ import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { distance } from '@AthenaShared/utility/vector';
 import { AudioView } from '@AthenaClient/views/audio';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_FRONTEND_SOUND, frontend);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, play3d);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, play2d);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_STOP, stopAudio);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D_POSITIONAL, handlePlayAudioPositional);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_FRONTEND_SOUND, frontend);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, play3d);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, play2d);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_STOP, stopAudio);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D_POSITIONAL, handlePlayAudioPositional);
 
 /**
  * Play a sound in the frontend.

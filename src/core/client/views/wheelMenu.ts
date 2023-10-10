@@ -10,14 +10,14 @@ import ViewModel from '@AthenaClient/models/viewModel';
 const PAGE_NAME = 'WheelMenu';
 let _label = '';
 let _options: Array<IWheelOptionExt> = [];
-let _interval: number;
+let _interval: alt.Timers.Interval;
 
 /**
  * Do Not Export Internal Only
  */
 class InternalFunctions implements ViewModel {
     static init() {
-        alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_WHEEL_MENU, open);
+        alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_WHEEL_MENU, open);
     }
 
     static tick() {
@@ -64,16 +64,16 @@ class InternalFunctions implements ViewModel {
 
         if (typeof option.emitServer === 'string') {
             if (Array.isArray(option.data)) {
-                alt.emitServer(option.emitServer, ...option.data);
+                alt.Events.emitServer(option.emitServer, ...option.data);
             } else {
-                alt.emitServer(option.emitServer);
+                alt.Events.emitServer(option.emitServer);
             }
         }
     }
 
     static async close(closePage = false) {
         if (_interval) {
-            alt.clearInterval(_interval);
+            _interval.destroy();
             _interval = null;
         }
 
@@ -130,7 +130,7 @@ export async function open(label: string, options: Array<IWheelOptionExt>, setMo
 
     if (setMouseToCenter) {
         const [_nothing, _x, _y] = native.getActualScreenResolution(0, 0);
-        alt.setCursorPos({ x: _x / 2, y: _y / 2 });
+        alt.Cursor.pos = new alt.Vector2({ x: _x / 2, y: _y / 2 });
     }
 
     // This is where we open the page and show the cursor.
@@ -142,7 +142,7 @@ export async function open(label: string, options: Array<IWheelOptionExt>, setMo
     alt.Player.local.isMenuOpen = true;
 
     if (_interval) {
-        alt.clearInterval(_interval);
+        _interval.destroy();
         _interval = null;
     }
 
@@ -170,7 +170,7 @@ export function update(label: string, options: Array<IWheelOptionExt>, setMouseT
 
     if (setMouseToCenter) {
         const [_nothing, _x, _y] = native.getActualScreenResolution(0, 0);
-        alt.setCursorPos({ x: _x / 2, y: _y / 2 });
+        alt.Cursor.pos = new alt.Vector2({ x: _x / 2, y: _y / 2 });
     }
 
     InternalFunctions.ready();

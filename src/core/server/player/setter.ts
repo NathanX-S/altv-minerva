@@ -25,9 +25,9 @@ export async function account(player: alt.Player, accountData: Account): Promise
     // Setup JWT Storage
     accountData._id = accountData._id.toString();
     const newToken = await Athena.systems.jwt.create(accountData as Account);
-    alt.emitClient(player, SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, newToken);
+    player.emit(SYSTEM_EVENTS.QUICK_TOKEN_UPDATE, newToken);
 
-    player.setSyncedMeta(PLAYER_SYNCED_META.ACCOUNT_ID, accountData.id);
+    player.syncedMeta[PLAYER_SYNCED_META.ACCOUNT_ID] = accountData.id;
     emit.meta(player, 'permissions', accountData.permissions);
 
     Athena.document.account.bind(player, accountData);
@@ -39,7 +39,7 @@ export function actionMenu(player: alt.Player, actionMenu: ActionMenu) {
         return Overrides.actionMenu(player, actionMenu);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.SET_ACTION_MENU, actionMenu);
+    player.emit(SYSTEM_EVENTS.SET_ACTION_MENU, actionMenu);
 }
 
 /**

@@ -102,7 +102,7 @@ export async function isDoneLoading(): Promise<void> {
                 return;
             }
 
-            alt.clearInterval(interval);
+            interval.destroy();
             resolve();
         }, 100);
     });

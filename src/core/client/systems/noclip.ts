@@ -7,7 +7,7 @@ import { LocaleController } from '@AthenaShared/locale/locale';
 
 const timeBetweenPlayerUpdates = 250;
 let nextUpdate = Date.now() + 50;
-let tick: number = null;
+let tick: alt.Timers.EveryTick = null;
 let noclipCam: number = null;
 let sensitivity = 0.15;
 let sensMultiplier = 5;
@@ -30,7 +30,7 @@ const NoClip = {
     },
 
     enable() {
-        tick = alt.everyTick(NoClip.tick);
+        tick = alt.Timers.everyTick(NoClip.tick);
         sensMultiplier = 5;
 
         const gameplayCamPos = native.getGameplayCamCoord();
@@ -58,7 +58,7 @@ const NoClip = {
     },
 
     disable() {
-        alt.clearEveryTick(tick);
+        tick.destroy();
 
         noclipCam = null;
         native.renderScriptCams(false, true, 500, true, false, 0);
@@ -92,7 +92,7 @@ const NoClip = {
 
         // native.setEntityCoords(alt.Player.local.scriptID, fwd.x, fwd.y, fwd.z - 2.0, true, false, false, true);
 
-        if (alt.gameControlsEnabled() === false) {
+        if (alt.areGameControlsActive() === false) {
             return;
         }
 
@@ -198,7 +198,7 @@ const NoClip = {
 
         if (Date.now() > nextUpdate) {
             nextUpdate = Date.now() + timeBetweenPlayerUpdates;
-            alt.emitServer(SYSTEM_EVENTS.NOCLIP_UPDATE, fwd);
+            alt.Events.emitServer(SYSTEM_EVENTS.NOCLIP_UPDATE, fwd);
         }
 
         AthenaClient.screen.text.drawText2D(

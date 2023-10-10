@@ -70,7 +70,7 @@ export function requestScaleForm(scaleformName: string): Promise<Scaleform> {
                 return;
             }
 
-            alt.clearInterval(interval);
+            interval.destroy();
             resolve(instance);
         }, 5);
     });

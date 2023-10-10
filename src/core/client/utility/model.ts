@@ -23,7 +23,7 @@ export async function load(model: number | string): Promise<boolean> {
         const interval = alt.Timers.setInterval(() => {
             if (count >= 100) {
                 resolve(false);
-                alt.clearInterval(interval);
+                interval.destroy();
                 return;
             }
 
@@ -32,7 +32,7 @@ export async function load(model: number | string): Promise<boolean> {
                 return;
             }
 
-            alt.clearInterval(interval);
+            interval.destroy();
             resolve(true);
         }, 100);
     });

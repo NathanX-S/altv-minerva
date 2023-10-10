@@ -66,17 +66,17 @@ export function appearance(player: alt.Player, document: Character = undefined) 
 
     // Set Face
     player.clearBloodDamage();
-    player.setHeadBlendData(
-        appearance.faceMother,
-        appearance.faceFather,
-        0,
-        appearance.skinMother,
-        appearance.skinFather,
-        0,
-        parseFloat(appearance.faceMix.toString()),
-        parseFloat(appearance.skinMix.toString()),
-        0,
-    );
+    player.headBlendData = {
+        shapeFirstID: appearance.faceMother,
+        shapeSecondID: appearance.faceFather,
+        shapeThirdID: 0,
+        skinFirstID: appearance.skinMother,
+        skinSecondID: appearance.skinFather,
+        skinThirdID: 0,
+        shapeMix: parseFloat(appearance.faceMix.toString()),
+        skinMix: parseFloat(appearance.skinMix.toString()),
+        thirdMix: 0,
+    };
 
     // Facial Features
     for (let i = 0; i < appearance.structure.length; i++) {
@@ -97,7 +97,7 @@ export function appearance(player: alt.Player, document: Character = undefined) 
     }
 
     if (decorationsToSync.length >= 1) {
-        alt.emitClient(player, SYSTEM_EVENTS.SET_PLAYER_DECORATIONS, decorationsToSync);
+        player.emit(SYSTEM_EVENTS.SET_PLAYER_DECORATIONS, decorationsToSync);
     }
 
     // Hair - Supports DLC
@@ -107,8 +107,8 @@ export function appearance(player: alt.Player, document: Character = undefined) 
         player.setDlcClothes(appearance.hairDlc, 2, appearance.hair, 0, 0);
     }
 
-    player.setHairColor(appearance.hairColor1);
-    player.setHairHighlightColor(appearance.hairColor2);
+    player.hairColor = appearance.hairColor1;
+    player.hairHighlightColor = appearance.hairColor2;
 
     // Facial Hair
     player.setHeadOverlay(1, appearance.facialHair, appearance.facialHairOpacity);
@@ -134,7 +134,7 @@ export function appearance(player: alt.Player, document: Character = undefined) 
     }
 
     // Eyes
-    player.setEyeColor(appearance.eyes);
+    player.eyeColor = appearance.eyes;
 }
 
 /**
@@ -147,8 +147,8 @@ export function syncedMeta(player: alt.Player): void {
         return Overrides.syncedMeta(player);
     }
 
-    player.setSyncedMeta(PLAYER_SYNCED_META.PING, player.ping);
-    player.setSyncedMeta(PLAYER_SYNCED_META.POSITION, player.pos);
+    player.syncedMeta[PLAYER_SYNCED_META.PING] = player.ping;
+    player.syncedMeta[PLAYER_SYNCED_META.POSITION] = player.pos;
 }
 
 export function playTime(player: alt.Player): void {

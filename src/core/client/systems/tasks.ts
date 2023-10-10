@@ -32,7 +32,7 @@ const TaskHelper = {
             return;
         }
 
-        alt.setTimeout(TaskHelper.nextTask, 0);
+        alt.Timers.setTimeout(TaskHelper.nextTask, 0);
     },
 
     async nextTask() {
@@ -47,7 +47,7 @@ const TaskHelper = {
 
         if (task.hasOwnProperty('callbackName')) {
             task = task as TaskCallback;
-            alt.emitServer(task.callbackName);
+            alt.Events.emitServer(task.callbackName);
             return;
         }
 
@@ -75,11 +75,11 @@ const TaskHelper = {
 
         await alt.Utils.wait(task.timeToWaitInMs);
         if (timeline.length >= 1) {
-            alt.setTimeout(TaskHelper.nextTask, 0);
+            alt.Timers.setTimeout(TaskHelper.nextTask, 0);
         } else {
             alt.log(`Timeline Completed`);
         }
     },
 };
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, TaskHelper.setTasks);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_TASK_TIMELINE, TaskHelper.setTasks);

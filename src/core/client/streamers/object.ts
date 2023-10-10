@@ -19,7 +19,7 @@ const InternalFunctions = {
             return;
         }
 
-        alt.clearInterval(interval);
+        clearInterval(interval);
     },
     moveObject(uid: string, pos: alt.IVector3) {
         const dataRef = serverObjects[uid] ? serverObjects : clientObjects;
@@ -46,19 +46,19 @@ const InternalFunctions = {
             dataRef[uid].createdObject.destroy();
         }
 
-        const createdObject = new alt.Object(
-            model,
-            new alt.Vector3(dataRef[uid].pos),
-            new alt.Vector3(dataRef[uid].rot),
-            true,
-            false,
-        );
+        const createdObject = alt.LocalObject.create({
+            model: model,
+            pos: new alt.Vector3(dataRef[uid].pos),
+            rot: new alt.Vector3(dataRef[uid].rot),
+            noOffset: true,
+            dynamic: false,
+        });
 
         if (dataRef[uid].noCollision) {
             createdObject.toggleCollision(false, false);
         }
 
-        createdObject.setPositionFrozen(true);
+        createdObject.positionFrozen = true;
         dataRef[uid].createdObject = createdObject;
     },
     populate(newObjects: Array<IObject>) {
@@ -87,19 +87,19 @@ const InternalFunctions = {
                 delete serverObjects[objRef.uid];
             }
 
-            const createdObject = new alt.Object(
-                objRef.model,
-                new alt.Vector3(objRef.pos),
-                new alt.Vector3(objRef.rot),
-                true,
-                false,
-            );
+            const createdObject = alt.LocalObject.create({
+                model: objRef.model,
+                pos: new alt.Vector3(objRef.pos),
+                rot: new alt.Vector3(objRef.rot),
+                noOffset: true,
+                dynamic: false,
+            });
 
             if (objRef.noCollision) {
                 createdObject.toggleCollision(false, false);
             }
 
-            createdObject.setPositionFrozen(true);
+            createdObject.positionFrozen = true;
 
             serverObjects[objRef.uid] = {
                 ...objRef,
@@ -135,19 +135,19 @@ export function addObject(newObject: IObject) {
         throw new Error(`Object with ${newObject.uid} already exists! Use a unique identifier.`);
     }
 
-    const createdObject = new alt.Object(
-        newObject.model,
-        new alt.Vector3(newObject.pos),
-        new alt.Vector3(newObject.rot),
-        true,
-        false,
-    );
+    const createdObject = alt.LocalObject.create({
+        model: newObject.model,
+        pos: new alt.Vector3(newObject.pos),
+        rot: new alt.Vector3(newObject.rot),
+        noOffset: true,
+        dynamic: false,
+    });
 
     if (newObject.noCollision) {
         createdObject.toggleCollision(false, false);
     }
 
-    createdObject.setPositionFrozen(true);
+    createdObject.positionFrozen = true;
     clientObjects[newObject.uid] = {
         ...newObject,
         createdObject,
@@ -212,8 +212,8 @@ export function getFromScriptId(scriptId: number): CreatedObject | undefined {
 }
 
 alt.Events.on('disconnect', InternalFunctions.stop);
-alt.onServer(SYSTEM_EVENTS.POPULATE_OBJECTS, InternalFunctions.populate);
-alt.onServer(SYSTEM_EVENTS.MOVE_OBJECT, InternalFunctions.moveObject);
-alt.onServer(SYSTEM_EVENTS.APPEND_OBJECT, addObject);
-alt.onServer(SYSTEM_EVENTS.REMOVE_OBJECT, removeObject);
-alt.onServer(SYSTEM_EVENTS.UPDATE_OBJECT_MODEL, InternalFunctions.updateObjectModel);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_OBJECTS, InternalFunctions.populate);
+alt.Events.onServer(SYSTEM_EVENTS.MOVE_OBJECT, InternalFunctions.moveObject);
+alt.Events.onServer(SYSTEM_EVENTS.APPEND_OBJECT, addObject);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_OBJECT, removeObject);
+alt.Events.onServer(SYSTEM_EVENTS.UPDATE_OBJECT_MODEL, InternalFunctions.updateObjectModel);

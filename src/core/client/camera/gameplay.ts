@@ -1,7 +1,7 @@
 import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 
-let interval: number = undefined;
+let interval: alt.Timers.Interval = undefined;
 
 const CAMERA_CONTROLS = [0, 1, 2, 3, 4, 5, 6, 7, 18, 24, 25, 53, 54, 68, 69, 70, 92, 106, 142, 144, 257, 346];
 
@@ -48,7 +48,7 @@ export function enable() {
         return;
     }
 
-    alt.clearInterval(interval);
+    interval.destroy();
     interval = undefined;
 }
 

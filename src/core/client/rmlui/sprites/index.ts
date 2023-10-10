@@ -59,7 +59,7 @@ type InternalSprite = SpriteInfo & { element?: alt.RmlElement; markForDeletion: 
 
 let document: alt.RmlDocument;
 let elements: Array<InternalSprite> = [];
-let interval: number;
+let interval: alt.Timers.EveryTick;
 let lastBlockingCheck = Date.now() + 1000;
 
 const InternalFunctions = {
@@ -104,7 +104,7 @@ const InternalFunctions = {
         element.addClass('image');
         element.setAttribute('width', `${elements[index].width}px`);
         element.setAttribute('height', `${elements[index].height}px`);
-        element.id = uid;
+        element.rmlID = uid;
         elements[index].element = element;
         document.appendChild(element);
     },
@@ -132,7 +132,7 @@ const InternalFunctions = {
         }
 
         if (document && elements.length <= 0) {
-            alt.clearInterval(interval);
+            interval.destroy();
             document.destroy();
             document = undefined;
             interval = undefined;
@@ -187,7 +187,7 @@ const InternalFunctions = {
             const scale = InternalFunctions.getScale(dist, width, height);
 
             // Update position based on world position.
-            const screenPosition = alt.worldToScreen(spritePosition.x, spritePosition.y, spritePosition.z);
+            const screenPosition = alt.worldToScreen(spritePosition);
 
             if (elements[i].isBlocked) {
                 elements[i].element.style['opacity'] = '0.1';
@@ -221,9 +221,9 @@ const InternalFunctions = {
  */
 export function create(sprite: SpriteInfo) {
     if (typeof document === 'undefined') {
-        document = new alt.RmlDocument('/client/rmlui/sprites/index.rml');
+        document = alt.RmlDocument.create({ url: '/client/rmlui/sprites/index.rml' });
         document.show();
-        interval = alt.Timers.setInterval(InternalFunctions.update, 0);
+        interval = alt.Timers.everyTick(InternalFunctions.update);
     }
 
     if (sprite.path.includes('@plugins')) {
@@ -276,7 +276,7 @@ export function update(uid: string, sprite: Partial<SpriteInfo>) {
 alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
-        alt.clearInterval(interval);
+        interval.destroy();
         alt.log('progressbar | Destroyed RMLUI Document on Disconnect');
     }
 });

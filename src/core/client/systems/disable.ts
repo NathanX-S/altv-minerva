@@ -4,10 +4,10 @@ import { SHARED_CONFIG } from '@AthenaShared/configurations/shared';
 import { VehicleController } from './vehicle';
 import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 
-let interval: number | undefined;
+let interval: alt.Timers.EveryTick | undefined;
 
 function toggleOn() {
-    interval = alt.Timers.setInterval(disableDefaultBehavior, 0);
+    interval = alt.Timers.everyTick(disableDefaultBehavior);
 }
 
 function disableDefaultBehavior(): void {

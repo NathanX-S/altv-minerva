@@ -160,7 +160,7 @@ export async function goto(player: alt.Player, door: DoorInfo) {
         Athena.document.vehicle.setBulk(vehicle, { pos: vehicle.pos, dimension: door.dimension });
         const passengers = Athena.getters.vehicle.passengers(player.vehicle);
 
-        alt.nextTick(() => {
+        alt.Timers.nextTick(() => {
             for (let i = 0; i < passengers.length; i++) {
                 const passenger = passengers[i];
                 passenger.dimension = door.dimension;

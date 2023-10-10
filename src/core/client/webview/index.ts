@@ -106,7 +106,7 @@ const InternalFunctions = {
             return;
         }
 
-        alt.emitServer(eventName, ...args);
+        alt.Events.emitServer(eventName, ...args);
     },
 
     /**
@@ -204,7 +204,7 @@ const InternalFunctions = {
         }
 
         await InternalFunctions.updatePages();
-        alt.nextTick(() => {
+        alt.Timers.nextTick(() => {
             isUpdating = false;
         });
     },
@@ -216,7 +216,7 @@ const InternalFunctions = {
                     return;
                 }
 
-                alt.clearInterval(interval);
+                interval.destroy();
                 return resolve();
             }, 50);
         });
@@ -237,7 +237,7 @@ export function create(url: string) {
     }
 
     if (!_webview) {
-        _webview = new alt.WebView(_defaultURL, false);
+        _webview = alt.WebView.create({ url: _defaultURL });
         _webview.on(WebViewEventNames.EMIT_CLIENT, InternalFunctions.handleClientEvent);
         _webview.on(WebViewEventNames.EMIT_SERVER, InternalFunctions.handleServerEvent);
         _webview.on(WebViewEventNames.EMIT_READY, InternalFunctions.handleReadyEvent);
@@ -358,7 +358,7 @@ export async function get(): Promise<alt.WebView> {
 
         const interval = alt.Timers.setInterval(() => {
             if (attempts >= 255) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 return resolve(undefined);
             }
 
@@ -372,7 +372,7 @@ export async function get(): Promise<alt.WebView> {
                 return;
             }
 
-            alt.clearInterval(interval);
+            interval.destroy();
             return resolve(_webview);
         }, 100);
     });
@@ -446,7 +446,7 @@ export async function openPages(
     }
 
     await InternalFunctions.updatePages();
-    alt.nextTick(() => {
+    alt.Timers.nextTick(() => {
         isUpdating = false;
     });
 }
@@ -458,7 +458,7 @@ export async function openPages(
  */
 export async function focus() {
     const view = await get();
-    view.focus();
+    view.focused = true;
 }
 
 /**
@@ -468,7 +468,7 @@ export async function focus() {
  */
 export async function unfocus() {
     const view = await get();
-    view.unfocus();
+    view.focused = false;
 }
 
 /**
@@ -481,12 +481,12 @@ export async function showCursor(state: boolean) {
     if (state) {
         _cursorCount += 1;
         try {
-            alt.showCursor(true);
+            alt.Cursor.visible = true;
         } catch (err) {}
     } else {
         for (let i = 0; i < _cursorCount; i++) {
             try {
-                alt.showCursor(false);
+                alt.Cursor.visible = false;
             } catch (err) {}
         }
 
@@ -531,7 +531,7 @@ export async function closeOverlays(pageNames: Array<string>) {
     }
 
     await InternalFunctions.updatePages();
-    alt.nextTick(() => {
+    alt.Timers.nextTick(() => {
         isUpdating = false;
     });
 }
@@ -578,7 +578,7 @@ export async function closePages(pageNames: Array<string>, showOverlays = false)
     }
 
     await InternalFunctions.updatePages();
-    alt.nextTick(() => {
+    alt.Timers.nextTick(() => {
         isUpdating = false;
     });
 }
@@ -700,9 +700,9 @@ export function isAnyMenuOpen(excludeDead = false): boolean {
 
 alt.Events.on('keyup', InternalFunctions.handleKeyDownEvent);
 alt.Events.on('disconnect', dispose);
-alt.onceServer(SYSTEM_EVENTS.WEBVIEW_INFO, create);
-alt.onServer(WebViewEventNames.ON_SERVER, InternalFunctions.onServer);
-alt.onServer(WebViewEventNames.CLOSE_PAGES, (pages: Array<string>) => {
+alt.Events.onceServer(SYSTEM_EVENTS.WEBVIEW_INFO, create);
+alt.Events.onServer(WebViewEventNames.ON_SERVER, InternalFunctions.onServer);
+alt.Events.onServer(WebViewEventNames.CLOSE_PAGES, (pages: Array<string>) => {
     if (pages.length <= 0) {
         InternalFunctions.closeNonOverlayPages();
         return;

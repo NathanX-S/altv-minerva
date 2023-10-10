@@ -36,7 +36,7 @@ const InternalController = {
      *
      */
     update(player: alt.Player, objects: Array<IObject>) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_OBJECTS, objects);
+        player.emit(SYSTEM_EVENTS.POPULATE_OBJECTS, objects);
     },
 };
 
@@ -145,7 +145,7 @@ export function removeFromPlayer(player: alt.Player, uid: string) {
         throw new Error(`Did not specify a uid for object removal. ObjectController.removeFromPlayer`);
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.REMOVE_OBJECT, uid);
+    player.emit(SYSTEM_EVENTS.REMOVE_OBJECT, uid);
 }
 
 /**
@@ -174,7 +174,7 @@ export function addToPlayer(player: alt.Player, objectData: IObject): string {
         objectData.uid = sha256Random(JSON.stringify(objectData));
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.APPEND_OBJECT, objectData);
+    player.emit(SYSTEM_EVENTS.APPEND_OBJECT, objectData);
     return objectData.uid;
 }
 
@@ -217,7 +217,7 @@ export function updatePosition(uid: string, pos: alt.IVector3, player: alt.Playe
         return true;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.MOVE_OBJECT, uid, pos);
+    player.emit(SYSTEM_EVENTS.MOVE_OBJECT, uid, pos);
     return true;
 }
 
@@ -233,7 +233,7 @@ export function updateModel(uid: string, model: string, player: alt.Player = und
         return true;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.UPDATE_OBJECT_MODEL, uid, model);
+    player.emit(SYSTEM_EVENTS.UPDATE_OBJECT_MODEL, uid, model);
     return true;
 }
 

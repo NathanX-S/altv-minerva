@@ -26,4 +26,4 @@ export const onInventoryUpdate = {
     },
 };
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_INVENTORY_SYNC, Internal.update);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_INVENTORY_SYNC, Internal.update);

@@ -353,6 +353,7 @@ declare module '@altv/server' {
         readonly hwidExHash: number;
 
         readonly isConnected: boolean;
+        readonly ping: number;
         readonly authToken: string;
         readonly discordId: number;
 

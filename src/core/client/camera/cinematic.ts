@@ -114,7 +114,7 @@ const InternalFunctions = {
                     return;
                 }
 
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve();
                 return;
             }, 25);
@@ -238,7 +238,7 @@ const InternalFunctions = {
         }
 
         await new Promise((resolve: Function) => {
-            alt.setTimeout(
+            alt.Timers.setTimeout(
                 () => {
                     resolve();
 

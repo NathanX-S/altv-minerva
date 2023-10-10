@@ -1,7 +1,7 @@
 import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 
-let interval: number = undefined;
+let interval: alt.Timers.EveryTick = undefined;
 
 const PAUSE_CONTROLS = [199, 200];
 
@@ -27,7 +27,7 @@ export function disable() {
         return;
     }
 
-    interval = alt.Timers.setInterval(Internal.tick, 0);
+    interval = alt.Timers.everyTick(Internal.tick);
 }
 
 /**
@@ -41,6 +41,6 @@ export function enable() {
         return;
     }
 
-    alt.clearInterval(interval);
+    interval.destroy();
     interval = undefined;
 }

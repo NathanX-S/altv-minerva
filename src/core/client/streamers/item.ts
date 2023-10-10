@@ -5,13 +5,13 @@ import * as AthenaClient from '@AthenaClient/api';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { ItemDrop } from '@AthenaShared/interfaces/item';
 
-export type CreatedDrop = ItemDrop & { createdObject?: alt.Object };
+export type CreatedDrop = ItemDrop & { createdObject?: alt.LocalObject };
 
 let maxDistance = 5;
 let defaultProp = 'prop_cs_cardbox_01';
 let items: Array<CreatedDrop> = [];
 let closestItems: Array<CreatedDrop> = [];
-let interval: number;
+let interval: alt.Timers.Interval;
 
 /**
  * Do Not Export Internal Only
@@ -26,7 +26,7 @@ const InternalFunctions = {
             return;
         }
 
-        alt.clearInterval(interval);
+        interval.destroy();
     },
     populate(itemDrops: Array<ItemDrop>) {
         // First Loop Clears Uncommon Values
@@ -64,15 +64,15 @@ const InternalFunctions = {
                 modifiedPosition.z + itemHeight,
             );
 
-            items[existingIndex].createdObject = new alt.Object(
-                model,
-                itemPosition,
-                new alt.Vector3(0, 0, 0),
-                true,
-                false,
-            );
+            items[existingIndex].createdObject = alt.LocalObject.create({
+                model: model,
+                pos: itemPosition,
+                rot: new alt.Vector3(0, 0, 0),
+                noOffset: true,
+                dynamic: false,
+            });
             items[existingIndex].createdObject.toggleCollision(false, false);
-            items[existingIndex].createdObject.setPositionFrozen(true);
+            items[existingIndex].createdObject.positionFrozen = true;
         }
 
         if (!interval) {
@@ -164,4 +164,4 @@ export function getDropped(id: number): CreatedDrop | undefined {
 
 alt.Events.on('connectionComplete', InternalFunctions.init);
 alt.Events.on('disconnect', InternalFunctions.stop);
-alt.onServer(SYSTEM_EVENTS.POPULATE_ITEM_DROPS, InternalFunctions.populate);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_ITEM_DROPS, InternalFunctions.populate);

@@ -161,7 +161,7 @@ export async function registerCallback<T>(
                 return;
             }
 
-            clearInterval(interval.id);
+            interval.destroy();
             resolve();
         }, 100);
     });
@@ -196,7 +196,7 @@ export async function updateData<T>(key: string, array: Array<T>) {
                 return;
             }
 
-            clearInterval(interval.id);
+            interval.destroy();
             resolve();
         }, 100);
     });

@@ -32,7 +32,7 @@ const Internal = {
                 text: 'Hospital',
                 color: 6,
                 sprite: 153,
-                scale: 1,
+                scale: new alt.Vector2(1),
                 shortRange: true,
                 pos: HOSPITALS[i],
                 uid: `hospital-${i}`,

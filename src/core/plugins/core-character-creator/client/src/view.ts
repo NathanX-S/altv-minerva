@@ -13,7 +13,7 @@ const PAGE_NAME = 'CharacterCreator';
 const fModel = alt.hash('mp_f_freemode_01');
 const mModel = alt.hash(`mp_m_freemode_01`);
 let oldCharacterData: Partial<Appearance> | null = {};
-let readyInterval: number;
+let readyInterval: alt.Timers.Interval;
 let noDiscard = true;
 let noName = true;
 let totalCharacters = 0;
@@ -69,13 +69,13 @@ class InternalFunctions {
         native.doScreenFadeOut(100);
         oldCharacterData = null;
 
-        alt.toggleGameControls(true);
+        alt.setGameControlsActive(true);
         disableAllControls(false);
     }
 
     static handleDone(newData, infoData, name: string) {
         InternalFunctions.close();
-        alt.emitServer(CHARACTER_CREATOR_EVENTS.DONE, newData, infoData, name);
+        alt.Events.emitServer(CHARACTER_CREATOR_EVENTS.DONE, newData, infoData, name);
     }
 
     static async waitForReady() {
@@ -85,7 +85,7 @@ class InternalFunctions {
 
     static async handleReadyDone() {
         if (readyInterval !== undefined || readyInterval !== null) {
-            alt.clearInterval(readyInterval);
+            readyInterval.destroy();
             readyInterval = null;
         }
 
@@ -100,7 +100,7 @@ class InternalFunctions {
     }
 
     static handleCheckName(name: string): void {
-        alt.emitServer(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, name);
+        alt.Events.emitServer(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, name);
     }
 
     static async handleNameFinish(result: boolean) {
@@ -119,6 +119,6 @@ class InternalFunctions {
 }
 
 // Needs to be moved server side... yay nightmares
-// alt.onServer(View_Events_Creator.Sync, InternalFunctions.handleSync);
-alt.onServer(CHARACTER_CREATOR_EVENTS.SHOW, InternalFunctions.open);
-alt.onServer(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, InternalFunctions.handleNameFinish);
+// alt.Events.onServer(View_Events_Creator.Sync, InternalFunctions.handleSync);
+alt.Events.onServer(CHARACTER_CREATOR_EVENTS.SHOW, InternalFunctions.open);
+alt.Events.onServer(CHARACTER_CREATOR_EVENTS.VERIFY_NAME, InternalFunctions.handleNameFinish);

@@ -1,4 +1,5 @@
 import * as alt from '@altv/server';
+import { Events } from '@altv/shared';
 import * as Athena from '@AthenaServer/api';
 
 const HOSPITALS = [
@@ -19,6 +20,7 @@ const HOSPITALS = [
  */
 
 let enabled = true;
+let event: Events.EventHandler;
 
 const Internal = {
     /**
@@ -62,7 +64,7 @@ const Internal = {
 
         const newPosition = Internal.getClosestHospital(victim.pos);
         Athena.document.character.set(victim, 'isDead', false);
-        victim.spawn(newPosition.x, newPosition.y, newPosition.z, 0);
+        victim.spawn(newPosition, 0);
         Athena.player.events.trigger('respawned', victim);
     },
 
@@ -89,7 +91,7 @@ const Internal = {
         Athena.document.character.set(victim, 'isDead', true);
         Athena.player.events.trigger('player-died', victim);
 
-        alt.setTimeout(() => {
+        alt.Timers.setTimeout(() => {
             if (!victim || !victim.valid) {
                 return;
             }
@@ -103,7 +105,7 @@ const Internal = {
         }
 
         Athena.player.events.on('selected-character', Internal.respawn);
-        alt.Events.on('playerDeath', Internal.handleDefaultDeath);
+        event = alt.Events.on('playerDeath', Internal.handleDefaultDeath);
         alt.log(`~lc~Default System: ~g~Death`);
     },
 };
@@ -121,7 +123,9 @@ const Internal = {
  */
 export function disable() {
     enabled = false;
-    alt.off('playerDeath', Internal.handleDefaultDeath);
+    if (event) {
+        event.destroy();
+    }
     alt.log(`~y~Default Death System Turned Off`);
 }
 

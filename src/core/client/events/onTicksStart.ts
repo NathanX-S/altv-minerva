@@ -23,4 +23,4 @@ export const onTicksStart = {
     },
 };
 
-alt.onServer(SYSTEM_EVENTS.TICKS_START, Internal.init);
+alt.Events.onServer(SYSTEM_EVENTS.TICKS_START, Internal.init);

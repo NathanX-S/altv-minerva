@@ -233,7 +233,7 @@ export function update(player: alt.Player, document: Character = undefined) {
 
     const propComponents = [0, 1, 2, 6, 7];
     for (let i = 0; i < propComponents.length; i++) {
-        player.clearProp(propComponents[i]);
+        player.clearProps(propComponents[i]);
     }
 
     if (isNullOrUndefined(data.skin)) {

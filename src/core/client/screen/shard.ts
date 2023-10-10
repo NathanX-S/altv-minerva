@@ -5,8 +5,8 @@ import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import IShard from '@AthenaShared/interfaces/iShard';
 
 let scaleform: AthenaClient.screen.scaleform.Scaleform;
-let interval: number;
-let timeout: number;
+let interval: alt.Timers.Interval;
+let timeout: alt.Timers.Timeout;
 
 /**
  * Used to clear the last set spinner.
@@ -20,12 +20,12 @@ export function clear() {
     }
 
     if (timeout) {
-        alt.clearTimeout(timeout);
+        timeout.destroy();
         timeout = null;
     }
 
     if (interval) {
-        alt.clearInterval(interval);
+        interval.destroy();
         interval = null;
     }
 }
@@ -58,9 +58,9 @@ export async function create(shard: IShard) {
     }, 0);
 
     if (shard.duration >= 0) {
-        alt.setTimeout(clear, shard.duration);
+        timeout = alt.Timers.setTimeout(clear, shard.duration);
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SHARD, create);
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SHARD_CLEAR, clear);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SHARD, create);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_SHARD_CLEAR, clear);

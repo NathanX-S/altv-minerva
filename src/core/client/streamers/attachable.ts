@@ -12,7 +12,7 @@ const ClientAttachableSystem = {
      *
      */
     create(entity: alt.Entity) {
-        alt.nextTick(() => {
+        alt.Timers.nextTick(() => {
             if (!entity || !entity.valid) {
                 return;
             }
@@ -21,7 +21,7 @@ const ClientAttachableSystem = {
                 return;
             }
 
-            const attachables = entity.getStreamSyncedMeta(PLAYER_SYNCED_META.ATTACHABLES);
+            const attachables = entity.streamSyncedMeta[PLAYER_SYNCED_META.ATTACHABLES];
             if (!attachables || !Array.isArray(attachables)) {
                 return;
             }
@@ -123,17 +123,17 @@ const ClientAttachableSystem = {
         cache[player.id] = [];
 
         for (let i = 0; i < attachables.length; i++) {
-            const newObject = new alt.Object(
-                attachables[i].model,
-                new alt.Vector3(attachables[i].pos),
-                new alt.Vector3(attachables[i].rot),
-                true,
-                false,
-            );
+            const newObject = alt.LocalObject.create({
+                model: attachables[i].model,
+                pos: new alt.Vector3(attachables[i].pos),
+                rot: new alt.Vector3(attachables[i].rot),
+                noOffset: true,
+                dynamic: false,
+            });
 
             await newObject.waitForSpawn();
 
-            newObject.attachToEntity(
+            newObject.attachTo(
                 player,
                 attachables[i].bone,
                 new alt.Vector3(attachables[i].pos),

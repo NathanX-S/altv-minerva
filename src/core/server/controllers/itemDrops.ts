@@ -17,7 +17,7 @@ const InternalController = {
         Athena.systems.streamer.updateData(KEY, globalDrops);
     },
     update(player: alt.Player, drops: Array<ItemDrop>) {
-        alt.emitClient(player, SYSTEM_EVENTS.POPULATE_ITEM_DROPS, drops);
+        player.emit(SYSTEM_EVENTS.POPULATE_ITEM_DROPS, drops);
     },
 };
 

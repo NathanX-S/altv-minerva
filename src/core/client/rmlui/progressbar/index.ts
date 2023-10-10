@@ -18,7 +18,7 @@ type InternalProgressBar = ProgressBarType & {
 
 let document: alt.RmlDocument;
 let elements: Array<InternalProgressBar> = [];
-let interval: number;
+let interval: alt.Timers.Interval;
 let lastBlockingCheck = Date.now() + 1000;
 
 const InternalFunctions = {
@@ -41,20 +41,20 @@ const InternalFunctions = {
 
         const backgroundBar = document.createElement('div');
         backgroundBar.addClass('bar-wrapper');
-        backgroundBar.id = uid;
+        backgroundBar.rmlID = uid;
         elements[index].element = backgroundBar;
         document.appendChild(backgroundBar);
 
         const frontBar = document.createElement('div');
         frontBar.addClass('bar');
-        frontBar.id = `bar-${uid}`;
+        frontBar.rmlID = `bar-${uid}`;
         elements[index].innerElement = frontBar;
         backgroundBar.appendChild(frontBar);
 
         if (elements[index].percentageEnabled) {
             const innerText = document.createElement('div');
             innerText.addClass('inner-text');
-            innerText.id = `text-${uid}`;
+            innerText.rmlID = `text-${uid}`;
             elements[index].innerText = innerText;
             backgroundBar.appendChild(innerText);
         }
@@ -82,7 +82,7 @@ const InternalFunctions = {
         }
 
         if (document && elements.length <= 0) {
-            alt.clearInterval(interval);
+            interval.destroy();
             document.destroy();
             document = undefined;
             interval = undefined;
@@ -156,7 +156,7 @@ const InternalFunctions = {
             const fullScale = InternalFunctions.getScale(dist, width, height, elements[i].distance);
 
             // Update position based on world position.
-            const screenPosition = alt.worldToScreen(barPosition.x, barPosition.y, barPosition.z);
+            const screenPosition = alt.worldToScreen(barPosition);
 
             if (elements[i].isBlocked) {
                 elements[i].element.style['opacity'] = '0.1';
@@ -206,7 +206,7 @@ const ProgressBarConst = {
      */
     create(bar: ProgressBarType) {
         if (typeof document === 'undefined') {
-            document = new alt.RmlDocument('/client/rmlui/progressbar/index.rml');
+            document = alt.RmlDocument.create({ url: '/client/rmlui/progressbar/index.rml' });
             document.show();
             interval = alt.Timers.setInterval(InternalFunctions.update, 0);
         }
@@ -237,7 +237,7 @@ const ProgressBarConst = {
 alt.Events.on('disconnect', () => {
     if (typeof document !== 'undefined') {
         document.destroy();
-        alt.clearInterval(interval);
+        interval.destroy();
         alt.log('progressbar | Destroyed RMLUI Document on Disconnect');
     }
 });

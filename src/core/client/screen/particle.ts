@@ -11,13 +11,13 @@ function loadParticleDictionary(dictionary: string): Promise<boolean> {
             count += 1;
 
             if (native.hasNamedPtfxAssetLoaded(dictionary)) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(true);
                 return;
             }
 
             if (count >= 50) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(false);
                 alt.log(`Exceeded count for ${dictionary} ptfx`);
                 return;
@@ -63,10 +63,10 @@ export async function handlePlayParticle(data: Particle): Promise<void> {
 
         if (Date.now() > endTime) {
             native.stopFireInRange(data.pos.x, data.pos.y, data.pos.z, 10);
-            alt.clearInterval(interval);
+            interval.destroy();
             return;
         }
     }, 250);
 }
 
-alt.onServer(SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, handlePlayParticle);
+alt.Events.onServer(SYSTEM_EVENTS.PLAY_PARTICLE_EFFECT, handlePlayParticle);

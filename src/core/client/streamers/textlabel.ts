@@ -5,7 +5,7 @@ import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { TextLabel } from '@AthenaShared/interfaces/textLabel';
 
 let labels: Array<TextLabel> = [];
-let interval: number;
+let interval: alt.Timers.EveryTick;
 let isRemoving = false;
 
 /**
@@ -21,7 +21,7 @@ const ClientTextLabelController = {
             return;
         }
 
-        alt.clearInterval(interval);
+        interval.destroy();
     },
 
     /**
@@ -64,7 +64,7 @@ const ClientTextLabelController = {
         }
 
         if (!interval) {
-            interval = alt.Timers.setInterval(handleDrawTextlabels, 0);
+            interval = alt.Timers.everyTick(handleDrawTextlabels);
         }
     },
 
@@ -80,7 +80,7 @@ const ClientTextLabelController = {
         labels = labels.filter((x) => !x.isServerWide).concat(serverLabels);
 
         if (!interval) {
-            interval = alt.Timers.setInterval(handleDrawTextlabels, 0);
+            interval = alt.Timers.everyTick(handleDrawTextlabels);
         }
     },
 
@@ -143,7 +143,7 @@ function handleDrawTextlabels() {
 
 alt.Events.on('connectionComplete', ClientTextLabelController.init);
 alt.Events.on('disconnect', ClientTextLabelController.stop);
-alt.onServer(SYSTEM_EVENTS.APPEND_TEXTLABELS, ClientTextLabelController.append);
-alt.onServer(SYSTEM_EVENTS.POPULATE_TEXTLABELS, ClientTextLabelController.populate);
-alt.onServer(SYSTEM_EVENTS.REMOVE_TEXTLABEL, ClientTextLabelController.remove);
-alt.onServer(SYSTEM_EVENTS.UPDATE_TEXT_LABEL, ClientTextLabelController.update);
+alt.Events.onServer(SYSTEM_EVENTS.APPEND_TEXTLABELS, ClientTextLabelController.append);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_TEXTLABELS, ClientTextLabelController.populate);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_TEXTLABEL, ClientTextLabelController.remove);
+alt.Events.onServer(SYSTEM_EVENTS.UPDATE_TEXT_LABEL, ClientTextLabelController.update);

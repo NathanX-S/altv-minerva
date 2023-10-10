@@ -10,9 +10,9 @@ import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 
 const Internal = {
     init() {
-        alt.onServer(VEHICLE_EVENTS.SET_SEATBELT, VehicleController.enableSeatBelt);
-        alt.onServer(VEHICLE_EVENTS.SET_INTO, VehicleController.setIntoVehicle);
-        alt.onServer(SYSTEM_EVENTS.VEHICLE_ENGINE, VehicleController.toggleEngine);
+        alt.Events.onServer(VEHICLE_EVENTS.SET_SEATBELT, VehicleController.enableSeatBelt);
+        alt.Events.onServer(VEHICLE_EVENTS.SET_INTO, VehicleController.setIntoVehicle);
+        alt.Events.onServer(SYSTEM_EVENTS.VEHICLE_ENGINE, VehicleController.toggleEngine);
         alt.Events.on('enteredVehicle', VehicleController.enterVehicle);
         alt.Events.on('leftVehicle', VehicleController.removeSeatBelt);
         VehicleController.registerKeybinds();
@@ -55,7 +55,7 @@ export const VehicleController = {
             return;
         }
 
-        alt.emitServer(VEHICLE_EVENTS.SET_ENGINE);
+        alt.Events.emitServer(VEHICLE_EVENTS.SET_ENGINE);
     },
 
     /**
@@ -82,7 +82,7 @@ export const VehicleController = {
                 return;
             }
 
-            alt.emitServer(VEHICLE_EVENTS.SET_LOCK, vehicle);
+            alt.Events.emitServer(VEHICLE_EVENTS.SET_LOCK, vehicle);
             return;
         }
 
@@ -90,7 +90,7 @@ export const VehicleController = {
             return;
         }
 
-        alt.emitServer(VEHICLE_EVENTS.SET_LOCK, alt.Player.local.vehicle);
+        alt.Events.emitServer(VEHICLE_EVENTS.SET_LOCK, alt.Player.local.vehicle);
     },
 
     /**
@@ -117,7 +117,7 @@ export const VehicleController = {
                 attempts += 1;
 
                 if (attempts >= 100) {
-                    alt.clearInterval(interval);
+                    interval.destroy();
                     resolve(false);
                     return;
                 }
@@ -126,7 +126,7 @@ export const VehicleController = {
                     return;
                 }
 
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(true);
             }, 200);
         });
@@ -145,7 +145,7 @@ export const VehicleController = {
      *
      */
     enableSeatBelt(value: boolean) {
-        alt.Player.local.setMeta('SEATBELT', value);
+        alt.Player.local.meta['SEATBELT'] = value;
         native.setPedConfigFlag(alt.Player.local.scriptID, PED_CONFIG_FLAG.CAN_FLY_THROUGH_WINDSHIELD, value);
     },
     removeSeatBelt(vehicle: alt.Vehicle) {

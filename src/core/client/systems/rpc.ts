@@ -18,8 +18,8 @@ import * as alt from '@altv/client';
  * @param {(...args: any[]) => T} callback
  */
 export function on<T = any>(eventName: string, callback: (...args: any[]) => T) {
-    alt.onServer(eventName, async (instancedName: string, ...args: any[]) => {
+    alt.Events.onServer(eventName, async (instancedName: string, ...args: any[]) => {
         const result = await callback(...args);
-        alt.emitServer(instancedName, result);
+        alt.Events.emitServer(instancedName, result);
     });
 }

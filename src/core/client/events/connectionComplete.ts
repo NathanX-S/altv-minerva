@@ -4,6 +4,7 @@ import * as native from '@altv/natives';
 import { SHARED_CONFIG } from '@AthenaShared/configurations/shared';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { onTicksStart } from './onTicksStart';
+import { Enums } from '@altv/shared';
 
 alt.Events.on('connectionComplete', handleConnectionComplete);
 alt.setWatermarkPosition(4);
@@ -17,15 +18,15 @@ async function handleConnectionComplete() {
     native.setStreamedTextureDictAsNoLongerNeeded('athena_icons');
 
     if (SHARED_CONFIG.DISABLE_IDLE_CAM) {
-        alt.setConfigFlag('DISABLE_IDLE_CAMERA', true);
+        alt.ConfigFlag.set(Enums.ConfigFlag.DISABLE_IDLE_CAMERA, true);
     }
 
     // Calls the login functionality
-    alt.emitServer(SYSTEM_EVENTS.BEGIN_CONNECTION);
+    alt.Events.emitServer(SYSTEM_EVENTS.BEGIN_CONNECTION);
     handleTick();
 }
 
-alt.everyTick(() => {
+alt.Timers.everyTick(() => {
     native.hideHudComponentThisFrame(6); // Vehicle Name
     if (alt.Player.local.vehicle) {
         native.hideHudComponentThisFrame(7); // Area Name

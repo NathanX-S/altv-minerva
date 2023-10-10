@@ -75,7 +75,7 @@ const Raycast = {
      *
      */
     positionFromCamera(flags: number = -1, useShapeTest: boolean = false, radius: number = 5): alt.IVector3 | null {
-        const start = alt.getCamPos();
+        const start = alt.Cam.pos;
         const forwardVector = rotationToDirection(native.getFinalRenderedCamRot(2));
         const end = {
             x: start.x + forwardVector.x * 2000,

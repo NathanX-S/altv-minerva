@@ -3,7 +3,7 @@ import * as native from '@altv/natives';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { ANIMATION_FLAGS } from '@AthenaShared/flags/animationFlags';
 
-alt.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ANIMATION, playAnimation);
+alt.Events.onServer(SYSTEM_EVENTS.PLAYER_EMIT_ANIMATION, playAnimation);
 
 const MaxLoadAttempts = 25;
 
@@ -24,13 +24,13 @@ export async function loadAnimation(dict: string, count: number = 0): Promise<bo
             count += 1;
 
             if (native.hasAnimDictLoaded(dict)) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(true);
                 return;
             }
 
             if (count >= MaxLoadAttempts) {
-                alt.clearInterval(interval);
+                interval.destroy();
                 resolve(false);
                 return;
             }

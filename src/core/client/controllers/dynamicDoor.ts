@@ -3,20 +3,20 @@ import * as AthenaClient from '@AthenaClient/api';
 import * as native from '@altv/natives';
 
 AthenaClient.systems.rpc.on('load-ipl', (iplName: string) => {
-    alt.requestIpl(iplName);
+    alt.Streaming.requestIpl(iplName);
     alt.Utils.waitFor(() => native.isIplActive(iplName));
     return native.isIplActive(iplName);
 });
 
 AthenaClient.systems.rpc.on('unload-ipl', (iplName: string) => {
-    alt.removeIpl(iplName);
+    alt.Streaming.removeIpl(iplName);
     alt.Utils.waitFor(() => native.isIplActive(iplName) === false);
 });
 
 AthenaClient.systems.rpc.on('load-ytyp', (ytypPath: string) => {
-    alt.loadYtyp(ytypPath);
+    alt.Streaming.loadYtyp(ytypPath);
 });
 
 AthenaClient.systems.rpc.on('unload-ytyp', (ytypPath: string) => {
-    alt.unloadYtyp(ytypPath);
+    alt.Streaming.unloadYtyp(ytypPath);
 });

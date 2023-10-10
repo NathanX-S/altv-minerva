@@ -47,10 +47,10 @@ export interface Blip {
 
     /**
      * The scale of this blip.
-     * @type {number}
+     * @type {alt.Vector2}
      *
      */
-    scale: number;
+    scale: alt.Vector2;
 
     /**
      * Another identifier field for the blip.

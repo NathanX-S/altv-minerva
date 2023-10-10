@@ -4,12 +4,14 @@ import * as AthenaClient from '@AthenaClient/api';
 import { SYSTEM_EVENTS } from '@AthenaShared/enums/system';
 import { Action, ActionMenu } from '@AthenaShared/interfaces/actions';
 import ViewModel from '@AthenaClient/models/viewModel';
+import { Events } from '@altv/shared';
 
 const PAGE_NAME = 'Actions';
 
 let hasRegistered = false;
 let isDisabled = false;
 let actionMenu: ActionMenu;
+let event: Events.EventHandler;
 
 class ActionsView implements ViewModel {
     /**
@@ -32,12 +34,12 @@ class ActionsView implements ViewModel {
         view.on(`${PAGE_NAME}:Ready`, ActionsView.ready);
         view.on(`${PAGE_NAME}:Close`, ActionsView.close);
         view.on(`${PAGE_NAME}:Trigger`, ActionsView.trigger);
-        view.focus();
+        view.focused = true;
         AthenaClient.webview.openPages(PAGE_NAME, false, () => {
             ActionsView.close(true);
         });
 
-        alt.Events.on('keyup', ActionsView.keyUp);
+        event = alt.Events.on('keyup', ActionsView.keyUp);
     }
 
     /**
@@ -74,7 +76,7 @@ class ActionsView implements ViewModel {
         ActionsView.close();
 
         if (action.isServer) {
-            alt.emitServer(action.eventName, action.data);
+            alt.Events.emitServer(action.eventName, action.data);
             return;
         }
 
@@ -99,8 +101,10 @@ class ActionsView implements ViewModel {
         view.off(`${PAGE_NAME}:Ready`, ActionsView.ready);
         view.off(`${PAGE_NAME}:Close`, ActionsView.close);
         view.off(`${PAGE_NAME}:Trigger`, ActionsView.trigger);
-        view.unfocus();
-        alt.off('keyup', ActionsView.keyUp);
+        view.focused = false;
+        if (event) {
+            event.destroy();
+        }
         alt.Player.local.isActionMenuOpen = false;
     }
 
@@ -110,4 +114,4 @@ class ActionsView implements ViewModel {
     }
 }
 
-alt.onServer(SYSTEM_EVENTS.SET_ACTION_MENU, ActionsView.set);
+alt.Events.onServer(SYSTEM_EVENTS.SET_ACTION_MENU, ActionsView.set);

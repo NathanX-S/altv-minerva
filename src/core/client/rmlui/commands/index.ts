@@ -1,5 +1,6 @@
 import * as alt from '@altv/client';
 import * as native from '@altv/natives';
+import { Events } from '@altv/shared';
 import * as AthenaClient from '@AthenaClient/api';
 
 import { MessageCommand } from '@AthenaShared/interfaces/messageCommand';
@@ -42,6 +43,7 @@ let commands: Array<Omit<MessageCommand<alt.Player>, 'callback'>> = [];
 let history: Array<string> = [];
 let historyIndex = -1;
 let isCommandInputOpen = false;
+let event: Events.EventHandler;
 
 async function autoFillCommand() {
     if (Overrides.autoFillCommand) {
@@ -92,7 +94,7 @@ async function autoFillCommand() {
     newElement.setAttribute('type', 'text');
     inputWrapper.appendChild(newElement);
 
-    alt.nextTick(() => {
+    alt.Timers.nextTick(() => {
         newElement.focus();
         newElement.click();
     });
@@ -297,15 +299,15 @@ export function create(inputInfo: CommandInput, skipMenuCheck = false): Promise<
     }
 
     if (typeof document === 'undefined') {
-        document = new alt.RmlDocument('/client/rmlui/commands/index.rml');
+        document = alt.RmlDocument.create({ url: '/client/rmlui/commands/index.rml' });
         document.show();
     }
 
     alt.Player.local.isMenuOpen = true;
-    alt.Events.on('keyup', handleKeyUp);
-    alt.showCursor(true);
-    alt.toggleRmlControls(true);
-    alt.toggleGameControls(false);
+    event = alt.Events.on('keyup', handleKeyUp);
+    alt.Cursor.visible = true;
+    alt.setRmlControlsActive(true);
+    alt.setGameControlsActive(false);
     focus(inputInfo);
 
     isCommandInputOpen = true;
@@ -326,10 +328,12 @@ export async function cancel() {
     }
 
     internalCallback = undefined;
-    alt.off('keyup', handleKeyUp);
-    alt.showCursor(false);
-    alt.toggleRmlControls(false);
-    alt.toggleGameControls(true);
+    if (event) {
+        event.destroy();
+    }
+    alt.Cursor.visible = false;
+    alt.setRmlControlsActive(false);
+    alt.setGameControlsActive(true);
     native.triggerScreenblurFadeOut(250);
     native.displayHud(true);
     native.displayRadar(true);

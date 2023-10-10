@@ -51,7 +51,7 @@ export interface IWheelOption {
     doNotClose?: boolean;
 
     /**
-     * From the client, call a specific server event through alt.emitServer
+     * From the client, call a specific server event through alt.Events.emitServer
      *
      * @type {string}
      *

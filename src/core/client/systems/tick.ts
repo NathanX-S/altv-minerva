@@ -12,7 +12,7 @@ function startTick() {
  * Pings the server every 5 minutes.
  */
 function handlePing() {
-    alt.emitServer(SYSTEM_EVENTS.PLAYER_TICK);
+    alt.Events.emitServer(SYSTEM_EVENTS.PLAYER_TICK);
 }
 
 onTicksStart.add(startTick);

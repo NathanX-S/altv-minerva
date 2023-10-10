@@ -12,7 +12,7 @@ const callbacks: Array<(controls: typeof AdminControls) => void> = [];
  * @param {...any[]} args
  */
 export function invoke(uid: string, ...args: any[]) {
-    alt.emitServer(AdminControlEvents.toServer.invoke, uid, ...args);
+    alt.Events.emitServer(AdminControlEvents.toServer.invoke, uid, ...args);
 }
 
 /**
@@ -46,4 +46,4 @@ function updateControls(controls: typeof AdminControls) {
     }
 }
 
-alt.onServer(AdminControlEvents.toClient.controls, updateControls);
+alt.Events.onServer(AdminControlEvents.toClient.controls, updateControls);

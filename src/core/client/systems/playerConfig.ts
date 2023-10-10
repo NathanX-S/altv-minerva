@@ -29,7 +29,7 @@ export function get(key: 'account-data'): Account | undefined;
  * @return {(ReturnType | undefined)}
  */
 export function get<ReturnType, CustomKeys = PlayerConfigKeys>(key: CustomKeys): ReturnType | undefined {
-    return alt.getMeta(String(key)) as ReturnType;
+    return alt.meta[String(key)] as ReturnType;
 }
 
 /**

@@ -7,7 +7,7 @@ import { Marker } from '@AthenaShared/interfaces/marker';
 let addedMarkers: Array<Marker> = [];
 let localMarkers: Array<Marker> = [];
 let isRemoving = false;
-let interval: number;
+let interval: alt.Timers.Interval;
 
 /**
  * Do Not Export Internal Only
@@ -23,7 +23,7 @@ const ClientMarkerController = {
             return;
         }
 
-        alt.clearInterval(interval);
+        interval.destroy();
     },
 
     /**
@@ -144,6 +144,6 @@ function handleDrawMarkers() {
 
 alt.Events.on('connectionComplete', ClientMarkerController.init);
 alt.Events.on('disconnect', ClientMarkerController.stop);
-alt.onServer(SYSTEM_EVENTS.POPULATE_MARKERS, ClientMarkerController.populate);
-alt.onServer(SYSTEM_EVENTS.APPEND_MARKER, ClientMarkerController.append);
-alt.onServer(SYSTEM_EVENTS.REMOVE_MARKER, ClientMarkerController.remove);
+alt.Events.onServer(SYSTEM_EVENTS.POPULATE_MARKERS, ClientMarkerController.populate);
+alt.Events.onServer(SYSTEM_EVENTS.APPEND_MARKER, ClientMarkerController.append);
+alt.Events.onServer(SYSTEM_EVENTS.REMOVE_MARKER, ClientMarkerController.remove);

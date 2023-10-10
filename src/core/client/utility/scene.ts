@@ -2,7 +2,7 @@ import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 
 export function load(pos: alt.IVector3): Promise<boolean> {
-    let timerHandle: number;
+    let timerHandle: alt.Timers.Interval;
     return new Promise<boolean>((resolve) => {
         // noinspection JSSuspiciousNameCombination
         native.newLoadSceneStartSphere(pos.x, pos.y, pos.z ?? native.getApproxHeightForPoint(pos.x, pos.y), 2, 1);
@@ -20,6 +20,6 @@ export function load(pos: alt.IVector3): Promise<boolean> {
         }, 10);
     }).finally(() => {
         native.newLoadSceneStop();
-        alt.clearInterval(timerHandle);
+        timerHandle.destroy();
     });
 }

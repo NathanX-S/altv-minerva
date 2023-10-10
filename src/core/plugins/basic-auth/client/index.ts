@@ -42,8 +42,8 @@ function endLogin() {
     page.close(true);
 }
 
-alt.onServer(AuthEvents.toClient.requestLogin, requestLogin);
-alt.onServer(AuthEvents.toClient.endLogin, endLogin);
+alt.Events.onServer(AuthEvents.toClient.requestLogin, requestLogin);
+alt.Events.onServer(AuthEvents.toClient.endLogin, endLogin);
 
 AthenaClient.webview.on(AuthEvents.toClient.fromWebview.quit, () => {
     console.log(`Quitting Game!`);

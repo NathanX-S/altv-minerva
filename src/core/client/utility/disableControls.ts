@@ -1,8 +1,8 @@
 import * as alt from '@altv/client';
 import * as native from '@altv/natives';
 
-let everyTickControls: number;
-let everyTickAttacks: number;
+let everyTickControls: alt.Timers.EveryTick;
+let everyTickAttacks: alt.Timers.EveryTick;
 
 /**
  * Completely disabled all local player controls.
@@ -12,24 +12,24 @@ let everyTickAttacks: number;
  */
 export function disableAllControls(value: boolean) {
     if (everyTickControls) {
-        alt.clearInterval(everyTickControls);
+        everyTickControls.destroy();
         everyTickControls = null;
     }
 
     if (value) {
-        everyTickControls = alt.Timers.setInterval(handleDisablingControls, 0);
+        everyTickControls = alt.Timers.everyTick(handleDisablingControls);
         return;
     }
 }
 
 export function disableAllAttacks(value: boolean) {
     if (everyTickAttacks) {
-        alt.clearInterval(everyTickAttacks);
+        everyTickAttacks.destroy();
         everyTickAttacks = null;
     }
 
     if (value) {
-        everyTickAttacks = alt.Timers.setInterval(handleDisablingAttacks, 0);
+        everyTickAttacks = alt.Timers.everyTick(handleDisablingAttacks);
         return;
     }
 }

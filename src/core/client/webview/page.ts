@@ -249,7 +249,7 @@ export class Page {
 
         switch (this.info.options.onOpen.disableControls) {
             case 'all':
-                alt.toggleGameControls(false);
+                alt.setGameControlsActive(false);
                 break;
             case 'camera':
                 AthenaClient.camera.gameplay.disable();
@@ -324,7 +324,7 @@ export class Page {
         }
 
         if (this.info.options.onClose.enableControls) {
-            alt.toggleGameControls(true);
+            alt.setGameControlsActive(true);
             AthenaClient.camera.gameplay.enable();
         }
 

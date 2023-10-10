@@ -54,11 +54,11 @@ export function playSound(player: alt.Player, soundInfo: CustomSoundInfo) {
     }
 
     if (soundInfo.target) {
-        alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, soundInfo.target, soundInfo.audioName);
+        player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, soundInfo.target, soundInfo.audioName);
         return;
     }
 
-    alt.emitClient(player, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, soundInfo.audioName, soundInfo.volume);
+    player.emit(SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, soundInfo.audioName, soundInfo.volume);
 }
 
 /**
@@ -82,11 +82,11 @@ export function playSoundInDimension(dimension: number, soundInfo: Omit<CustomSo
     }
 
     if (soundInfo.target) {
-        alt.emitClient(players, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, soundInfo.target, soundInfo.audioName);
+        alt.Events.emitPlayers(players, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D, soundInfo.target, soundInfo.audioName);
         return;
     }
 
-    alt.emitClient(players, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, soundInfo.audioName, soundInfo.volume);
+    alt.Events.emitPlayers(players, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_2D, soundInfo.audioName, soundInfo.volume);
 }
 
 /**
@@ -115,7 +115,7 @@ export function playSoundInArea(soundInfo: Required<Omit<CustomSoundInfo, 'targe
         return;
     }
 
-    alt.emitClient(players, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D_POSITIONAL, soundInfo.pos, soundInfo.audioName);
+    alt.Events.emitPlayers(players, SYSTEM_EVENTS.PLAYER_EMIT_SOUND_3D_POSITIONAL, soundInfo.pos, soundInfo.audioName);
 }
 
 interface SoundFuncs {
