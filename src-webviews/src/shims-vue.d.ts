@@ -6,7 +6,7 @@ declare module '*.vue' {
 }
 
 declare module 'alt' {
-    import '@altv/types-webview';
-    import '@altv/types-shared';
+    import './typings/webview';
+    import './typings/shared';
     export default alt;
 }
