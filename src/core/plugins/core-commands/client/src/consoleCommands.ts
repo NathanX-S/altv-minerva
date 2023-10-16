@@ -5,7 +5,7 @@ import { ConsoleCommander } from '@AthenaShared/utility/consoleCommander';
 
 class ClientPlugin {
     static async init() {
-        ConsoleCommander.init(alt);
+        ConsoleCommander.init();
         ConsoleCommander.registerConsoleCommand('/commands', ClientPlugin.commands);
         ConsoleCommander.registerConsoleCommand('/pos', ClientPlugin.position);
         ConsoleCommander.registerConsoleCommand('/position', ClientPlugin.position);

@@ -8,5 +8,5 @@ import './commands/admin';
 
 const PLUGIN_NAME = 'commands';
 Athena.systems.plugins.registerPlugin(PLUGIN_NAME, () => {
-    ConsoleCommander.init(alt);
+    ConsoleCommander.init();
 });

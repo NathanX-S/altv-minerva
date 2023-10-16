@@ -22,7 +22,7 @@ function handleConsoleMessage(cmdName: string, ...args: string[]): void {
 }
 
 export class ConsoleCommander {
-    static init(alt: { on: (event: string, handler: Function) => any }) {
+    static init() {
         alt.Events.on('consoleCommand', handleConsoleMessage);
     }
 
