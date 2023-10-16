@@ -3,6 +3,9 @@
  */
 
 declare module "@altv/shared" {
+    export const defaultDimension: number;
+    export const globalDimension: number;
+
     export const isClient: boolean;
     export const isServer: boolean;
     export const isDebug: boolean;
@@ -59,6 +62,8 @@ declare module "@altv/shared" {
         writeFloat(offset: number, value: number): void;
         writeDouble(offset: number, value: number): void;
         writeString(offset: number, value: string): void;
+
+        destroy(): void;
     }
 
     export interface ColShapeSphereCreateOptions {
@@ -361,7 +366,7 @@ declare module "@altv/shared" {
         fixedAfterExplosion: boolean;
     }
 
-    export interface NeonState {
+    export interface VehicleNeonState {
         readonly left: boolean;
         readonly right: boolean;
         readonly front: boolean;
@@ -374,7 +379,7 @@ declare module "@altv/shared" {
     }
 
     export interface WeatherCycle {
-        weather: Enums.Weather;
+        weather: Enums.WeatherType;
         multiplier: number;
     }
 
@@ -433,7 +438,7 @@ declare module "@altv/shared" {
     }
 
     /**
-     * Extend it by interface merging for use in {@link meta alt.meta}.
+     * Extend it by interface merging for use in meta.
      */
     export interface GlobalMeta {
         [key: string]: unknown;
@@ -457,6 +462,11 @@ declare module "@altv/shared" {
      * Extend it by interface merging for use in Blip#syncedMeta.
      */
     export interface BlipSyncedMeta extends BaseObjectSyncedMeta {}
+
+    /**
+     * Extend it by interface merging for use in Marker#syncedMeta.
+     */
+    export interface MarkerSyncedMeta extends BaseObjectSyncedMeta {}
 
     /**
      * Extend it by interface merging for use in ColShape#syncedMeta.
@@ -605,6 +615,11 @@ declare module "@altv/shared" {
         export function getByID(id: number): Timer | null;
     }
 
+    // DO NOT TOUCH THIS - This is only here so client / server can extend Utils namespace using merging
+    export class Utils {
+        protected constructor();
+    }
+
     export namespace Utils {
         // boolean = showHidden
         export function inspect(value: unknown, options?: boolean | Partial<InspectOptions>): void;
@@ -629,8 +644,29 @@ declare module "@altv/shared" {
         export function assertNotNaN(value: number, message?: string): void;
 
         export function assertRGBA(val: IRGBA, message?: string): void;
+
+        export function isVector2(val: unknown): boolean;
         export function assertVector2(val: IVector2, message?: string): void;
+        export function isVector3(val: unknown): boolean;
         export function assertVector3(val: IVector3, message?: string): void;
+
+        interface ClosestEntityOptions {
+            pos?: IVector3; // default: localPlayer.pos - required for server!
+            range?: number; // default: infinity
+            streamedInOnly?: boolean; // default: false
+        }
+
+        export function getClosestEntity<T = unknown>(entities: ArrayLike<T>, options: ClosestEntityOptions): [T | null, number];
+        export function getClosestEntityOfType<T = unknown>(type: Enums.BaseObjectType | Array<Enums.BaseObjectType>, options: ClosestEntityOptions): [T | null, number];
+
+        // TODO (xLuxy): Make T resolve to proper type and fallback to unknown
+        export function getClosestPlayer<T = unknown>(options?: ClosestEntityOptions & { localOnly?: boolean }): [T | null, number];
+        export function getClosestPed<T = unknown>(options?: ClosestEntityOptions & { localOnly?: boolean }): [T | null, number];
+        export function getClosestVehicle<T = unknown>(options?: ClosestEntityOptions & { localOnly?: boolean }): [T | null, number];
+        export function getClosestObject<T = unknown>(options?: ClosestEntityOptions & { localOnly?: boolean }): [T | null, number];
+        export function getClosestCheckpoint<T = unknown>(options?: ClosestEntityOptions & { checkpointType?: boolean }): [T | null, number];
+        export function getClosestColShape<T = unknown>(options?: ClosestEntityOptions & { colShapeType?: boolean }): [T | null, number];
+        export function getClosestVirtualEntity<T = unknown>(options?: ClosestEntityOptions): [T | null, number];
 
         export interface InspectOptions {
             showHidden: boolean; // default: false
@@ -649,7 +685,7 @@ declare module "@altv/shared" {
     }
 
     export namespace Commands {
-        export type CommandCallback = (args: string[]) => void;
+        export type CommandCallback = (...args: string[]) => void;
 
         export function register(commandName: string, callback: CommandCallback): void;
         export function unregister(commandName: string, callback: CommandCallback): void;
@@ -660,20 +696,30 @@ declare module "@altv/shared" {
         export function read(path: string): string;
     }
 
+    export namespace RPC {
+        interface CustomPlayerToServerRpcEvent {}
+        interface CustomServerToPlayerRpcEvent {}
+    }
+
     export namespace Events {
         interface CustomRemoteEvent {}
         interface CustomPlayerToServerEvent {}
         interface CustomServerToPlayerEvent {}
         interface CustomClientToWebViewEvent {}
+        interface WebSocketClientEvent {}
 
         interface WebViewToClientEvent {
             load(): void;
         }
         interface CustomWebViewToClientEvent extends WebViewToClientEvent {}
 
-        interface GenericOnEventCallback {
-            readonly [key: string]: unknown;
+        interface GenericOnEventParameters {
+            readonly isCancellable: boolean;
+            readonly type: number;
+            readonly eventType: Enums.EventType | Enums.CustomEventType;
             readonly customEvent: boolean;
+
+            readonly [key: string]: unknown;
         }
 
         export class EventHandler {
@@ -694,6 +740,13 @@ declare module "@altv/shared" {
         }
 
         export class GenericEventHandler extends EventHandler {}
+    }
+
+    export namespace Profiler {
+        /**
+         * Resolves to a JSON string that can be loaded by e.g. Chrome DevTools to investigate the current heap objects.
+         */
+        export function takeHeapSnapshot(): Promise<string>;
     }
 
     export namespace Enums {
@@ -1644,7 +1697,7 @@ declare module "@altv/shared" {
         }
 
         // When changing, update shared/js/enums/weather.js aswell
-        export enum Weather {
+        export enum WeatherType {
             EXTRA_SUNNY = 0,
             CLEAR = 1,
             CLOUDS = 2,
@@ -1747,6 +1800,54 @@ declare module "@altv/shared" {
             CONNECTED
         }
 
+        export enum MarkerType {
+            MARKER_CONE,
+            MARKER_CYLINDER,
+            MARKER_ARROW,
+            MARKER_ARROW_FLAT,
+            MARKER_FLAG,
+            MARKER_RING_FLAG,
+            MARKER_RING,
+            MARKER_PLANE,
+            MARKER_BIKE_LOGO1,
+            MARKER_BIKE_LOGO2,
+            MARKER_NUM_0,
+            MARKER_NUM_1,
+            MARKER_NUM_2,
+            MARKER_NUM_3,
+            MARKER_NUM_4,
+            MARKER_NUM_5,
+            MARKER_NUM_6,
+            MARKER_NUM_7,
+            MARKER_NUM_8,
+            MARKER_NUM_9,
+            MARKER_CHEVRON_1,
+            MARKER_CHEVRON_2,
+            MARKER_CHEVRON_3,
+            MARKER_RINGFLAT,
+            MARKER_LAP,
+            MARKER_HALO,
+            MARKER_HALO_POINT,
+            MARKER_HALO_ROTATE,
+            MARKER_SPHERE,
+            MARKER_MONEY,
+            MARKER_LINES,
+            MARKER_BEAST,
+            MARKER_QUESTION_MARK,
+            MARKER_TRANSFORM_PLANE,
+            MARKER_TRANSFORM_HELICOPTER,
+            MARKER_TRANSFORM_BOAT,
+            MARKER_TRANSFORM_CAR,
+            MARKER_TRANSFORM_BIKE,
+            MARKER_TRANSFORM_PUSH_BIKE,
+            MARKER_TRANSFORM_TRUCK,
+            MARKER_TRANSFORM_PARACHUTE,
+            MARKER_TRANSFORM_THRUSTER,
+            MARKER_WARP,
+            MARKER_BOXES,
+            MARKER_PIT_LANE
+        }
+
         export enum ExplosionType {
             GRENADE,
             GRENADELAUNCHER,
@@ -1846,8 +1947,6 @@ declare module "@altv/shared" {
             CLIENT_REQUEST_OBJECT_EVENT,
             CLIENT_DELETE_OBJECT_EVENT,
 
-            CLIENT_SCRIPT_RPC_EVENT,
-
             // Shared
             PLAYER_CONNECT,
             PLAYER_DISCONNECT,
@@ -1920,6 +2019,9 @@ declare module "@altv/shared" {
 
             GIVE_PED_SCRIPTED_TASK,
 
+            SCRIPT_RPC_EVENT,
+            SCRIPT_RPC_ANSWER_EVENT,
+
             // Client
             CONNECTION_COMPLETE,
             DISCONNECT_EVENT,
@@ -1945,8 +2047,6 @@ declare module "@altv/shared" {
             PED_DAMAGE,
             PED_DEATH,
             PED_HEAL,
-
-            SERVER_SCRIPT_RPC_ANSWER_EVENT,
 
             ALL,
             SIZE
@@ -1986,6 +2086,22 @@ declare module "@altv/shared" {
             BOTTOM_CENTER = 4
         }
 
+        // When changing, update shared/js/enums/gameFont.js aswell
+        export enum GameFont {
+            CHALET_LONDON = 0,
+            HOUSE_SCRIPT = 1,
+            MONOSPACE = 2,
+            CHARLET_COMPRIME_COLONGE = 4,
+            PRICEDOWN = 7
+        }
+
+        // When changing, update shared/js/enums/textAlign.js aswell
+        export enum TextAlign {
+            CENTER = 0,
+            LEFT = 1,
+            RIGHT = 2
+        }
+
         // When changing, update shared/js/enums/statName.js aswell
         export enum StatName {
             STAMINA = "stamina",
@@ -1995,6 +2111,23 @@ declare module "@altv/shared" {
             FLYING = "flying_ability",
             SHOOTING = "shooting_ability",
             STEALTH = "stealth_ability"
+        }
+
+        // When changing, update shared/js/enums/vehicleIndicatorLights.js aswell
+        export enum VehicleIndicatorLights {
+            BLINK_LEFT = 1,
+            BLINK_RIGHT = 2,
+            BLINK_PERM_BOTH = 4,
+            STATIC_BOTH = 8,
+            INTERIOR = 64
+        }
+
+        // When changing, update shared/js/enums/webSocketReadyState.js aswell
+        export enum WebSocketReadyState {
+            CONNECTING,
+            OPEN,
+            CLOSING,
+            CLOSED
         }
 
         // When changing, update shared/js/enums/configFlag.js aswell
@@ -2523,6 +2656,700 @@ declare module "@altv/shared" {
             VEHICLE_TRANSFORM_TO_SUBMARINE = 529,
             ANIMATED_FALLBACK = 530
         }
+
+        export enum VehicleLockState {
+            NONE,
+            UNLOCKED,
+            LOCKED,
+            LOCKOUT_PLAYER_ONLY,
+            LOCK_PLAYER_INSIDE,
+            INITIALLY_LOCKED,
+            FORCE_DOORS_SHUT,
+            LOCKED_CAN_BE_DAMAGED
+        }
+
+        export enum RadioStation {
+            LOS_SANTOS_ROCK_RADIO,
+            NON_STOP_POP_FM,
+            RADIO_LOS_SANTOS,
+            CHANNEL_X,
+            WEST_COAST_TALK_RADIO,
+            REBEL_RADIO,
+            SOULWAX_FM,
+            EAST_LOS_FM,
+            WEST_COAST_CLASSICS,
+            BLAINE_COUNTY_RADIO,
+            THE_BLUE_ARK,
+            WORLD_WIDE_FM,
+            FLYLO_FM,
+            THE_LOWDOWN,
+            RADIO_MIRROR_PARK,
+            SPACE,
+            VINEWOOD_BOULEVARD_RADIO,
+            SELF_RADIO,
+            THE_LAB,
+            RADIO_OFF = 255
+        }
+
+        export enum VehicleDoor {
+            DRIVER_FRONT,
+            PASSENGER_FRONT,
+            DRIVER_REAR,
+            PASSENGER_REAR,
+            HOOD,
+            TRUNK
+        }
+
+        export enum VehicleDoorState {
+            CLOSED = 0,
+            OPENED_LEVEL_1 = 1,
+            OPENED_LEVEL_2 = 2,
+            OPENED_LEVEL_3 = 3,
+            OPENED_LEVEL_4 = 4,
+            OPENED_LEVEL_5 = 5,
+            OPENED_LEVEL_6 = 6,
+            OPENED_LEVEL_7 = 7,
+            UNKNOWN = 255
+        }
+
+        export enum VehicleModType {
+            SPOILER,
+            FRONT_BUMPER,
+            REAR_BUMPER,
+            SIDE_SKIRT,
+            EXHAUST,
+            FRAME,
+            GRILLE,
+            HOOD,
+            FENDER,
+            RIGHT_FENDER,
+            ROOF,
+            ENGINE,
+            BRAKES,
+            TRANSMISSION,
+            HORN,
+            SUSPENSION,
+            ARMOR,
+            UNK1,
+            TURBO,
+            UNK2,
+            TIRE_SMOKE,
+            UNK3,
+            XENON_LIGHTS,
+            FRONT_WHEELS,
+            BACK_WHEELS,
+            PLATE_HOLDER,
+            VANITY_PLATES,
+            TRIM_DESIGN,
+            ORNAMENTS,
+            DASHBOARD,
+            DIAL,
+            DOOR_SPEAKER,
+            SEATS,
+            STEERING_WHEEL,
+            COLUMN_SHIFTER_LEAVERS,
+            PLAQUES,
+            SPEAKERS,
+            TRUNK,
+            HYDRAULICS,
+            ENGINE_BLOCK,
+            AIR_FILTER,
+            STRUTS,
+            ARCH_COVER,
+            AERIALS,
+            TRIM,
+            TANK,
+            WINDOWS,
+            UNK4,
+            LIVERY
+        }
+
+        export enum VehicleNumberPlateStyle {
+            BLUE_WHITE,
+            YELLOW_BLACK,
+            YELLOW_BLUE,
+            BLUE_WHITE_2,
+            BLUE_WHITE_3,
+            YANKTON
+        }
+
+        export enum BaseObjectFilterType {
+            PLAYER = 1,
+            VEHICLE = 2,
+            PED = 4,
+            OBJECT = 8
+        }
+
+        export enum VehicleBumper {
+            FRONT,
+            REAR
+        }
+
+        export enum VehicleBumperDamage {
+            NOT_DAMAGED,
+            DAMAGED,
+            NONE
+        }
+
+        export enum VehiclePart {
+            FRONT_LEFT,
+            FRONT_RIGHT,
+            MIDDLE_LEFT,
+            MIDDLE_RIGHT,
+            REAR_LEFT,
+            REAR_RIGHT
+        }
+
+        export enum VehiclePartDamage {
+            NOT_DAMAGED,
+            DAMAGED_LEVEL_1,
+            DAMAGED_LEVEL_2,
+            DAMAGED_LEVEL_3
+        }
+
+        export enum VehicleWindowTint {
+            NONE,
+            PURE_BLACK,
+            DARK_SMOKE,
+            LIGHT_SMOKE,
+            STOCK,
+            LIMO,
+            GREEN
+        }
+
+        export enum ConnectDeniedReason {
+            WRONG_VERSION,
+            WRONG_BRANCH,
+            DEBUG_NOT_ALLOWED,
+            WRONG_PASSWORD,
+            WRONG_CDN_URL
+        }
+
+        export enum FileEncoding {
+            UTF8 = "utf-8",
+            UTF16 = "utf-16",
+            BINARY = "binary"
+        }
+
+        export enum AudioCategories {
+            X44E21C90 = "0x44E21C90",
+            XBAD598C7 = "0xBAD598C7",
+            XA4D158B0 = "0xA4D158B0",
+            FRONTEND_MENU = "frontend_menu",
+            CUTSCENES = "cutscenes",
+            GAME_WORLD = "game_world",
+            AMBIENCE = "ambience",
+            WEAPONS = "weapons",
+            PEDS = "peds",
+            SPEECH = "speech",
+            VEHICLES = "vehicles",
+            COLLISIONS = "collisions",
+            HUD = "hud",
+            WEAPONS_EXPLOSIONS = "weapons_explosions",
+            WEAPONS_GUNS = "weapons_guns",
+            X4E8BCAED = "0x4E8BCAED",
+            X32157574 = "0x32157574",
+            PEDS_CLOTHING = "peds_clothing",
+            PEDS_COLLISIONS = "peds_collisions",
+            XF7C35252 = "0xF7C35252",
+            VEHICLES_HELIS = "vehicles_helis",
+            VEHICLES_WHEELS = "vehicles_wheels",
+            VEHICLES_WHEELS_SKIDS = "vehicles_wheels_skids",
+            X2EED1D0A = "0x2EED1D0A",
+            VEHICLES_HORNS = "vehicles_horns",
+            VEHICLES_HORNS_LOUD = "vehicles_horns_loud",
+            VEHICLES_SIRENS = "vehicles_sirens",
+            VEHICLES_DOORS = "vehicles_doors",
+            VEHICLES_BRAKES = "vehicles_brakes",
+            VEHICLES_CHASSIS_RATTLE = "vehicles_chassis_rattle",
+            VEHICLES_SUSPENSION = "vehicles_suspension",
+            XDF9CFFD4 = "0xDF9CFFD4",
+            VEHICLES_ENGINES_INTAKE = "vehicles_engines_intake",
+            XF48DE3B3 = "0xF48DE3B3",
+            VEHICLES_ENGINES_DAMAGE = "vehicles_engines_damage",
+            VEHICLES_ENGINES_IGNITION = "vehicles_engines_ignition",
+            XB607457F = "0xB607457F",
+            X39736A51 = "0x39736A51",
+            X3F6594E4 = "0x3F6594E4",
+            XE86DF43F = "0xE86DF43F",
+            X1C507071 = "0x1C507071",
+            MUSIC = "music",
+            MUSIC_LOADING = "music_loading",
+            X6244F855 = "0x6244F855",
+            XD59675EA = "0xD59675EA",
+            XEA185B02 = "0xEA185B02",
+            XAC3F546D = "0xAC3F546D",
+            X41ACDDFF = "0x41ACDDFF",
+            XC8B2D787 = "0xC8B2D787",
+            X3AA35DEF = "0x3AA35DEF",
+            XDCA3CC61 = "0xDCA3CC61",
+            X1F418253 = "0x1F418253",
+            X933E72C3 = "0x933E72C3",
+            XF05AAEDD = "0xF05AAEDD",
+            XC4872161 = "0xC4872161",
+            XAA0678B2 = "0xAA0678B2",
+            VEHICLES_ENGINES_COOLING = "vehicles_engines_cooling",
+            SCRIPTED = "scripted",
+            AMBIENCE_WEATHER = "ambience_weather",
+            X6F56A5DC = "0x6F56A5DC",
+            VEHICLES_BOATS_ENGINES = "vehicles_boats_engines",
+            AMBIENCE_INSECTS = "ambience_insects",
+            AMBIENCE_BIRDS = "ambience_birds",
+            RADIO = "radio",
+            X52BA33D4 = "0x52BA33D4",
+            X45EB536F = "0x45EB536F",
+            FRONTEND_RADIO = "frontend_radio",
+            X9B60B77E = "0x9B60B77E",
+            X044986F4 = "0x044986F4",
+            XF7954E76 = "0xF7954E76",
+            COLLISIONS_VEHICLES_GLASS = "collisions_vehicles_glass",
+            XEB0390D7 = "0xEB0390D7",
+            X80722AAA = "0x80722AAA",
+            FIRE = "fire",
+            WATER = "water",
+            SCORE = "score",
+            DOORS = "doors",
+            X01E27C7E = "0x01E27C7E",
+            XA95BF404 = "0xA95BF404",
+            INTERACTIVE_MUSIC = "interactive_music",
+            X9205C7A1 = "0x9205C7A1",
+            XD3594A47 = "0xD3594A47",
+            X20230050 = "0x20230050",
+            XEA1277B9 = "0xEA1277B9",
+            XF4908CAD = "0xF4908CAD",
+            X05D22F30 = "0x05D22F30",
+            X11034592 = "0x11034592",
+            X1E51E02F = "0x1E51E02F",
+            X6D867E97 = "0x6D867E97",
+            X9C6A4771 = "0x9C6A4771",
+            X6C742462 = "0x6C742462",
+            ANIMALS_FOOTSTEPS = "animals_footsteps",
+            X414231B5 = "0x414231B5",
+            MELEE = "melee",
+            X992F6CB7 = "0x992F6CB7",
+            X75FB2B65 = "0x75FB2B65",
+            X368CC071 = "0x368CC071",
+            XB2681B31 = "0xB2681B31",
+            XB4C14B9C = "0xB4C14B9C",
+            XE3FAF7D3 = "0xE3FAF7D3",
+            XCD3365DE = "0xCD3365DE",
+            X864AAAB9 = "0x864AAAB9",
+            WEATHER = "weather",
+            WEATHER_WIND = "weather_wind",
+            X4FFD9CA5 = "0x4FFD9CA5",
+            XCB2382B4 = "0xCB2382B4",
+            XBCE6F3E0 = "0xBCE6F3E0",
+            X781669E6 = "0x781669E6",
+            WEATHER_RAIN = "weather_rain",
+            VEHICLES_TRAIN = "vehicles_train",
+            XF1754C85 = "0xF1754C85",
+            COLLISIONS_VEHICLES_GLASS = "collisions_vehicles_glass",
+            VEHICLES_PLANES = "vehicles_planes",
+            VEHICLES_PLANES_JET = "vehicles_planes_jet",
+            XF4FABC2A = "0xF4FABC2A",
+            X3EB27392 = "0x3EB27392",
+            COLLISIONS_LOUDER = "collisions_louder",
+            XED39E59D = "0xED39E59D",
+            X011F1827 = "0x011F1827",
+            AMBIENCE_MUSIC = "ambience_music",
+            X85B8BFD4 = "0x85B8BFD4",
+            XB421C2DC = "0xB421C2DC",
+            VEHICLES_BOATS_WATER = "vehicles_boats_water",
+            WATER_SWIMMING = "water_swimming",
+            X31A9A815 = "0x31A9A815",
+            X3874EB6C = "0x3874EB6C",
+            X85DBC375 = "0x85DBC375",
+            XC7D71D61 = "0xC7D71D61",
+            X2F34D6FC = "0x2F34D6FC",
+            SCRIPTED_ALARMS = "scripted_alarms",
+            WEATHER_RAIN_HEAVY = "weather_rain_heavy",
+            X88EEAE72 = "0x88EEAE72",
+            VEHICLES_HELIS_DISTANT = "vehicles_helis_distant",
+            VEHICLES_PLANES_PROP = "vehicles_planes_prop",
+            VEHICLES_PLANES_CLOSE = "vehicles_planes_close",
+            XBC11E471 = "0xBC11E471",
+            WATER_OCEAN = "water_ocean",
+            X25E385A7 = "0x25E385A7",
+            VEHICLES_PLANES_DISTANT = "vehicles_planes_distant",
+            VEHICLES_ENGINES_STARTUP = "vehicles_engines_startup",
+            XC701057A = "0xC701057A",
+            FIRE_LOUDER = "fire_louder",
+            X0E212957 = "0x0E212957",
+            UNDERWATER = "underwater",
+            VEHICLES_TRAIN_CARRIAGE = "vehicles_train_carriage",
+            VEHICLES_TRAIN_CLACK = "vehicles_train_clack",
+            PEDS_WIND = "peds_wind",
+            VEHICLES_EXTRAS_LOUD = "vehicles_extras_loud",
+            VEHICLES_WHEELS_LOUD = "vehicles_wheels_loud",
+            AMBIENCE_INDUSTRIAL = "ambience_industrial",
+            AMBIENCE_SPEECH = "ambience_speech",
+            XF0E66096 = "0xF0E66096",
+            X3A52AFA3 = "0x3A52AFA3",
+            WATER_RIVER = "water_river",
+            WEATHER_THUNDER = "weather_thunder",
+            VEHICLES_BICYCLES = "vehicles_bicycles",
+            VEHICLES_BICYCLES_MECHANICAL = "vehicles_bicycles_mechanical",
+            AMBIENCE_GENERAL = "ambience_general",
+            AMBIENCE_COLLECTABLES = "ambience_collectables",
+            UNDERWATER_LOUD = "underwater_loud",
+            SPEECH_AMBIENT = "speech_ambient",
+            SPEECH_SCRIPTED = "speech_scripted",
+            SPEECH_PAIN = "speech_pain",
+            SPEECH_BREATHING = "speech_breathing",
+            XBF162C33 = "0xBF162C33",
+            XB9CB44C7 = "0xB9CB44C7",
+            XDA38F55D = "0xDA38F55D",
+            COLLISIONS_GLASS = "collisions_glass",
+            WATER_LOUD = "water_loud",
+            XF846B110 = "0xF846B110",
+            X0D3C9D38 = "0x0D3C9D38",
+            VEHICLES_TRAIN_BRAKES = "vehicles_train_brakes",
+            XD2626419 = "0xD2626419",
+            WEAPONS_EXPLOSIONS_LOUD = "weapons_explosions_loud",
+            PEDS_COLLISIONS_LOUD = "peds_collisions_loud",
+            X03D39751 = "0x03D39751",
+            COLLISIONS_SCRIPTED = "collisions_scripted",
+            XE8C16DEA = "0xE8C16DEA",
+            FRONTEND_MENU_LOUD = "frontend_menu_loud",
+            WEATHER_WIND_FOLIAGE = "weather_wind_foliage",
+            VEHICLES_PLANES_EXTRAS = "vehicles_planes_extras",
+            X0BE5A8C0 = "0x0BE5A8C0",
+            VEHICLES_CAR_BY = "vehicles_car_by",
+            SCRIPTED_TV = "scripted_tv",
+            X02C7B342 = "0x02C7B342",
+            X2BA33BE9 = "0x2BA33BE9",
+            X9748F077 = "0x9748F077",
+            DOORS_LOUD = "doors_loud",
+            X0607FDB8 = "0x0607FDB8",
+            SCRIPTED_LOUDER = "scripted_louder",
+            XA6A84701 = "0xA6A84701",
+            X3C496EED = "0x3C496EED",
+            VEHICLES_ENGINES_REFLECTIONS = "vehicles_engines_reflections",
+            WEATHER_RAIN_PROPS = "weather_rain_props",
+            UNDERWATER_SWIMMING = "underwater_swimming",
+            X1FF21B89 = "0x1FF21B89",
+            XA6DA13DC = "0xA6DA13DC",
+            VEHICLES_ENGINES_LOUD = "vehicles_engines_loud",
+            X6A3DD9A1 = "0x6A3DD9A1",
+            X53B27328 = "0x53B27328",
+            UNDERWATER_MUTED = "underwater_muted",
+            X6805AAC2 = "0x6805AAC2",
+            X8A91FE75 = "0x8A91FE75",
+            XEB0865AB = "0xEB0865AB",
+            XF3196F77 = "0xF3196F77",
+            X05403EE1 = "0x05403EE1",
+            X63614939 = "0x63614939",
+            XBC72B5EB = "0xBC72B5EB",
+            FRONTEND_GAME_LOUD = "frontend_game_loud",
+            XF2C3426E = "0xF2C3426E",
+            X639A44A4 = "0x639A44A4",
+            X266E012E = "0x266E012E",
+            XACA58232 = "0xACA58232",
+            X7A6F1418 = "0x7A6F1418",
+            XD4AE89CA = "0xD4AE89CA",
+            XFDB42EDF = "0xFDB42EDF",
+            XFF7A0598 = "0xFF7A0598",
+            X5A6165D9 = "0x5A6165D9",
+            X585863F0 = "0x585863F0",
+            X0E4CF672 = "0x0E4CF672",
+            X11D52176 = "0x11D52176",
+            XF841C9F9 = "0xF841C9F9",
+            X291E7FD7 = "0x291E7FD7",
+            X94821026 = "0x94821026",
+            XFB40B82B = "0xFB40B82B",
+            XCFF0C1C2 = "0xCFF0C1C2"
+        }
+
+        export enum PedConfigFlag {
+            NO_CRITICAL_HITS = 2,
+            DROWNS_IN_WATER = 3,
+            DISABLE_RETICULE_FIXED_LOCKON = 4,
+            UPPER_BODY_DAMAGE_ANIMS_ONLY = 7,
+            NEVER_LEAVES_GROUP = 13,
+            BLOCK_NON_TEMPORARY_EVENTS = 17,
+            CAN_PUNCH = 18,
+            IGNORE_SEEN_MELEE = 24,
+            GET_OUT_UNDRIVEABLE_VEHICLE = 29,
+            CAN_FLY_THRU_WINDSCREEN = 32,
+            DIES_WHEN_RAGDOLL = 33,
+            HAS_HELMET = 34,
+            PUT_ON_MOTORCYCLE_HELMET = 35,
+            DONT_TAKE_OFF_HELMET = 36,
+            DISABLE_EVASIVE_DIVES = 39,
+            DONT_INFLUENCE_WANTED_LEVEL = 42,
+            DISABLE_PLAYER_LOCKON = 43,
+            DISABLE_LOCKON_TO_RANDOM_PEDS = 44,
+            ALLOW_LOCKON_TO_FRIENDLY_PLAYERS = 45,
+            BEING_DELETED = 47,
+            BLOCK_WEAPON_SWITCHING = 48,
+            NO_COLLISION = 52,
+            IS_SHOOTING = 58,
+            WAS_SHOOTING = 59,
+            IS_ON_GROUND = 60,
+            WAS_ON_GROUND = 61,
+            IN_VEHICLE = 62,
+            ON_MOUNT = 63,
+            ATTACHED_TO_VEHICLE = 64,
+            IS_SWIMMING = 65,
+            WAS_SWIMMING = 66,
+            IS_SKIING = 67,
+            IS_SITTING = 68,
+            KILLED_BY_STEALTH = 69,
+            KILLED_BY_TAKEDOWN = 70,
+            KNOCKEDOUT = 71,
+            IS_SNIPER_SCOPE_ACTIVE = 72,
+            SUPER_DEAD = 73,
+            USING_COVER_POINT = 75,
+            IS_IN_THE_AIR = 76,
+            IS_AIMING_GUN = 78,
+            FORCE_PED_LOAD_COVER = 93,
+            VAULT_FROM_COVER = 97,
+            IS_DRUNK = 100,
+            FORCED_AIM = 101,
+            IS_NOT_RAGDOLL_AND_NOT_PLAYING_ANIM = 104,
+            FORCE_RELOAD = 105,
+            DONT_ACTIVATE_RAGDOLL_FROM_VEHICLE_IMPACT = 106,
+            DONT_ACTIVATE_RAGDOLL_FROM_BULLET_IMPACT = 107,
+            DONT_ACTIVATE_RAGDOLL_FROM_EXPLOSIONS = 108,
+            DONT_ACTIVATE_RAGDOLL_FROM_FIRE = 109,
+            DONT_ACTIVATE_RAGDOLL_FROM_ELECTROCUTION = 110,
+            KEEP_WEAPON_HOLSTERED_UNLESS_FIRED = 113,
+            GET_OUT_BURNING_VEHICLE = 116,
+            BUMPED_BY_PLAYER = 117,
+            RUN_FROM_FIRES_AND_EXPLOSIONS = 118,
+            TREAT_AS_PLAYER_DURING_TARGETING = 119,
+            IS_HAND_CUFFED = 120,
+            IS_ANKLE_CUFFED = 121,
+            DISABLE_MELEE = 122,
+            DISABLE_UNARMED_DRIVEBYS = 123,
+            JUST_GETS_PULLED_OUT_WHEN_ELECTROCUTED = 124,
+            NM_MESSAGE_466 = 125,
+            WILL_NOT_HOTWIRE_LAW_ENFORCEMENT_VEHICLE = 126,
+            WILL_COMMANDEER_RATHER_THAN_JACK = 127,
+            CAN_BE_AGITATED = 128,
+            FORCE_PED_TO_FACE_LEFT_IN_COVER = 129,
+            FORCE_PED_TO_FACE_RIGHT_IN_COVER = 130,
+            BLOCK_PED_FROM_TURNING_IN_COVER = 131,
+            KEEP_RELATIONSHIP_GROUP_AFTER_CLEAN_UP = 132,
+            FORCE_PED_TO_BE_DRAGGED = 133,
+            PREVENT_PED_FROM_REACTING_TO_BEING_JACKED = 134,
+            IS_SCUBA = 135,
+            WILL_ARREST_RATHER_THAN_JACK = 136,
+            REMOVE_DEAD_EXTRA_FAR_AWAY = 137,
+            RIDING_TRAIN = 138,
+            ARREST_RESULT = 139,
+            CAN_ATTACK_FRIENDLY = 140,
+            WILL_JACK_ANY_PLAYER = 141,
+            WILL_JACK_WANTED_PLAYERS_RATHER_THAN_STEAL_CAR = 144,
+            SHOOTING_ANIM_FLAG = 145,
+            DISABLE_LADDER_CLIMBING = 146,
+            STAIRS_DETECTED = 147,
+            SLOPE_DETECTED = 148,
+            COWER_INSTEAD_OF_FLEE = 150,
+            CAN_ACTIVATE_RAGDOLL_WHEN_VEHICLE_UPSIDE_DOWN = 151,
+            ALWAYS_RESPOND_TO_CRIES_FOR_HELP = 152,
+            DISABLE_BLOOD_POOL_CREATION = 153,
+            SHOULD_FIX_IF_NO_COLLISION = 154,
+            CAN_PERFORM_ARREST = 155,
+            CAN_PERFORM_UNCUFF = 156,
+            CAN_BE_ARRESTED = 157,
+            PLAYER_PREFER_FRONT_SEAT_MP = 159,
+            IS_INJURED = 166,
+            DONT_ENTER_VEHICLES_IN_PLAYERS_GROUP = 167,
+            PREVENT_ALL_MELEE_TAUNTS = 169,
+            IS_INJURED2 = 170,
+            ALWAYS_SEE_APPROACHING_VEHICLES = 171,
+            CAN_DIVE_AWAY_FROM_APPROACHING_VEHICLES = 172,
+            ALLOW_PLAYER_TO_INTERRUPT_VEHICLE_ENTRY_EXIT = 173,
+            ONLY_ATTACK_LAW_IF_PLAYER_IS_WANTED = 174,
+            PEDS_JACKING_ME_DONT_GET_IN = 177,
+            PED_IGNORES_ANIM_INTERRUPT_EVENTS = 179,
+            IS_IN_CUSTODY = 180,
+            FORCE_STANDARD_BUMP_REACTION_THRESHOLDS = 181,
+            LAW_WILL_ONLY_ATTACK_IF_PLAYER_IS_WANTED = 182,
+            IS_AGITATED = 183,
+            PREVENT_AUTO_SHUFFLE_TO_DRIVERS_SEAT = 184,
+            USE_KINEMATIC_MODE_WHEN_STATIONARY = 185,
+            ENABLE_WEAPON_BLOCKING = 186,
+            HAS_HURT_STARTED = 187,
+            DISABLE_HURT = 188,
+            PLAYER_IS_WEIRD = 189,
+            DO_NOTHING_WHEN_ON_FOOT_BY_DEFAULT = 193,
+            USING_SCENARIO = 194,
+            VISIBLE_ON_SCREEN = 195,
+            DONT_ACTIVATE_RAGDOLL_ON_VEHICLE_COLLISION_WHEN_DEAD = 199,
+            HAS_BEEN_IN_ARMED_COMBAT = 200,
+            AVOIDANCE_IGNORE_ALL = 202,
+            AVOIDANCE_IGNORED_BY_ALL = 203,
+            AVOIDANCE_IGNORE_GROUP1 = 204,
+            AVOIDANCE_MEMBER_OF_GROUP1 = 205,
+            FORCED_TO_USE_SPECIFIC_GROUP_SEAT_INDEX = 206,
+            DISABLE_EXPLOSION_REACTIONS = 208,
+            DODGED_PLAYER = 209,
+            WAITING_FOR_PLAYER_CONTROL_INTERRUPT = 210,
+            FORCED_TO_STAY_IN_COVER = 211,
+            GENERATES_SOUND_EVENTS = 212,
+            LISTENS_TO_SOUND_EVENTS = 213,
+            ALLOW_TO_BE_TARGETED_IN_A_VEHICLE = 214,
+            WAIT_FOR_DIRECT_ENTRY_POINT_TO_BE_FREE_WHEN_EXITING = 215,
+            ONLY_REQUIRE_ONE_PRESS_TO_EXIT_VEHICLE = 216,
+            FORCE_EXIT_TO_SKYDIVE = 217,
+            DONT_ENTER_LEADERS_VEHICLE = 220,
+            DISABLE_EXIT_TO_SKYDIVE = 221,
+            SHRINK = 223,
+            MELEE_COMBAT = 224,
+            DISABLE_POTENTIAL_TO_BE_WALKED_INTO_RESPONSE = 225,
+            DISABLE_PED_AVOIDANCE = 226,
+            FORCE_RAGDOLL_UPON_DEATH = 227,
+            DISABLE_PANIC_IN_VEHICLE = 229,
+            ALLOWED_TO_DETACH_TRAILER = 230,
+            IS_HOLDING_PROP = 236,
+            BLOCKS_PATHING_WHEN_DEAD = 237,
+            FORCE_SKIN_CHARACTER_CLOTH = 240,
+            DISABLE_STOPPING_VEHICLE_ENGINE = 241,
+            PHONE_DISABLE_TEXTING_ANIMATIONS = 242,
+            PHONE_DISABLE_TALKING_ANIMATIONS = 243,
+            PHONE_DISABLE_CAMERA_ANIMATIONS = 244,
+            DISABLE_BLIND_FIRING_IN_SHOT_REACTIONS = 245,
+            ALLOW_NEARBY_COVER_USAGE = 246,
+            CAN_PLAY_IN_CAR_IDLES = 248,
+            CAN_ATTACK_NON_WANTED_PLAYER_AS_LAW = 249,
+            WILL_TAKE_DAMAGE_WHEN_VEHICLE_CRASHES = 250,
+            AI_CAN_DRIVE_PLAYER_AS_REAR_PASSENGER = 251,
+            PLAYER_CAN_JACK_FRIENDLY_PLAYERS = 252,
+            IS_ON_STAIRS = 253,
+            AI_DRIVER_ALLOW_FRIENDLY_PASSENGER_SEAT_ENTRY = 255,
+            ALLOW_MISSION_PED_TO_USE_INJURED_MOVEMENT = 257,
+            PREVENT_USING_LOWER_PRIORITY_SEATS = 261,
+            DISABLE_CLOSING_VEHICLE_DOOR = 264,
+            TELEPORT_TO_LEADER_VEHICLE = 268,
+            AVOIDANCE_IGNORE_WEIRD_PED_BUFFER = 269,
+            ON_STAIR_SLOPE = 270,
+            DONT_BLIP_COP = 272,
+            CLIMBED_SHIFTED_FENCE = 273,
+            KILL_WHEN_TRAPPED = 275,
+            EDGE_DETECTED = 276,
+            AVOID_TEAR_GAS = 279,
+            NO_WRITHE = 281,
+            ONLY_USE_FORCED_SEAT_WHEN_ENTERING_HELI_IN_GROUP = 282,
+            DISABLE_WEIRD_PED_EVENTS = 285,
+            SHOULD_CHARGE_NOW = 286,
+            RAGDOLLING_ON_BOAT = 287,
+            HAS_BRANDISHED_WEAPON = 288,
+            FREEZE_POSITION = 292,
+            DISABLE_SHOCKING_EVENTS = 294,
+            NEVER_REACT_TO_PED_ON_ROOF = 296,
+            DISABLE_SHOCKING_DRIVING_ON_PAVEMENT_EVENTS = 299,
+            DISABLE_PED_CONSTRAINTS = 301,
+            FORCE_INITIAL_PEEK_IN_COVER = 302,
+            DISABLE_JUMPING_FROM_VEHICLES_AFTER_LEADER = 305,
+            IS_IN_CLUSTER = 310,
+            SHOUT_TO_GROUP_ON_PLAYER_MELEE = 311,
+            IGNORED_BY_AUTO_OPEN_DOORS = 312,
+            NO_PED_MELEE = 314,
+            CHECK_LOS_FOR_SOUND_EVENTS = 315,
+            CAN_SAY_FOLLOWED_BY_PLAYER_AUDIO = 317,
+            ACTIVATE_RAGDOLL_FROM_MINOR_PLAYER_CONTACT = 318,
+            FORCE_POSE_CHARACTER_CLOTH = 320,
+            HAS_CLOTH_COLLISION_BOUNDS = 321,
+            HAS_HIGH_HEELS = 322,
+            DONT_BEHAVE_LIKE_LAW = 324,
+            DISABLE_POLICE_INVESTIGATING_BODY = 326,
+            DISABLE_WRITHE_SHOOT_FROM_GROUND = 327,
+            LOWER_PRIORITY_OF_WARP_SEATS = 328,
+            DISABLE_TALK_TO = 329,
+            DONT_BLIP = 330,
+            IS_SWITCHING_WEAPON = 331,
+            IGNORE_LEG_IK_RESTRICTIONS = 332,
+            ALLOW_TASK_DO_NOTHING_TIMESLICING = 339,
+            NOT_ALLOWED_TO_JACK_ANY_PLAYERS = 342,
+            ALWAYS_LEAVE_TRAIN_UPON_ARRIVAL = 345,
+            ONLY_WRITHE_FROM_WEAPON_DAMAGE = 347,
+            USE_SLO_MO_BLOOD_VFX = 348,
+            EQUIP_JETPACK = 349,
+            PREVENT_DRAGGED_OUT_OF_CAR_THREAT_RESPONSE = 350,
+            FORCE_DEEP_SURFACE_CHECK = 356,
+            DISABLE_DEEP_SURFACE_ANIMS = 357,
+            DONT_BLIP_NOT_SYNCED = 358,
+            IS_DUCKING_IN_VEHICLE = 359,
+            PREVENT_AUTO_SHUFFLE_TO_TURRET_SEAT = 360,
+            DISABLE_EVENT_INTERIOR_STATUS_CHECK = 361,
+            HAS_RESERVE_PARACHUTE = 362,
+            USE_RESERVE_PARACHUTE = 363,
+            TREAT_DISLIKE_AS_HATE_WHEN_IN_COMBAT = 364,
+            ONLY_UPDATE_TARGET_WANTED_IF_SEEN = 365,
+            ALLOW_AUTO_SHUFFLE_TO_DRIVERS_SEAT = 366,
+            PREVENT_REACTING_TO_SILENCED_CLONE_BULLETS = 372,
+            DISABLE_INJURED_CRY_FOR_HELP_EVENTS = 373,
+            NEVER_LEAVE_TRAIN = 374,
+            DONT_DROP_JETPACK_ON_DEATH = 375,
+            DISABLE_AUTO_EQUIP_HELMETS_IN_BIKES = 380,
+            IS_CLIMBING_LADDER = 388,
+            HAS_BARE_FEET = 389,
+            GO_ON_WITHOUT_VEHICLE_IF_IT_IS_UNABLE_TO_GET_BACK_TO_ROAD = 391,
+            BLOCK_DROPPING_HEALTH_SNACKS_ON_DEATH = 392,
+            FORCE_THREAT_RESPONSE_TO_NON_FRIEND_TO_FRIEND_MELEE_ACTIONS = 394,
+            DONT_RESPOND_TO_RANDOM_PEDS_DAMAGE = 395,
+            ALLOW_CONTINUOUS_THREAT_RESPONSE_WANTED_LEVEL_UPDATES = 396,
+            KEEP_TARGET_LOSS_RESPONSE_ON_CLEANUP = 397,
+            PLAYERS_DONT_DRAG_ME_OUT_OF_CAR = 398,
+            BROADCAST_RESPONDED_TO_THREAT_WHEN_GOING_TO_POINT_SHOOTING = 399,
+            IGNORE_PED_TYPE_FOR_IS_FRIENDLY_WITH = 400,
+            TREAT_NON_FRIENDLY_AS_HATE_WHEN_IN_COMBAT = 401,
+            DONT_LEAVE_VEHICLE_IF_LEADER_NOT_IN_VEHICLE = 402,
+            ALLOW_MELEE_REACTION_IF_MELEE_PROOF_IS_ON = 404,
+            USE_NORMAL_EXPLOSION_DAMAGE_WHEN_BLOWN_UP_IN_VEHICLE = 407,
+            DISABLE_HOMING_MISSILE_LOCK_FOR_VEHICLE_PED_INSIDE = 408,
+            DISABLE_TAKE_OFF_SCUBA_GEAR = 409,
+            ALPHA = 410,
+            LAW_PEDS_CAN_FLEE_FROM_NON_WANTED_PLAYER = 411,
+            FORCE_BLIP_SECURITY_PEDS_IF_PLAYER_IS_WANTED = 412,
+            IS_HOLSTERING_WEAPON = 413,
+            USE_GO_TO_POINT_FOR_SCENARIO_NAVIGATION = 414,
+            DONT_CLEAR_LOCAL_PASSENGERS_WANTED_LEVEL = 415,
+            BLOCK_AUTO_SWAP_ON_WEAPON_PICKUPS = 416,
+            THIS_PED_IS_A_TARGET_PRIORITY_FOR_AI = 417,
+            IS_SWITCHING_HELMET_VISOR = 418,
+            FORCE_HELMET_VISOR_SWITCH = 419,
+            FLAMING_FOOTPRINTS = 421,
+            DISABLE_VEHICLE_COMBAT = 422,
+            DISABLE_PROP_KNOCK_OFF = 423,
+            FALLS_LIKE_AIRCRAFT = 424,
+            USE_LOCKPICK_VEHICLE_ENTRY_ANIMATIONS = 426,
+            IGNORE_INTERIOR_CHECK_FOR_SPRINTING = 427,
+            SWAT_HELI_SPAWN_WITHIN_LAST_SPOTTED_LOCATION = 428,
+            DISABLE_STARTING_VEHICLE_ENGINE = 429,
+            IGNORE_BEING_ON_FIRE = 430,
+            DISABLE_TURRET_OR_REAR_SEAT_PREFERENCE = 431,
+            DISABLE_WANTED_HELICOPTER_SPAWNING = 432,
+            USE_TARGET_PERCEPTION_FOR_CREATING_AIMED_AT_EVENTS = 433,
+            DISABLE_HOMING_MISSILE_LOCKON = 434,
+            FORCE_IGNORE_MAX_MELEE_ACTIVE_SUPPORT_COMBATANTS = 435,
+            STAY_IN_DEFENSIVE_AREA_WHEN_IN_VEHICLE = 436,
+            DONT_SHOUT_TARGET_POSITION = 437,
+            DISABLE_HELMET_ARMOR = 438,
+            PREVENT_VEH_EXIT_DUE_TO_INVALID_WEAPON = 441,
+            IGNORE_NET_SESSION_FRIENDLY_FIRE_CHECK_FOR_ALLOW_DAMAGE = 442,
+            DONT_LEAVE_COMBAT_IF_TARGET_PLAYER_IS_ATTACKED_BY_POLICE = 443,
+            CHECK_LOCKED_BEFORE_WARP = 444,
+            DONT_SHUFFLE_IN_VEHICLE_TO_MAKE_ROOM = 445,
+            GIVE_WEAPON_ON_GETUP = 446,
+            DONT_HIT_VEHICLE_WITH_PROJECTILES = 447,
+            DISABLE_FORCED_ENTRY_FOR_OPEN_VEHICLES_FROM_TRY_LOCKED_DOOR = 448,
+            FIRES_DUMMY_ROCKETS = 449,
+            IS_ARRESTING = 450,
+            IS_DECOY_PED = 451,
+            HAS_ESTABLISHED_DECOY = 452,
+            BLOCK_DISPATCHED_HELICOPTERS_FROM_LANDING = 453,
+            DONT_CRY_FOR_HELP_ON_STUN = 454,
+            CAN_BE_INCAPACITATED = 456,
+            MUTABLE_FORCED_AIM = 457,
+            DONT_CHANGE_TARGET_FROM_MELEE = 458
+        }
+    }
+
+    export namespace Symbols {
+        export const serialize: unique symbol;
     }
 }
 
