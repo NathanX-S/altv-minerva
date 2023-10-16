@@ -1,6 +1,4 @@
 import * as alt from '@altv/client';
-import * as native from '@altv/natives';
-import * as AthenaClient from '@AthenaClient/api';
 
 import { ATHENA_DEBUG_EVENTS } from '../shared/events';
 import { onTicksStart } from '@AthenaClient/events/onTicksStart';
