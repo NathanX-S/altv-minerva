@@ -5,6 +5,7 @@ import VehicleTuning from '@AthenaShared/interfaces/vehicleTuning';
 import { VehicleState } from '@AthenaShared/interfaces/vehicleState';
 import VehicleExtra from '@AthenaShared/interfaces/vehicleExtra';
 import IVehicleMod from '@AthenaShared/interfaces/vehicleMod';
+import { VehicleModType } from 'alt-server';
 
 /**
  * Applies specified properties to a vehicle in bulk.
@@ -114,9 +115,9 @@ export function getTuning(vehicle: alt.Vehicle): VehicleTuning {
     for (let id = 0; id < 67; ++id) {
         let value = vehicle.getMod(id);
         if (id === 23) {
-            tuningData.mods.push({ id, value: vehicle.frontWheels });
+            tuningData.mods.push({ id, value: vehicle.getMod(VehicleModType.FrontWheels) });
         } else if (id === 24) {
-            tuningData.mods.push({ id, value: vehicle.rearWheels });
+            tuningData.mods.push({ id, value: vehicle.getMod(VehicleModType.BackWheels) });
         } else {
             tuningData.mods.push({ id, value });
         }
@@ -180,9 +181,9 @@ export function getMods(vehicle: alt.Vehicle): Array<IVehicleMod> {
         try {
             let value = vehicle.getMod(i);
             if (i === 23) {
-                mods.push({ id: i, value: vehicle.frontWheels });
+                mods.push({ id: i, value: vehicle.getMod(VehicleModType.FrontWheels) });
             } else if (i === 24) {
-                mods.push({ id: i, value: vehicle.rearWheels });
+                mods.push({ id: i, value: vehicle.getMod(VehicleModType.BackWheels) });
             } else {
                 mods.push({ id: i, value });
             }
