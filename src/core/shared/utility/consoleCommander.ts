@@ -1,3 +1,5 @@
+import * as alt from '@altv/client';
+
 type ConsoleCommand = {
     [cmd: string]: (...args: string[]) => void;
 };

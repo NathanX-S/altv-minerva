@@ -238,7 +238,7 @@ const Internal = {
  * @param {KeyInfo} keyBind
  */
 export function add(keyBind: KeyInfo) {
-    const userDefinedHotkey = alt.LocalStorage.get(`keybind-${keyBind.key}`);
+    const userDefinedHotkey = alt.LocalStorage.get(`keybind-${keyBind.key}`) as number;
 
     if (typeof userDefinedHotkey !== 'undefined') {
         keyMappings.push({ ...keyBind, default: keyBind.key, key: userDefinedHotkey });

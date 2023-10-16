@@ -101,8 +101,7 @@ export interface VehicleState {
     /**
      * Gets or sets the lock state of a vehicle.
      */
-    // TODO: fix.
-    lockState: alt.Enums.VehicleModelType;
+    lockState: alt.Enums.VehicleLockState;
     /**
      * Enables or disables the manual engine control.
      */
