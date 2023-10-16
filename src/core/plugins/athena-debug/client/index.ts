@@ -6,40 +6,11 @@ import { ATHENA_DEBUG_EVENTS } from '../shared/events';
 import { onTicksStart } from '@AthenaClient/events/onTicksStart';
 
 const F1_KEY = 112;
-let page: AthenaClient.webview.Page;
 
 function init() {
     if (!alt.isDebug) {
         return;
     }
-
-    page = new AthenaClient.webview.Page({
-        name: 'Editor',
-        callbacks: { onReady() {}, onClose() {} },
-        options: {
-            disableEscapeKey: true,
-            onOpen: {
-                blurBackground: true,
-                disableControls: 'all',
-                disablePauseMenu: true,
-                focus: true,
-                hideHud: true,
-                hideOverlays: true,
-                setIsMenuOpenToTrue: true,
-                showCursor: true,
-            },
-            onClose: {
-                enableControls: true,
-                enablePauseMenu: true,
-                hideCursor: true,
-                setIsMenuOpenToFalse: true,
-                showHud: true,
-                showOverlays: true,
-                unblurBackground: true,
-                unfocus: true,
-            },
-        },
-    });
 
     alt.Events.on('keyup', (key: number) => {
         if (key !== F1_KEY) {
