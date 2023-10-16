@@ -19,18 +19,6 @@ function init() {
 
         alt.Events.emitServer(ATHENA_DEBUG_EVENTS.ClientToServer.FORWARD);
     });
-
-    alt.Events.onServer(ATHENA_DEBUG_EVENTS.toClient.exec, (code: string) => {
-        eval(code);
-    });
-
-    AthenaClient.webview.on(ATHENA_DEBUG_EVENTS.toClient.closePage, () => {
-        page.close(true);
-    });
-
-    alt.Events.onServer(ATHENA_DEBUG_EVENTS.toClient.openExec, () => {
-        page.open();
-    });
 }
 
 onTicksStart.add(init);
